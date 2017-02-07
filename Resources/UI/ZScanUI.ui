@@ -56,7 +56,7 @@ color:rgb(202, 202, 202);</string>
      <number>15</number>
     </property>
     <item row="0" column="0">
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="tab_widget">
       <property name="font">
        <font>
         <pointsize>14</pointsize>
@@ -121,7 +121,7 @@ QGroupBox::title{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -336,7 +336,7 @@ margin-top: 5px;</string>
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../Resources/image_resources_for_testing.qrc">:/image/000010186001_compressed.jpg</pixmap>
+                <pixmap resource="../image_resources_for_testing.qrc">:/image/000010186001_compressed.jpg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -2709,7 +2709,7 @@ p, li { white-space: pre-wrap; }
           <item row="1" column="0">
            <layout class="QGridLayout" name="gridLayout_44">
             <item row="1" column="1">
-             <widget class="QLabel" name="label_87">
+             <widget class="QLabel" name="about_revision_label">
               <property name="text">
                <string>0.1</string>
               </property>
@@ -2757,12 +2757,12 @@ p, li { white-space: pre-wrap; }
              </spacer>
             </item>
             <item row="2" column="1">
-             <widget class="QLabel" name="label_86">
+             <widget class="QLabel" name="about_author_label">
               <property name="text">
                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Corwin Perren&lt;/p&gt;&lt;p&gt;caperren@caperren.com&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http:\\www.caperren.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:rgb(169, 69, 0);&quot;&gt;http:\\www.caperren.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="textInteractionFlags">
                <set>Qt::LinksAccessibleByMouse</set>
@@ -2827,7 +2827,7 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <resources>
-  <include location="../Resources/image_resources_for_testing.qrc"/>
+  <include location="../image_resources_for_testing.qrc"/>
  </resources>
  <connections/>
 </ui>

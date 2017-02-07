@@ -26,21 +26,25 @@ __status__ = "Development"
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with "Pick And Plate".  If not, see <http://www.gnu.org/licenses/>.
+# along with "ZScan Processor".  If not, see <http://www.gnu.org/licenses/>.
 
 #####################################
 # Imports
 #####################################
 # Python native imports
 import sys
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets, QtCore, uic
 import signal
 
+# Custom Imports
+from Framework.LoggingCore import Logger
+from Framework.SettingsCore import Settings
+from Interface.InterfaceCore import Interface
 
 #####################################
 # Global Variables
 #####################################
-UI_FILE_PATH = "Interface/ZScanUI.ui"
+UI_FILE_PATH = "Resources/UI/ZScanUI.ui"
 
 
 #####################################
@@ -48,8 +52,20 @@ UI_FILE_PATH = "Interface/ZScanUI.ui"
 #####################################
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
-        super().__init__(parent)
+        # noinspection PyArgumentList
+        super(ApplicationWindow, self).__init__(parent)
         uic.loadUi(UI_FILE_PATH, self)
+
+        # ########## Instantiation of program classes ##########
+        # Settings class and version number set
+        self.settings = Settings(self)
+        QtCore.QSettings().setValue("miscellaneous/version", __version__)
+
+        # Set up the global logger instance
+        self.logger = Logger(console_output=True)
+
+        # All interface elements
+        self.interface = Interface(self)
 
         # ########## Set up QT Application Window ##########
         self.show()
