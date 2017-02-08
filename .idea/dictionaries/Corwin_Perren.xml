@@ -2,7 +2,10 @@
   <dictionary name="Corwin Perren">
     <words>
       <w>appdata</w>
+      <w>mycompany</w>
+      <w>myproduct</w>
       <w>sarl</w>
+      <w>subproduct</w>
     </words>
   </dictionary>
 </component>

@@ -121,7 +121,7 @@ QGroupBox::title{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -2828,6 +2828,7 @@ p, li { white-space: pre-wrap; }
  </widget>
  <resources>
   <include location="../image_resources_for_testing.qrc"/>
+  <include location="../../../../.designer/image_resources_for_testing.qrc"/>
  </resources>
  <connections/>
 </ui>

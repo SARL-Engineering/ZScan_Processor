@@ -25,6 +25,8 @@
 from PyQt5 import QtCore, QtWidgets
 
 # Custom imports
+from Interface.LiveLogs.LiveLogsCore import LiveLogs
+from Interface.DetectionSettings.DetectionSettingsCore import DetectionSettings
 from Interface.FileAndTransferSettings.FileAndTransferSettingsCore import FileAndTransferSettings
 from Interface.About.AboutCore import About
 
@@ -40,8 +42,10 @@ class Interface(QtCore.QObject):
         self.main_window = main_window
 
         # ########## Instantiations of sub-classes ##########
-        self.file_transfer_and_settings = FileAndTransferSettings(self.main_window)
-        self.about = About(self.main_window)
+        self.live_logs_class = LiveLogs(self.main_window)
+        self.detection_class = DetectionSettings(self.main_window)
+        self.file_transfer_and_settings_class = FileAndTransferSettings(self.main_window)
+        self.about_class = About(self.main_window)
 
         # ########## References to GUI Elements ##########
         self.tab_widget = self.main_window.tab_widget  # type: QtWidgets.QTabWidget

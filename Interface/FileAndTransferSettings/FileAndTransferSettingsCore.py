@@ -21,7 +21,7 @@
 # Imports
 #####################################
 # Python native imports
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5 import QtCore, QtWidgets
 
 
 #####################################
@@ -35,7 +35,17 @@ class FileAndTransferSettings(QtCore.QObject):
         self.main_window = main_window
 
         # ########## References to GUI Elements ##########
-        self.author_label = self.main_window.about_author_label  # type: QtWidgets.QLabel
+        self.input_images_le = self.main_window.file_transfer_input_images_line_edit  # type: QtWidgets.QLineEdit
+        self.failed_rename_le = self.main_window.file_transfer_failed_rename_images_line_edit  # type: QtWidgets.QLineEdit
+        self.local_output_le = self.main_window.file_transfer_local_output_line_edit  # type: QtWidgets.QLineEdit
+        self.network_transfer_le = self.main_window.file_transfer_network_transfer_line_edit  # type: QtWidgets.QLineEdit
+
+        self.input_images_browse_b = self.main_window.file_transfer_input_images_browse_button  # type: QtWidgets.QPushButton
+        self.failed_rename_browse_b = self.main_window.file_transfer_failed_rename_images_browse_button  # type: QtWidgets.QPushButton
+        self.local_output_browse_b = self.main_window.file_transfer_local_output_browse_button  # type: QtWidgets.QPushButton
+        self.network_transfer_browse_b = self.main_window.file_transfer_network_transfer_browse_button  # type: QtWidgets.QPushButton
+
+        self.transfer_time_te = self.main_window.file_transfer_transfer_time_edit  # type: QtWidgets.QTimeEdit
 
         # ########## Make signal/slot connections ##########
         self.__connect_signals_to_slots()

@@ -91,34 +91,55 @@ class Logger(QtCore.QObject):
         # This copies the existing log.txt file to an old version with a datetime stamp
         # It then checks if there are too many log files, and if so, deletes the oldest
         if exists(self.log_directory):
-            num_log_files = len(listdir(self.log_directory))
+            # Get the number of log files
+            num_log_files = self.__get_num_files_in_directory(self.log_directory)
 
+            # Check that we actually have log files
             if num_log_files > 0:
                 date_time = datetime.now().strftime("%Y%m%d-%H%M%S")
+
+                # If we do, move the current logfile to a backup in the format old_log_datetime
                 if exists(self.log_file_path):
                     rename(self.log_file_path, self.log_directory + "\\old_log_" + date_time + ".txt")
 
+                # If we have more than the max log files delete the oldest one
                 if num_log_files >= MAX_NUM_LOG_FILES:
-                    unlink(self.get_name_of_oldest_file(self.log_directory))
+                    unlink(self.__get_name_of_oldest_file(self.log_directory))
 
     def __add_startup_log_buffer_text(self):
-        self.logger.info("########## New Instance of Application Started ##########")
+        # Prints a header saying when the program started
+        self.logger.info("########## Application Starting ##########")
 
     @staticmethod
-    def get_name_of_oldest_file(input_path):
+    def __get_name_of_oldest_file(input_path):
         oldest_file_path = None
         previous_oldest_time = 0
 
+        # Walk the directory passed in to get all folders and files
         for dir_path, dir_names, file_names in walk(input_path):
+            # Go through all of the filenames found
             for file in file_names:
+                # Recreate the full path and get the modified time of the file
                 current_path = dir_path + "\\" + file
                 time = getmtime(current_path)
 
+                # Default case for if the variables above have not been initially set
                 if previous_oldest_time == 0:
                     previous_oldest_time = time
                     oldest_file_path = current_path
 
+                # Saves the oldest time and file path of the current file if it's older (lower timestamp) than the
+                # last file saved in the variables
                 if time < previous_oldest_time:
                     previous_oldest_time = time
                     oldest_file_path = current_path
+
+        # Returns the path to the oldest file after checking all the files
         return oldest_file_path
+
+    @staticmethod
+    def __get_num_files_in_directory(input_path):
+        # Walk the directory passed in to get all the files
+        for _, _, file_names in walk(input_path):
+            # Return the number of files found in the directory
+            return len(file_names)
