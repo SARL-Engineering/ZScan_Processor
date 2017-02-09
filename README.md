@@ -1,12 +1,11 @@
 # ZScan_Processor
 This application processes scanned images of 96-well plates, splits them, renames them based on the barcode in the image, and transfers the images to a desired location. For more information, please visit the following link: https://www.caperren.com/project/zscan-processor/
 
-
 # Installation
---Pre-requisites--
-1. ZBar                              (http://zbar.sourceforge.net/)
-2. Python 3.x                        (https://www.python.org/downloads/)
-3. PyQt5                             (https://www.riverbankcomputing.com/software/pyqt/download5)(Pip install is easiest)
+Pre-requisites
+1. ZBar (http://zbar.sourceforge.net/)
+2. Python 3.x (https://www.python.org/downloads/)
+3. PyQt5 (https://www.riverbankcomputing.com/software/pyqt/download5)(Pip install is easiest)
 
 Note that I am NOT using python's zbar library. It's at 0.10 and I haven't been able to get it to work, so for now I'm just calling the windows binary. Not ideal, but it works just fine.
 
