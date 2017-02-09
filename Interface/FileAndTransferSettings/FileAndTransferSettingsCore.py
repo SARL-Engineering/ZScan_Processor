@@ -22,6 +22,7 @@
 #####################################
 # Python native imports
 from PyQt5 import QtCore, QtWidgets
+import logging
 
 
 #####################################
@@ -33,6 +34,12 @@ class FileAndTransferSettings(QtCore.QObject):
 
         # ########## Reference to top level window ##########
         self.main_window = main_window
+
+        # ########## Get the settings instance ##########
+        self.settings = QtCore.QSettings()
+
+        # ########## Get the Pick And Plate instance of the logger ##########
+        self.logger = logging.getLogger("ZScanProcessor")
 
         # ########## References to GUI Elements ##########
         self.input_images_le = self.main_window.file_transfer_input_images_line_edit  # type: QtWidgets.QLineEdit
@@ -47,8 +54,107 @@ class FileAndTransferSettings(QtCore.QObject):
 
         self.transfer_time_te = self.main_window.file_transfer_transfer_time_edit  # type: QtWidgets.QTimeEdit
 
+        # ########## Load Settings ##########
+        self.__load_settings()
+
         # ########## Make signal/slot connections ##########
         self.__connect_signals_to_slots()
 
+    def __load_settings(self):
+        input_images_path = self.settings.value("file_and_transfer_settings/input_images_path",
+                                                "*** No Path Set ***", type=str)
+        failed_rename_path = self.settings.value("file_and_transfer_settings/failed_rename_path",
+                                                 "*** No Path Set ***", type=str)
+        local_output_path = self.settings.value("file_and_transfer_settings/local_output_path",
+                                                "*** No Path Set ***", type=str)
+        network_transfer_path = self.settings.value("file_and_transfer_settings/network_transfer_path",
+                                                    "*** No Path Set ***", type=str)
+        transfer_time_string = self.settings.value("file_and_transfer_settings/network_transfer_time",
+                                                   "12:00 PM", type=str)
+
+        self.input_images_le.setText(input_images_path)
+        self.failed_rename_le.setText(failed_rename_path)
+        self.local_output_le.setText(local_output_path)
+        self.network_transfer_le.setText(network_transfer_path)
+        self.transfer_time_te.setTime(QtCore.QTime.fromString(transfer_time_string, "h:mm AP"))
+
+        self.__on_settings_changed__slot()
+
+    # noinspection PyUnresolvedReferences
     def __connect_signals_to_slots(self):
-        pass
+        self.input_images_browse_b.clicked.connect(self.__on_input_images_browse_button_clicked__slot)
+        self.failed_rename_browse_b.clicked.connect(self.__on_failed_rename_browse_button_clicked__slot)
+        self.local_output_browse_b.clicked.connect(self.__on_local_output_browse_button_clicked__slot)
+        self.network_transfer_browse_b.clicked.connect(self.__on_network_transfer_browse_button_clicked__slot)
+
+        self.input_images_le.textChanged.connect(self.__on_settings_changed__slot)
+        self.failed_rename_le.textChanged.connect(self.__on_settings_changed__slot)
+        self.local_output_le.textChanged.connect(self.__on_settings_changed__slot)
+        self.network_transfer_le.textChanged.connect(self.__on_settings_changed__slot)
+
+        self.transfer_time_te.timeChanged.connect(self.__on_settings_changed__slot)
+
+    # noinspection PyArgumentList
+    def __on_input_images_browse_button_clicked__slot(self):
+        file_dialog = QtWidgets.QFileDialog(self.main_window)
+        file_dialog.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
+        file_dialog.setDirectory(QtCore.QStandardPaths.standardLocations(QtCore.QStandardPaths.HomeLocation)[0])
+
+        directory = file_dialog.getExistingDirectory()
+
+        if directory != "":
+            self.input_images_le.setText(directory)
+            self.logger.debug("Setting input images directory to: \"" + directory + "\".")
+        else:
+            self.logger.debug("Input images directory not changed. No folder selected.")
+
+    # noinspection PyArgumentList
+    def __on_failed_rename_browse_button_clicked__slot(self):
+        file_dialog = QtWidgets.QFileDialog(self.main_window)
+        file_dialog.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
+        file_dialog.setDirectory(QtCore.QStandardPaths.standardLocations(QtCore.QStandardPaths.HomeLocation)[0])
+
+        directory = file_dialog.getExistingDirectory()
+
+        if directory != "":
+            self.failed_rename_le.setText(directory)
+            self.logger.debug("Setting failed rename directory to: \"" + directory + "\".")
+        else:
+            self.logger.debug("Failed rename directory not changed. No folder selected.")
+
+    # noinspection PyArgumentList
+    def __on_local_output_browse_button_clicked__slot(self):
+        file_dialog = QtWidgets.QFileDialog(self.main_window)
+        file_dialog.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
+        file_dialog.setDirectory(QtCore.QStandardPaths.standardLocations(QtCore.QStandardPaths.HomeLocation)[0])
+
+        directory = file_dialog.getExistingDirectory()
+
+        if directory != "":
+            self.local_output_le.setText(directory)
+            self.logger.debug("Setting local output directory to: \"" + directory + "\".")
+        else:
+            self.logger.debug("Local output directory not changed. No folder selected.")
+
+    # noinspection PyArgumentList
+    def __on_network_transfer_browse_button_clicked__slot(self):
+        file_dialog = QtWidgets.QFileDialog(self.main_window)
+        file_dialog.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
+        file_dialog.setDirectory(QtCore.QStandardPaths.standardLocations(QtCore.QStandardPaths.HomeLocation)[0])
+
+        directory = file_dialog.getExistingDirectory()
+
+        if directory != "":
+            self.network_transfer_le.setText(directory)
+            self.logger.debug("Setting network transfer directory to: \"" + directory + "\".")
+        else:
+            self.logger.debug("Network transfer directory not changed. No folder selected.")
+
+    def __on_settings_changed__slot(self):
+        self.settings.setValue("file_and_transfer_settings/input_images_path", self.input_images_le.text())
+        self.settings.setValue("file_and_transfer_settings/failed_rename_path", self.failed_rename_le.text())
+        self.settings.setValue("file_and_transfer_settings/local_output_path", self.local_output_le.text())
+        self.settings.setValue("file_and_transfer_settings/network_transfer_path", self.network_transfer_le.text())
+
+        self.settings.setValue("file_and_transfer_settings/network_transfer_time",
+                               self.transfer_time_te.time().toString('h:mm AP'))

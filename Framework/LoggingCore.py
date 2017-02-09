@@ -22,7 +22,7 @@
 #####################################
 # Python native imports
 from PyQt5 import QtCore
-from os import makedirs, listdir, rename, walk, unlink
+from os import makedirs, rename, walk, unlink
 from os.path import exists, getmtime
 import logging
 from datetime import datetime

@@ -41,5 +41,8 @@ class About(QtCore.QObject):
         self.revision_label = self.main_window.about_revision_label  # type: QtWidgets.QLabel
 
         # ########## Set defaults on GUI Elements ##########
+        self.__load_settings()
+
+    def __load_settings(self):
         version = self.settings.value("miscellaneous/version", type=str)
         self.revision_label.setText(version)

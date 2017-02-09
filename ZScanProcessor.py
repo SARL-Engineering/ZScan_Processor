@@ -40,9 +40,11 @@ import logging
 import time
 
 # Custom Imports
-from Framework.LoggingCore import Logger
 from Framework.SettingsCore import Settings
+from Framework.LoggingCore import Logger
 from Interface.InterfaceCore import Interface
+from Framework.DetectionPreviewCore import DetectionPreview
+from Framework.ProcessorCore import ProcessorCore
 
 #####################################
 # Global Variables
@@ -69,7 +71,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # ########## Instantiation of program classes ##########
         # Settings class and version number set
         self.settings_class = Settings(self)
-        QtCore.QSettings().setValue("miscellaneous/version", __version__)
+        self.settings = QtCore.QSettings()
+        self.settings.setValue("miscellaneous/version", __version__)
+
+        # Uncomment these lines to completely reset settings and quit, then re-comment and rerun program
+        # self.settings.clear()
+        # self.close()
 
         # Set up the global logger instance
         self.logger_class = Logger(console_output=True)
@@ -78,8 +85,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # All interface elements
         self.interface_class = Interface(self)
 
-        # ########## Add threads to list ##########
+        # The detection preview class for handling calculations and updates to that tab
+        self.detection_preview_class = DetectionPreview(self)
+
+        # The processor core class that handles schedules and actually running the program core features
+        self.processor_core_class = ProcessorCore(self)
+
+        # ########## Add threads to list for easy access on program close ##########
         self.threads.append(self.interface_class.live_logs_class)
+        self.threads.append(self.detection_preview_class)
+        self.threads.append(self.processor_core_class)
 
         # ########## Set up QT Application Window ##########
         self.show()
@@ -101,7 +116,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
 
 #####################################
-# Function Definition
+# Function Definitions
 #####################################
 def set_application_icon(app_to_set):
     # Make icon and set it on the passed in object
