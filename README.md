@@ -4,9 +4,9 @@ This application processes scanned images of 96-well plates, splits them, rename
 
 # Installation
 --Pre-requisites--
-ZBar                              (http://zbar.sourceforge.net/)
-Python 3.x                        (https://www.python.org/downloads/)
-PyQt5                             (https://www.riverbankcomputing.com/software/pyqt/download5)(Pip install is easiest)
+1. ZBar                              (http://zbar.sourceforge.net/)
+2. Python 3.x                        (https://www.python.org/downloads/)
+3. PyQt5                             (https://www.riverbankcomputing.com/software/pyqt/download5)(Pip install is easiest)
 
 Note that I am NOT using python's zbar library. It's at 0.10 and I haven't been able to get it to work, so for now I'm just calling the windows binary. Not ideal, but it works just fine.
 
