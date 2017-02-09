@@ -46,11 +46,13 @@ class FileAndTransferSettings(QtCore.QObject):
         self.failed_rename_le = self.main_window.file_transfer_failed_rename_images_line_edit  # type: QtWidgets.QLineEdit
         self.local_output_le = self.main_window.file_transfer_local_output_line_edit  # type: QtWidgets.QLineEdit
         self.network_transfer_le = self.main_window.file_transfer_network_transfer_line_edit  # type: QtWidgets.QLineEdit
+        self.zbar_path_le = self.main_window.file_transfer_zbar_path_line_edit  # type: QtWidgets.QLineEdit
 
         self.input_images_browse_b = self.main_window.file_transfer_input_images_browse_button  # type: QtWidgets.QPushButton
         self.failed_rename_browse_b = self.main_window.file_transfer_failed_rename_images_browse_button  # type: QtWidgets.QPushButton
         self.local_output_browse_b = self.main_window.file_transfer_local_output_browse_button  # type: QtWidgets.QPushButton
         self.network_transfer_browse_b = self.main_window.file_transfer_network_transfer_browse_button  # type: QtWidgets.QPushButton
+        self.zbar_path_browse_b = self.main_window.file_transfer_zbar_path_browse_button  # type: QtWidgets.QPushButton
 
         self.transfer_time_te = self.main_window.file_transfer_transfer_time_edit  # type: QtWidgets.QTimeEdit
 
@@ -69,6 +71,8 @@ class FileAndTransferSettings(QtCore.QObject):
                                                 "*** No Path Set ***", type=str)
         network_transfer_path = self.settings.value("file_and_transfer_settings/network_transfer_path",
                                                     "*** No Path Set ***", type=str)
+        zbar_path = self.settings.value("file_and_transfer_settings/zbar_path",
+                                        "*** No Path Set ***", type=str)
         transfer_time_string = self.settings.value("file_and_transfer_settings/network_transfer_time",
                                                    "12:00 PM", type=str)
 
@@ -76,6 +80,7 @@ class FileAndTransferSettings(QtCore.QObject):
         self.failed_rename_le.setText(failed_rename_path)
         self.local_output_le.setText(local_output_path)
         self.network_transfer_le.setText(network_transfer_path)
+        self.zbar_path_le.setText(zbar_path)
         self.transfer_time_te.setTime(QtCore.QTime.fromString(transfer_time_string, "h:mm AP"))
 
         self.__on_settings_changed__slot()
@@ -86,11 +91,13 @@ class FileAndTransferSettings(QtCore.QObject):
         self.failed_rename_browse_b.clicked.connect(self.__on_failed_rename_browse_button_clicked__slot)
         self.local_output_browse_b.clicked.connect(self.__on_local_output_browse_button_clicked__slot)
         self.network_transfer_browse_b.clicked.connect(self.__on_network_transfer_browse_button_clicked__slot)
+        self.zbar_path_browse_b.clicked.connect(self.__on_zbar_browse_button_clicked__slot)
 
         self.input_images_le.textChanged.connect(self.__on_settings_changed__slot)
         self.failed_rename_le.textChanged.connect(self.__on_settings_changed__slot)
         self.local_output_le.textChanged.connect(self.__on_settings_changed__slot)
         self.network_transfer_le.textChanged.connect(self.__on_settings_changed__slot)
+        self.zbar_path_le.textChanged.connect(self.__on_settings_changed__slot)
 
         self.transfer_time_te.timeChanged.connect(self.__on_settings_changed__slot)
 
@@ -150,11 +157,26 @@ class FileAndTransferSettings(QtCore.QObject):
         else:
             self.logger.debug("Network transfer directory not changed. No folder selected.")
 
+    # noinspection PyArgumentList
+    def __on_zbar_browse_button_clicked__slot(self):
+        file_dialog = QtWidgets.QFileDialog(self.main_window)
+        file_dialog.setFileMode(QtWidgets.QFileDialog.ExistingFiles)
+        file_dialog.setDirectory(QtCore.QStandardPaths.standardLocations(QtCore.QStandardPaths.HomeLocation)[0])
+
+        file_path = file_dialog.getOpenFileName(filter="zbarimg Executable (zbarimg.exe)")[0]
+
+        if file_path != "":
+            self.zbar_path_le.setText(file_path)
+            self.logger.debug("Setting zbar executable path to: \"" + file_path + "\".")
+        else:
+            self.logger.debug("ZBar executable path not changed. No file selected.")
+
     def __on_settings_changed__slot(self):
         self.settings.setValue("file_and_transfer_settings/input_images_path", self.input_images_le.text())
         self.settings.setValue("file_and_transfer_settings/failed_rename_path", self.failed_rename_le.text())
         self.settings.setValue("file_and_transfer_settings/local_output_path", self.local_output_le.text())
         self.settings.setValue("file_and_transfer_settings/network_transfer_path", self.network_transfer_le.text())
+        self.settings.setValue("file_and_transfer_settings/zbar_path", self.zbar_path_le.text())
 
         self.settings.setValue("file_and_transfer_settings/network_transfer_time",
                                self.transfer_time_te.time().toString('h:mm AP'))
