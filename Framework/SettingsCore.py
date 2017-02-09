@@ -40,7 +40,7 @@ class Settings(QtCore.QObject):
         super(Settings, self).__init__()
 
         # ########## Reference to highest level window ##########
-        self.main_window = main_window
+        self.main_window = main_window  # type: QtWidgets.QMainWindow
 
         # ########## Set up settings for program ##########
         self.__setup_settings()

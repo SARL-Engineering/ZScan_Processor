@@ -36,7 +36,7 @@ class LiveLogs(QtCore.QThread):
         super(LiveLogs, self).__init__()
 
         # ########## Reference to top level window ##########
-        self.main_window = main_window
+        self.main_window = main_window  # type: QtWidgets.QMainWindow
 
         # ########## Get the settings instance ##########
         self.settings = QtCore.QSettings()
@@ -79,7 +79,7 @@ class LiveLogs(QtCore.QThread):
                 self.open_log_file_flag = False
             elif self.show_log_file_flag:
                 self.__show_updated_log_file()
-                self.msleep(1000)
+                self.msleep(250)
 
         self.logger.debug("Live Logs Thread Stopping...")
 

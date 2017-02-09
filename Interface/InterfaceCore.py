@@ -39,7 +39,7 @@ class Interface(QtCore.QObject):
         super(Interface, self).__init__()
 
         # ########## Reference to top level window ##########
-        self.main_window = main_window
+        self.main_window = main_window  # type: QtWidgets.QMainWindow
 
         # ########## Instantiations of sub-classes ##########
         self.live_logs_class = LiveLogs(self.main_window)

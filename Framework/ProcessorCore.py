@@ -33,7 +33,7 @@ class ProcessorCore(QtCore.QThread):
         super(ProcessorCore, self).__init__()
 
         # ########## Reference to top level window ##########
-        self.main_window = main_window
+        self.main_window = main_window  # type: QtWidgets.QMainWindow
 
         # ########## Get the settings instance ##########
         self.settings = QtCore.QSettings()
