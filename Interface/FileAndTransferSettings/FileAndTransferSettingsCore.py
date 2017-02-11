@@ -180,3 +180,5 @@ class FileAndTransferSettings(QtCore.QObject):
 
         self.settings.setValue("file_and_transfer_settings/network_transfer_time",
                                self.transfer_time_te.time().toString('h:mm AP'))
+
+        self.logger.debug("File and transfer settings changes saved...")

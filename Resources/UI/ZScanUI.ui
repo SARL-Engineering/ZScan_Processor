@@ -121,7 +121,7 @@ QGroupBox::title{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -1393,6 +1393,9 @@ margin-top: 5px;</string>
                      <property name="text">
                       <string/>
                      </property>
+                     <property name="scaledContents">
+                      <bool>true</bool>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -1444,6 +1447,9 @@ margin-top: 5px;</string>
                      </property>
                      <property name="text">
                       <string/>
+                     </property>
+                     <property name="scaledContents">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
@@ -1552,6 +1558,9 @@ margin-top: 5px;</string>
                      <property name="text">
                       <string/>
                      </property>
+                     <property name="scaledContents">
+                      <bool>true</bool>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -1603,6 +1612,9 @@ margin-top: 5px;</string>
                      </property>
                      <property name="text">
                       <string/>
+                     </property>
+                     <property name="scaledContents">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>

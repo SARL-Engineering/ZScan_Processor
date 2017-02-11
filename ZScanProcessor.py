@@ -140,7 +140,7 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal.SIG_DFL)  # This allows the keyboard interrupt kill to work  properly
     application = QtWidgets.QApplication(sys.argv)  # Create the base qt gui application
     set_application_icon(application)  # Sets the icon
-    app_window = ApplicationWindow()  # Make a window in this application using the pnp MyWindowClass
+    app_window = ApplicationWindow()  # Make a window in this application
     app_window.setWindowTitle("ZScan Processor")  # Sets the window title
     app_window.show()  # Show the window in the application
     application.exec_()  # Execute launching of the application

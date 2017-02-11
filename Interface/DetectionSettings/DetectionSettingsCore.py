@@ -21,13 +21,17 @@
 # Imports
 #####################################
 # Python native imports
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 import logging
+
 
 #####################################
 # Detection Settings Class Definition
 #####################################
 class DetectionSettings(QtCore.QObject):
+
+    detection_preview_image_displayed_signal = QtCore.pyqtSignal()
+
     def __init__(self, main_window):
         super(DetectionSettings, self).__init__()
 
@@ -87,76 +91,150 @@ class DetectionSettings(QtCore.QObject):
         self.__connect_signals_to_slots()
 
     def __load_settings(self):
-        self.preview_image_lb
+        # Load settings or load defaults
+        shared_split = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", 12000, type=int)
 
-        self.align_shared_split_sb
+        align_top_bottom_y = self.settings.value("detection_settings/alignment_and_limits/top/bottom_y", 12000, type=int)
+        align_top_left_x = self.settings.value("detection_settings/alignment_and_limits/top/left_x", 2000, type=int)
+        align_top_right_x = self.settings.value("detection_settings/alignment_and_limits/top/right_x", 6000, type=int)
 
-        self.align_top_bottom_y_sb
-        self.align_top_left_x_sb
-        self.align_top_right_x_sb
+        align_bottom_bottom_y = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_y", 12000, type=int)
+        align_bottom_left_x = self.settings.value("detection_settings/alignment_and_limits/bottom/left_x", 2000, type=int)
+        align_bottom_right_x = self.settings.value("detection_settings/alignment_and_limits/bottom/right_x", 6000, type=int)
 
-        self.align_bottom_bottom_y_sb
-        self.align_bottom_left_x_sb
-        self.align_bottom_right_x_sb
+        detect_set_top_bc_x_size = self.settings.value("detection_settings/barcode_detection/top/barcode_x_size", 2000, type=int)
+        detect_set_top_bc_y_size = self.settings.value("detection_settings/barcode_detection/top/barcode_y_size", 200, type=int)
+        detect_set_top_scan_x_size = self.settings.value("detection_settings/barcode_detection/top/scan_x_size", 4000, type=int)
+        detect_set_top_scan_y_size = self.settings.value("detection_settings/barcode_detection/top/scan_y_size", 400, type=int)
+        detect_set_top_scan_x_pos = self.settings.value("detection_settings/barcode_detection/top/scan_x_position", 4000, type=int)
+        detect_set_top_scan_y_pos = self.settings.value("detection_settings/barcode_detection/top/scan_y_position", 12000, type=int)
+        detect_set_top_scan_thresh_center = self.settings.value("detection_settings/barcode_detection/top/threshold_center", 128, type=int)
+        detect_set_top_scan_thresh_range = self.settings.value("detection_settings/barcode_detection/top/threshold_range", 5, type=int)
 
-        self.detect_set_top_bc_x_size_sb
-        self.detect_set_top_bc_y_size_sb
-        self.detect_set_top_scan_x_size_sb
-        self.detect_set_top_scan_y_size_sb
-        self.detect_set_top_scan_x_pos_sb
-        self.detect_set_top_scan_y_pos_sb
-        self.detect_set_top_scan_thresh_center_sb
-        self.detect_set_top_scan_thresh_range_sb
+        detect_set_bottom_bc_x_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_x_size", 2000, type=int)
+        detect_set_bottom_bc_y_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_y_size", 200, type=int)
+        detect_set_bottom_scan_x_size = self.settings.value("detection_settings/barcode_detection/bottom/scan_x_size", 4000, type=int)
+        detect_set_bottom_scan_y_size = self.settings.value("detection_settings/barcode_detection/bottom/scan_y_size", 400, type=int)
+        detect_set_bottom_scan_x_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_x_position", 4000, type=int)
+        detect_set_bottom_scan_y_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_y_position", 12000, type=int)
+        detect_set_bottom_scan_thresh_center = self.settings.value("detection_settings/barcode_detection/bottom/threshold_center", 128, type=int)
+        detect_set_bottom_scan_thresh_range = self.settings.value("detection_settings/barcode_detection/bottom/threshold_range", 5, type=int)
 
-        self.detect_set_bottom_bc_x_size_sb
-        self.detect_set_bottom_bc_y_size_sb
-        self.detect_set_bottom_scan_x_size_sb
-        self.detect_set_bottom_scan_y_size_sb
-        self.detect_set_bottom_scan_x_pos_sb
-        self.detect_set_bottom_scan_y_pos_sb
-        self.detect_set_bottom_scan_thresh_center_sb
-        self.detect_set_bottom_scan_thresh_range_sb
+        # Set gui elements to their settings values
+        self.align_shared_split_sb.setValue(shared_split)
 
-        self.settings.value("detection_settings/top_bc_preview_image_path",
-                            "Resources/UI/preview_please_load_image_barcode.png")
-        self.detect_prev_top_raw_lb
-        self.detect_prev_top_thresh_lb
-        self.detect_prev_top_bc_lb
+        self.align_top_bottom_y_sb.setValue(align_top_bottom_y)
+        self.align_top_left_x_sb.setValue(align_top_left_x)
+        self.align_top_right_x_sb.setValue(align_top_right_x)
 
-        self.settings.value("detection_settings/bottom_bc_preview_image_path",
-                            "Resources/UI/preview_please_load_image_barcode.png")
-        self.detect_prev_bottom_raw_lb
-        self.detect_prev_bottom_thresh_lb
-        self.detect_prev_bottom_bc_lb
+        self.align_bottom_bottom_y_sb.setValue(align_bottom_bottom_y)
+        self.align_bottom_left_x_sb.setValue(align_bottom_left_x)
+        self.align_bottom_right_x_sb.setValue(align_bottom_right_x)
+
+        self.detect_set_top_bc_x_size_sb.setValue(detect_set_top_bc_x_size)
+        self.detect_set_top_bc_y_size_sb.setValue(detect_set_top_bc_y_size)
+        self.detect_set_top_scan_x_size_sb.setValue(detect_set_top_scan_x_size)
+        self.detect_set_top_scan_y_size_sb.setValue(detect_set_top_scan_y_size)
+        self.detect_set_top_scan_x_pos_sb.setValue(detect_set_top_scan_x_pos)
+        self.detect_set_top_scan_y_pos_sb.setValue(detect_set_top_scan_y_pos)
+        self.detect_set_top_scan_thresh_center_sb.setValue(detect_set_top_scan_thresh_center)
+        self.detect_set_top_scan_thresh_range_sb.setValue(detect_set_top_scan_thresh_range)
+
+        self.detect_set_bottom_bc_x_size_sb.setValue(detect_set_bottom_bc_x_size)
+        self.detect_set_bottom_bc_y_size_sb.setValue(detect_set_bottom_bc_y_size)
+        self.detect_set_bottom_scan_x_size_sb.setValue(detect_set_bottom_scan_x_size)
+        self.detect_set_bottom_scan_y_size_sb.setValue(detect_set_bottom_scan_y_size)
+        self.detect_set_bottom_scan_x_pos_sb.setValue(detect_set_bottom_scan_x_pos)
+        self.detect_set_bottom_scan_y_pos_sb.setValue(detect_set_bottom_scan_y_pos)
+        self.detect_set_bottom_scan_thresh_center_sb.setValue(detect_set_bottom_scan_thresh_center)
+        self.detect_set_bottom_scan_thresh_range_sb.setValue(detect_set_bottom_scan_thresh_range)
+
+        self.__on_settings_changed__slot()
+
+    # noinspection PyUnresolvedReferences
+    def __connect_signals_to_slots(self):
+        self.align_shared_split_sb.valueChanged.connect(self.__on_settings_changed__slot)
+
+        self.align_top_bottom_y_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.align_top_left_x_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.align_top_right_x_sb.valueChanged.connect(self.__on_settings_changed__slot)
+
+        self.align_bottom_bottom_y_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.align_bottom_left_x_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.align_bottom_right_x_sb.valueChanged.connect(self.__on_settings_changed__slot)
+
+        self.detect_set_top_bc_x_size_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_top_bc_y_size_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_top_scan_x_size_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_top_scan_y_size_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_top_scan_x_pos_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_top_scan_y_pos_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_top_scan_thresh_center_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_top_scan_thresh_range_sb.valueChanged.connect(self.__on_settings_changed__slot)
+
+        self.detect_set_bottom_bc_x_size_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_bottom_bc_y_size_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_bottom_scan_x_size_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_bottom_scan_y_size_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_bottom_scan_x_pos_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_bottom_scan_y_pos_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_bottom_scan_thresh_center_sb.valueChanged.connect(self.__on_settings_changed__slot)
+        self.detect_set_bottom_scan_thresh_range_sb.valueChanged.connect(self.__on_settings_changed__slot)
+
+        self.preview_image_load_b.clicked.connect(self.__on_detection_load_preview_image_button_clicked__slot)
 
     def __on_settings_changed__slot(self):
-        self.align_shared_split_sb
+        self.settings.setValue("detection_settings/alignment_and_limits/shared/split_value", self.align_shared_split_sb.value())
 
-        self.align_top_bottom_y_sb
-        self.align_top_left_x_sb
-        self.align_top_right_x_sb
+        self.settings.setValue("detection_settings/alignment_and_limits/top/bottom_y", self.align_top_bottom_y_sb.value())
+        self.settings.setValue("detection_settings/alignment_and_limits/top/left_x", self.align_top_left_x_sb.value())
+        self.settings.setValue("detection_settings/alignment_and_limits/top/right_x", self.align_top_right_x_sb.value())
 
-        self.align_bottom_bottom_y_sb
-        self.align_bottom_left_x_sb
-        self.align_bottom_right_x_sb
+        self.settings.setValue("detection_settings/alignment_and_limits/bottom/bottom_y", self.align_bottom_bottom_y_sb.value())
+        self.settings.setValue("detection_settings/alignment_and_limits/bottom/left_x", self.align_bottom_left_x_sb.value())
+        self.settings.setValue("detection_settings/alignment_and_limits/bottom/right_x", self.align_bottom_right_x_sb.value())
 
-        self.detect_set_top_bc_x_size_sb
-        self.detect_set_top_bc_y_size_sb
-        self.detect_set_top_scan_x_size_sb
-        self.detect_set_top_scan_y_size_sb
-        self.detect_set_top_scan_x_pos_sb
-        self.detect_set_top_scan_y_pos_sb
-        self.detect_set_top_scan_thresh_center_sb
-        self.detect_set_top_scan_thresh_range_sb
+        self.settings.setValue("detection_settings/barcode_detection/top/barcode_x_size", self.detect_set_top_bc_x_size_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/top/barcode_y_size", self.detect_set_top_bc_y_size_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/top/scan_x_size", self.detect_set_top_scan_x_size_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/top/scan_y_size", self.detect_set_top_scan_y_size_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/top/scan_x_position", self.detect_set_top_scan_x_pos_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/top/scan_y_position", self.detect_set_top_scan_y_pos_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/top/threshold_center", self.detect_set_top_scan_thresh_center_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/top/threshold_range", self.detect_set_top_scan_thresh_range_sb.value())
 
-        self.detect_set_bottom_bc_x_size_sb
-        self.detect_set_bottom_bc_y_size_sb
-        self.detect_set_bottom_scan_x_size_sb
-        self.detect_set_bottom_scan_y_size_sb
-        self.detect_set_bottom_scan_x_pos_sb
-        self.detect_set_bottom_scan_y_pos_sb
-        self.detect_set_bottom_scan_thresh_center_sb
-        self.detect_set_bottom_scan_thresh_range_sb
+        self.settings.setValue("detection_settings/barcode_detection/bottom/barcode_x_size", self.detect_set_bottom_bc_x_size_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/bottom/barcode_y_size", self.detect_set_bottom_bc_y_size_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/bottom/scan_x_size", self.detect_set_bottom_scan_x_size_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/bottom/scan_y_size", self.detect_set_bottom_scan_y_size_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/bottom/scan_x_position", self.detect_set_bottom_scan_x_pos_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/bottom/scan_y_position", self.detect_set_bottom_scan_y_pos_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/bottom/threshold_center", self.detect_set_bottom_scan_thresh_center_sb.value())
+        self.settings.setValue("detection_settings/barcode_detection/bottom/threshold_range", self.detect_set_bottom_scan_thresh_range_sb.value())
 
-    def __connect_signals_to_slots(self):
-        pass
+        self.logger.debug("Detection settings changes saved...")
+
+    # noinspection PyArgumentList
+    def __on_detection_load_preview_image_button_clicked__slot(self):
+        file_dialog = QtWidgets.QFileDialog(self.main_window)
+        file_dialog.setFileMode(QtWidgets.QFileDialog.ExistingFiles)
+        file_dialog.setDirectory(QtCore.QStandardPaths.standardLocations(QtCore.QStandardPaths.HomeLocation)[0])
+
+        file_path = file_dialog.getOpenFileName()[0]
+
+        if file_path != "":
+            self.settings.setValue("detection_settings/preview_image_path", file_path)
+            self.logger.debug("Setting preview image path to: \"" + file_path + "\".")
+        else:
+            self.logger.debug("Preview image path not changed. No file selected.")
+
+    # noinspection PyCallByClass,PyArgumentList,PyTypeChecker
+    def on_main_preview_image_ready__slot(self):
+        pixmap = self.main_window.detection_preview_class.detection_main_preview_pixmap  # type: QtGui.QPixmap
+
+        try:
+            self.preview_image_lb.setPixmap(pixmap)
+        except e:
+            print(e)
+
+        self.detection_preview_image_displayed_signal.emit()
