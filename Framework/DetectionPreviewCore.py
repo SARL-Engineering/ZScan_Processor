@@ -24,6 +24,8 @@
 from PyQt5 import QtCore, QtWidgets, QtGui
 import logging
 from PIL import Image, PngImagePlugin, ImageQt
+import cv2
+import qimage2ndarray
 
 # Settings for imports
 Image.MAX_IMAGE_PIXELS = None  # This disables the decompression bomb warning
@@ -43,7 +45,7 @@ UI_PREVIEW_MAIN_LB_HEIGHT = 830
 #####################################
 class DetectionPreview(QtCore.QThread):
 
-    preview_main_image_ready_signal = QtCore.pyqtSignal()
+    preview_images_ready_signal = QtCore.pyqtSignal()
 
     def __init__(self, main_window):
         super(DetectionPreview, self).__init__()
@@ -64,7 +66,12 @@ class DetectionPreview(QtCore.QThread):
         self.detection_settings_tab_open = False
 
         self.detection_main_preview_pixmap = None
-        self.detection_image_displayed = False
+        self.detection_top_bc_raw_preview_pixmap = None
+        self.detection_top_bc_threshold_preview_pixmap = None
+        self.detection_bottom_bc_raw_preview_pixmap = None
+        self.detection_bottom_bc_threshold_preview_pixmap = None
+
+        self.detection_image_updates_needed = True
 
         # ########## Load class settings ##########
         self.__load_settings()
@@ -91,52 +98,45 @@ class DetectionPreview(QtCore.QThread):
     def __connect_signals_to_slots(self):
         self.main_window.tab_widget.currentChanged.connect(self.on_tab_index_changed__slot)
 
-        self.preview_main_image_ready_signal.connect(self.main_window.interface_class.detection_class.on_main_preview_image_ready__slot)
-        self.main_window.interface_class.detection_class.detection_preview_image_displayed_signal.connect(self.on_detection_preview_image_displayed__slot)
+        self.preview_images_ready_signal.connect(self.main_window.interface_class.detection_class.on_preview_images_ready__slot)
+        self.main_window.interface_class.detection_class.image_update_needed_signal.connect(self.on_image_update_needed__slot)
 
         self.main_window.kill_threads_signal.connect(self.on_kill_threads__slot)
 
-    # noinspection PyCallByClass,PyCallByClass,PyTypeChecker,PyArgumentList
     def __show_detection_settings_preview(self):
+        if self.detection_image_updates_needed:
+            self.logger.debug("Showing updated image...")
+            if self.settings.contains("detection_settings/preview_image_path"):
 
-        if self.settings.contains("detection_settings/preview_image_path"):
-            main_preview_pil_image = None
+                try:
+                    image_path = self.settings.value("detection_settings/preview_image_path", type=str)
+                    main_preview_pil_image = Image.open(image_path)
+                except IOError:
+                    self.logger.error("Preview image path incorrect, or file not an image. Clearing path...")
+                    self.settings.remove("detection_settings/preview_image_path")
+                    return
 
-            try:
-                image_path = self.settings.value("detection_settings/preview_image_path", type=str)
-                main_preview_pil_image = Image.open(image_path)
-            except IOError:
-                self.logger.error("Preview image path incorrect, or file not an image. Clearing path...")
-                self.settings.remove("detection_settings/preview_image_path")
-                return
+                resized = main_preview_pil_image.resize((UI_PREVIEW_MAIN_LB_WIDTH, UI_PREVIEW_MAIN_LB_HEIGHT))
+                self.detection_main_preview_pixmap = QtGui.QPixmap.fromImage(ImageQt.ImageQt(resized))
+                self.detection_main_preview_pixmap.detach()
+                self.preview_images_ready_signal.emit()
 
-            resized = main_preview_pil_image.resize((UI_PREVIEW_MAIN_LB_WIDTH, UI_PREVIEW_MAIN_LB_HEIGHT))
-            self.detection_main_preview_pixmap = QtGui.QPixmap.fromImage(ImageQt.ImageQt(resized))
-            self.detection_main_preview_pixmap.detach()
-            self.detection_image_displayed = False
-            self.preview_main_image_ready_signal.emit()
+            else:
+                self.__show_load_image_images()
 
-            while not self.detection_image_displayed:
-                self.msleep(100)
+            self.detection_image_updates_needed = False
 
-        else:
-            temp_img = Image.open(UI_PREVIEW_LOAD_IMAGE_MAIN_PATH)  # type: PngImagePlugin.PngImageFile
-            resized = temp_img.resize((UI_PREVIEW_MAIN_LB_WIDTH, UI_PREVIEW_MAIN_LB_HEIGHT))
-            self.detection_main_preview_pixmap = QtGui.QPixmap.fromImage(ImageQt.ImageQt(resized))
-            self.detection_main_preview_pixmap.detach()
-            self.detection_image_displayed = False
-            self.preview_main_image_ready_signal.emit()
+    # noinspection PyCallByClass,PyCallByClass,PyTypeChecker,PyArgumentList
+    def __show_load_image_images(self):
+        self.detection_main_preview_pixmap = QtGui.QPixmap(UI_PREVIEW_LOAD_IMAGE_MAIN_PATH)
 
-            while not self.detection_image_displayed:
-                self.msleep(100)
+        bc_pixmap_temp = QtGui.QPixmap(UI_PREVIEW_LOAD_IMAGE_BC_PATH)
+        self.detection_top_bc_raw_preview_pixmap = bc_pixmap_temp
+        self.detection_top_bc_threshold_preview_pixmap = bc_pixmap_temp
+        self.detection_bottom_bc_raw_preview_pixmap = bc_pixmap_temp
+        self.detection_bottom_bc_threshold_preview_pixmap = bc_pixmap_temp
 
-        # main_preview_pil_image = Image.open("C:/Users/Corwin Perren/Pictures/Scanner Barcode Testing/000010186004.tif")  # type: Image
-        # main_preview_pil_image = main_preview_pil_image.transpose(Image.FLIP_LEFT_RIGHT)
-        # main_preview_pil_image = main_preview_pil_image.rotate(180)
-        # print("Image type: " + str(main_preview_pil_image.mode))
-        # print(ImageQt.ImageQt(main_preview_pil_image))
-
-        self.msleep(500)
+        self.preview_images_ready_signal.emit()
 
     def on_tab_index_changed__slot(self, index):
         if index == 1:
@@ -144,8 +144,8 @@ class DetectionPreview(QtCore.QThread):
         else:
             self.detection_settings_tab_open = False
 
-    def on_detection_preview_image_displayed__slot(self):
-        self.detection_image_displayed = True
+    def on_image_update_needed__slot(self):
+        self.detection_image_updates_needed = True
 
     def on_kill_threads__slot(self):
         self.run_thread_flag = False

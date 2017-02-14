@@ -30,7 +30,7 @@ import logging
 #####################################
 class DetectionSettings(QtCore.QObject):
 
-    detection_preview_image_displayed_signal = QtCore.pyqtSignal()
+    image_update_needed_signal = QtCore.pyqtSignal()
 
     def __init__(self, main_window):
         super(DetectionSettings, self).__init__()
@@ -214,6 +214,8 @@ class DetectionSettings(QtCore.QObject):
 
         self.logger.debug("Detection settings changes saved...")
 
+        self.image_update_needed_signal.emit()
+
     # noinspection PyArgumentList
     def __on_detection_load_preview_image_button_clicked__slot(self):
         file_dialog = QtWidgets.QFileDialog(self.main_window)
@@ -225,16 +227,29 @@ class DetectionSettings(QtCore.QObject):
         if file_path != "":
             self.settings.setValue("detection_settings/preview_image_path", file_path)
             self.logger.debug("Setting preview image path to: \"" + file_path + "\".")
+
+            self.image_update_needed_signal.emit()
         else:
             self.logger.debug("Preview image path not changed. No file selected.")
 
     # noinspection PyCallByClass,PyArgumentList,PyTypeChecker
-    def on_main_preview_image_ready__slot(self):
-        pixmap = self.main_window.detection_preview_class.detection_main_preview_pixmap  # type: QtGui.QPixmap
+    def on_preview_images_ready__slot(self):
+        main_pixmap = self.main_window.detection_preview_class.detection_main_preview_pixmap  # type: QtGui.QPixmap
+
+        top_raw_pixmap = self.main_window.detection_preview_class.detection_top_bc_raw_preview_pixmap  # type: QtGui.QPixmap
+        top_threshold_pixmap = self.main_window.detection_preview_class.detection_top_bc_threshold_preview_pixmap  # type: QtGui.QPixmap
+
+        bottom_raw_pixmap = self.main_window.detection_preview_class.detection_bottom_bc_raw_preview_pixmap  # type: QtGui.QPixmap
+        bottom_threshold_pixmap = self.main_window.detection_preview_class.detection_bottom_bc_threshold_preview_pixmap  # type: QtGui.QPixmap
 
         try:
-            self.preview_image_lb.setPixmap(pixmap)
-        except e:
-            print(e)
+            self.preview_image_lb.setPixmap(main_pixmap)
 
-        self.detection_preview_image_displayed_signal.emit()
+            self.detect_prev_top_raw_lb.setPixmap(top_raw_pixmap)
+            self.detect_prev_top_thresh_lb.setPixmap(top_threshold_pixmap)
+
+            self.detect_prev_bottom_raw_lb.setPixmap(bottom_raw_pixmap)
+            self.detect_prev_bottom_thresh_lb.setPixmap(bottom_threshold_pixmap)
+
+        except:
+            pass
