@@ -23,12 +23,12 @@
 # Python native imports
 from PyQt5 import QtCore, QtWidgets, QtGui
 import logging
-from PIL import Image, PngImagePlugin, ImageQt
+# from PIL import Image, PngImagePlugin, ImageQt
 import cv2
 import qimage2ndarray
 
 # Settings for imports
-Image.MAX_IMAGE_PIXELS = None  # This disables the decompression bomb warning
+# Image.MAX_IMAGE_PIXELS = None  # This disables the decompression bomb warning
 
 #####################################
 # Global Variables
@@ -38,6 +38,19 @@ UI_PREVIEW_LOAD_IMAGE_BC_PATH = "Resources/UI/preview_please_load_image_barcode.
 
 UI_PREVIEW_MAIN_LB_WIDTH = 280
 UI_PREVIEW_MAIN_LB_HEIGHT = 830
+
+PLATE_ROWS = 12
+PLATE_COLS = 8
+
+PLATE_SPLIT_COLOR = (0, 0, 255)  # BGR -> Full Red
+PLATE_LINE_THICKNESS = 150
+
+TOP_WELL_COLOR = (32, 50, 1)  # BGR -> Dark Green
+TOP_WELL_GRID_COLOR = (0, 255, 0)  # BGR -> Full Green
+BOTTOM_WELL_COLOR = (128, 0, 0)  # BGR -> Navy Blue
+BOTTOM_WELL_GRID_COLOR = (255, 0, 0)  # BGR -> Full Green
+WELL_CIRCLE_THICKNESS = 100
+WELL_CIRCLE_RADIUS = 360
 
 
 #####################################
@@ -105,26 +118,61 @@ class DetectionPreview(QtCore.QThread):
 
     def __show_detection_settings_preview(self):
         if self.detection_image_updates_needed:
-            self.logger.debug("Showing updated image...")
+
             if self.settings.contains("detection_settings/preview_image_path"):
-
-                try:
-                    image_path = self.settings.value("detection_settings/preview_image_path", type=str)
-                    main_preview_pil_image = Image.open(image_path)
-                except IOError:
-                    self.logger.error("Preview image path incorrect, or file not an image. Clearing path...")
-                    self.settings.remove("detection_settings/preview_image_path")
-                    return
-
-                resized = main_preview_pil_image.resize((UI_PREVIEW_MAIN_LB_WIDTH, UI_PREVIEW_MAIN_LB_HEIGHT))
-                self.detection_main_preview_pixmap = QtGui.QPixmap.fromImage(ImageQt.ImageQt(resized))
-                self.detection_main_preview_pixmap.detach()
-                self.preview_images_ready_signal.emit()
-
+                self.__show_detection_preview_images()
             else:
                 self.__show_load_image_images()
 
             self.detection_image_updates_needed = False
+
+    # noinspection PyCallByClass,PyCallByClass,PyTypeChecker,PyArgumentList
+    def __show_detection_preview_images(self):
+        # ##### Main image preview section
+        try:
+            image_path = self.settings.value("detection_settings/preview_image_path", type=str)
+            cv2_main_image = cv2.imread(image_path, cv2.IMREAD_COLOR)
+        except IOError:
+            self.logger.error("Preview image path incorrect, or file not an image. Clearing path...")
+            self.settings.remove("detection_settings/preview_image_path")
+            return
+
+        # Settings and variables for drawing
+        height, width, channels = cv2_main_image.shape
+        plate_split = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", type=int)
+        top_bottom_y = self.settings.value("detection_settings/alignment_and_limits/top/bottom_y", type=int)
+        top_left_x = self.settings.value("detection_settings/alignment_and_limits/top/left_x", type=int)
+        top_right_x = self.settings.value("detection_settings/alignment_and_limits/top/right_x", type=int)
+        bottom_bottom_y = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_y", type=int)
+        bottom_left_x = self.settings.value("detection_settings/alignment_and_limits/bottom/left_x", type=int)
+        bottom_right_x = self.settings.value("detection_settings/alignment_and_limits/bottom/right_x", type=int)
+
+        # Draw plate split line
+        cv2.line(cv2_main_image, (0, plate_split), (width, plate_split), PLATE_SPLIT_COLOR, PLATE_LINE_THICKNESS)
+
+        # Draw top plate well alignment circles
+        offset_per_well = (top_right_x - top_left_x) // 7
+
+        for x in range(PLATE_COLS):
+            for y in range(PLATE_ROWS):
+                temp_y = top_bottom_y - (y * offset_per_well)
+                temp_x = top_right_x - (x * offset_per_well)
+                cv2.circle(cv2_main_image, (temp_x, temp_y), WELL_CIRCLE_RADIUS, TOP_WELL_GRID_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+
+        cv2.circle(cv2_main_image, (top_left_x, top_bottom_y), WELL_CIRCLE_RADIUS, TOP_WELL_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+        cv2.circle(cv2_main_image, (top_right_x, top_bottom_y), WELL_CIRCLE_RADIUS, TOP_WELL_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+
+        # Draw bottom plate well alignment circles
+        cv2.circle(cv2_main_image, (bottom_left_x, bottom_bottom_y), WELL_CIRCLE_RADIUS, BOTTOM_WELL_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+        cv2.circle(cv2_main_image, (bottom_right_x, bottom_bottom_y), WELL_CIRCLE_RADIUS, BOTTOM_WELL_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+
+        resized = cv2.resize(cv2_main_image, (UI_PREVIEW_MAIN_LB_WIDTH, UI_PREVIEW_MAIN_LB_HEIGHT))
+        color_corrected = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
+        self.detection_main_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected))
+
+        # ##### Barcode preview section
+
+        self.preview_images_ready_signal.emit()
 
     # noinspection PyCallByClass,PyCallByClass,PyTypeChecker,PyArgumentList
     def __show_load_image_images(self):
