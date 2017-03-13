@@ -108,7 +108,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             thread.wait()
 
         # Print final log noting shutdown and shutdown the logger to flush to disk
-        self.logger.debug("########## Application Stopping ##########")
+        self.logger.info("########## Application Stopping ##########")
         logging.shutdown()
 
         # Accept the close event to properly close the program

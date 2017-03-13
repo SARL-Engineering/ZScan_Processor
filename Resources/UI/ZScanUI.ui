@@ -416,19 +416,6 @@ margin-top: 5px;</string>
                    </item>
                    <item>
                     <layout class="QGridLayout" name="gridLayout_11">
-                     <item row="0" column="1">
-                      <widget class="QSpinBox" name="alignment_shared_split_line_spin_box">
-                       <property name="maximum">
-                        <number>99999</number>
-                       </property>
-                       <property name="singleStep">
-                        <number>10</number>
-                       </property>
-                       <property name="value">
-                        <number>12000</number>
-                       </property>
-                      </widget>
-                     </item>
                      <item row="0" column="0">
                       <widget class="QLabel" name="label_23">
                        <property name="sizePolicy">
@@ -455,12 +442,38 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
+                     <item row="0" column="1">
+                      <widget class="QSpinBox" name="alignment_shared_split_line_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="singleStep">
+                        <number>10</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
                      <item row="2" column="0">
                       <widget class="QLabel" name="label_26">
                        <property name="text">
                         <string/>
                        </property>
                       </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <spacer name="verticalSpacer_11">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
                      </item>
                     </layout>
                    </item>
@@ -493,7 +506,17 @@ margin-top: 5px;</string>
                    </item>
                    <item>
                     <layout class="QGridLayout" name="gridLayout_9">
-                     <item row="2" column="0">
+                     <item row="5" column="1">
+                      <widget class="QSpinBox" name="alignment_top_bottom_right_x_position_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="5" column="0">
                       <widget class="QLabel" name="label_17">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -512,27 +535,7 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="2" column="1">
-                      <widget class="QSpinBox" name="alignment_top_right_x_position_spin_box">
-                       <property name="maximum">
-                        <number>99999</number>
-                       </property>
-                       <property name="value">
-                        <number>12000</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="1" column="1">
-                      <widget class="QSpinBox" name="alignment_top_left_x_position_spin_box">
-                       <property name="maximum">
-                        <number>99999</number>
-                       </property>
-                       <property name="value">
-                        <number>12000</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="0">
+                     <item row="3" column="0">
                       <widget class="QLabel" name="label_16">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -551,8 +554,8 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="1">
-                      <widget class="QSpinBox" name="alignment_top_row_y_position_spin_box">
+                     <item row="4" column="1">
+                      <widget class="QSpinBox" name="alignment_top_bottom_left_x_position_spin_box">
                        <property name="maximum">
                         <number>99999</number>
                        </property>
@@ -561,7 +564,17 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="1" column="0">
+                     <item row="3" column="1">
+                      <widget class="QSpinBox" name="alignment_top_bottom_row_y_position_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="0">
                       <widget class="QLabel" name="label_15">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -577,6 +590,93 @@ margin-top: 5px;</string>
                        </property>
                        <property name="text">
                         <string>Bottom Left Well X Position</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_50">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Top Row Y Position</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_51">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Top Left Well X Position</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_52">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Top Right Well X Position</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QSpinBox" name="alignment_top_top_row_y_position_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QSpinBox" name="alignment_top_top_left_x_position_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QSpinBox" name="alignment_top_top_right_x_position_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
                        </property>
                       </widget>
                      </item>
@@ -611,7 +711,7 @@ margin-top: 5px;</string>
                    </item>
                    <item>
                     <layout class="QGridLayout" name="gridLayout_10">
-                     <item row="1" column="0">
+                     <item row="4" column="0">
                       <widget class="QLabel" name="label_21">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -630,8 +730,8 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="1">
-                      <widget class="QSpinBox" name="alignment_bottom_row_y_position_spin_box">
+                     <item row="3" column="1">
+                      <widget class="QSpinBox" name="alignment_bottom_bottom_row_y_position_spin_box">
                        <property name="maximum">
                         <number>99999</number>
                        </property>
@@ -640,7 +740,17 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="0">
+                     <item row="4" column="1">
+                      <widget class="QSpinBox" name="alignment_bottom_bottom_left_x_position_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
                       <widget class="QLabel" name="label_20">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -659,17 +769,7 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="1" column="1">
-                      <widget class="QSpinBox" name="alignment_bottom_left_x_position_spin_box">
-                       <property name="maximum">
-                        <number>99999</number>
-                       </property>
-                       <property name="value">
-                        <number>12000</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="2" column="0">
+                     <item row="5" column="0">
                       <widget class="QLabel" name="label_22">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -688,8 +788,95 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
+                     <item row="5" column="1">
+                      <widget class="QSpinBox" name="alignment_bottom_bottom_right_x_position_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_53">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Top Row Y Position</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_54">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Top Left Well X Position</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_55">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Top Right Well X Position</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QSpinBox" name="alignment_bottom_top_row_y_position_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QSpinBox" name="alignment_bottom_top_left_x_position_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
                      <item row="2" column="1">
-                      <widget class="QSpinBox" name="alignment_bottom_right_x_position_spin_box">
+                      <widget class="QSpinBox" name="alignment_bottom_top_right_x_position_spin_box">
                        <property name="maximum">
                         <number>99999</number>
                        </property>
@@ -784,6 +971,25 @@ margin-top: 5px;</string>
                    </item>
                    <item>
                     <layout class="QGridLayout" name="gridLayout_12">
+                     <item row="5" column="0">
+                      <widget class="QLabel" name="label_30">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>180</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Scan Box Y Position</string>
+                       </property>
+                      </widget>
+                     </item>
                      <item row="6" column="0">
                       <widget class="QLabel" name="label_28">
                        <property name="sizePolicy">
@@ -832,27 +1038,8 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="5" column="0">
-                      <widget class="QLabel" name="label_30">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="minimumSize">
-                        <size>
-                         <width>180</width>
-                         <height>0</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string>Scan Box Y Position</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="4" column="1">
-                      <widget class="QSpinBox" name="detection_top_scan_x_position_spin_box">
+                     <item row="1" column="1">
+                      <widget class="QSpinBox" name="detection_top_barcode_y_size_spin_box">
                        <property name="maximum">
                         <number>99999</number>
                        </property>
@@ -871,18 +1058,8 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="1" column="1">
-                      <widget class="QSpinBox" name="detection_top_barcode_y_size_spin_box">
-                       <property name="maximum">
-                        <number>99999</number>
-                       </property>
-                       <property name="value">
-                        <number>12000</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="2" column="1">
-                      <widget class="QSpinBox" name="detection_top_scan_x_size_spin_box">
+                     <item row="4" column="1">
+                      <widget class="QSpinBox" name="detection_top_scan_x_position_spin_box">
                        <property name="maximum">
                         <number>99999</number>
                        </property>
@@ -929,6 +1106,16 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
+                     <item row="2" column="1">
+                      <widget class="QSpinBox" name="detection_top_scan_x_size_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
+                       </property>
+                       <property name="value">
+                        <number>12000</number>
+                       </property>
+                      </widget>
+                     </item>
                      <item row="0" column="1">
                       <widget class="QSpinBox" name="detection_top_barcode_x_size_spin_box">
                        <property name="maximum">
@@ -958,13 +1145,22 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="3" column="1">
-                      <widget class="QSpinBox" name="detection_top_scan_y_size_spin_box">
-                       <property name="maximum">
-                        <number>99999</number>
+                     <item row="7" column="0">
+                      <widget class="QLabel" name="label_35">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
                        </property>
-                       <property name="value">
-                        <number>12000</number>
+                       <property name="minimumSize">
+                        <size>
+                         <width>180</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Threshold +/- Range Value</string>
                        </property>
                       </widget>
                      </item>
@@ -987,22 +1183,13 @@ margin-top: 5px;</string>
                        </property>
                       </widget>
                      </item>
-                     <item row="7" column="0">
-                      <widget class="QLabel" name="label_35">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
+                     <item row="3" column="1">
+                      <widget class="QSpinBox" name="detection_top_scan_y_size_spin_box">
+                       <property name="maximum">
+                        <number>99999</number>
                        </property>
-                       <property name="minimumSize">
-                        <size>
-                         <width>180</width>
-                         <height>0</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string>Threshold +/- Range Value</string>
+                       <property name="value">
+                        <number>12000</number>
                        </property>
                       </widget>
                      </item>
@@ -1397,7 +1584,7 @@ margin-top: 5px;</string>
                       <string/>
                      </property>
                      <property name="scaledContents">
-                      <bool>true</bool>
+                      <bool>false</bool>
                      </property>
                     </widget>
                    </item>
@@ -1452,7 +1639,7 @@ margin-top: 5px;</string>
                       <string/>
                      </property>
                      <property name="scaledContents">
-                      <bool>true</bool>
+                      <bool>false</bool>
                      </property>
                     </widget>
                    </item>
@@ -1562,7 +1749,7 @@ margin-top: 5px;</string>
                       <string/>
                      </property>
                      <property name="scaledContents">
-                      <bool>true</bool>
+                      <bool>false</bool>
                      </property>
                     </widget>
                    </item>
@@ -1617,7 +1804,7 @@ margin-top: 5px;</string>
                       <string/>
                      </property>
                      <property name="scaledContents">
-                      <bool>true</bool>
+                      <bool>false</bool>
                      </property>
                     </widget>
                    </item>

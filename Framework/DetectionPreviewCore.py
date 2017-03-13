@@ -23,7 +23,7 @@
 # Python native imports
 from PyQt5 import QtCore, QtWidgets, QtGui
 import logging
-# from PIL import Image, PngImagePlugin, ImageQt
+import subprocess
 import cv2
 import qimage2ndarray
 
@@ -39,18 +39,27 @@ UI_PREVIEW_LOAD_IMAGE_BC_PATH = "Resources/UI/preview_please_load_image_barcode.
 UI_PREVIEW_MAIN_LB_WIDTH = 280
 UI_PREVIEW_MAIN_LB_HEIGHT = 830
 
+UI_PREVIEW_BC_WIDTH = 450
+UI_PREVIEW_BC_HEIGHT = 45
+
 PLATE_ROWS = 12
 PLATE_COLS = 8
 
 PLATE_SPLIT_COLOR = (0, 0, 255)  # BGR -> Full Red
 PLATE_LINE_THICKNESS = 150
 
-TOP_WELL_COLOR = (32, 50, 1)  # BGR -> Dark Green
+TOP_WELL_COLOR = (0, 128, 0)  # BGR -> Dark Green
 TOP_WELL_GRID_COLOR = (0, 255, 0)  # BGR -> Full Green
-BOTTOM_WELL_COLOR = (128, 0, 0)  # BGR -> Navy Blue
-BOTTOM_WELL_GRID_COLOR = (255, 0, 0)  # BGR -> Full Green
+BOTTOM_WELL_COLOR = (255, 0, 0)  # BGR -> Navy Blue
+BOTTOM_WELL_GRID_COLOR = (255, 191, 0)  # BGR -> Sky Blue
 WELL_CIRCLE_THICKNESS = 100
 WELL_CIRCLE_RADIUS = 360
+
+SCAN_BOX_THICKNESS = 150
+SCAN_BOX_COLOR = (72, 124, 247)
+
+BC_BOX_THICKNESS = 100
+BC_BOX_COLOR = (88, 83, 237)
 
 
 #####################################
@@ -79,10 +88,14 @@ class DetectionPreview(QtCore.QThread):
         self.detection_settings_tab_open = False
 
         self.detection_main_preview_pixmap = None
+
         self.detection_top_bc_raw_preview_pixmap = None
         self.detection_top_bc_threshold_preview_pixmap = None
+        self.detection_top_bc_string = "Not Found"
+
         self.detection_bottom_bc_raw_preview_pixmap = None
         self.detection_bottom_bc_threshold_preview_pixmap = None
+        self.detection_bottom_bc_string = "Not Found"
 
         self.detection_image_updates_needed = True
 
@@ -132,47 +145,184 @@ class DetectionPreview(QtCore.QThread):
         try:
             image_path = self.settings.value("detection_settings/preview_image_path", type=str)
             cv2_main_image = cv2.imread(image_path, cv2.IMREAD_COLOR)
+            cv2_main_image = cv2.flip(cv2_main_image, 0)
+            unaltered_cv2_copy = cv2_main_image.copy()
         except IOError:
             self.logger.error("Preview image path incorrect, or file not an image. Clearing path...")
             self.settings.remove("detection_settings/preview_image_path")
             return
 
-        # Settings and variables for drawing
-        height, width, channels = cv2_main_image.shape
-        plate_split = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", type=int)
-        top_bottom_y = self.settings.value("detection_settings/alignment_and_limits/top/bottom_y", type=int)
-        top_left_x = self.settings.value("detection_settings/alignment_and_limits/top/left_x", type=int)
-        top_right_x = self.settings.value("detection_settings/alignment_and_limits/top/right_x", type=int)
-        bottom_bottom_y = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_y", type=int)
-        bottom_left_x = self.settings.value("detection_settings/alignment_and_limits/bottom/left_x", type=int)
-        bottom_right_x = self.settings.value("detection_settings/alignment_and_limits/bottom/right_x", type=int)
+        self.__draw_plate_split_line(cv2_main_image)
 
-        # Draw plate split line
-        cv2.line(cv2_main_image, (0, plate_split), (width, plate_split), PLATE_SPLIT_COLOR, PLATE_LINE_THICKNESS)
+        self.__draw_plate_wells(cv2_main_image, True)
+        self.__draw_plate_wells(cv2_main_image, False)
 
-        # Draw top plate well alignment circles
-        offset_per_well = (top_right_x - top_left_x) // 7
+        self.__draw_barcode_boxes(cv2_main_image, True)
+        self.__draw_barcode_boxes(cv2_main_image, False)
 
-        for x in range(PLATE_COLS):
-            for y in range(PLATE_ROWS):
-                temp_y = top_bottom_y - (y * offset_per_well)
-                temp_x = top_right_x - (x * offset_per_well)
-                cv2.circle(cv2_main_image, (temp_x, temp_y), WELL_CIRCLE_RADIUS, TOP_WELL_GRID_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+        self.__detect_barcode_and_show_preview(unaltered_cv2_copy, True)
+        self.__detect_barcode_and_show_preview(unaltered_cv2_copy, False)
 
-        cv2.circle(cv2_main_image, (top_left_x, top_bottom_y), WELL_CIRCLE_RADIUS, TOP_WELL_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
-        cv2.circle(cv2_main_image, (top_right_x, top_bottom_y), WELL_CIRCLE_RADIUS, TOP_WELL_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
-
-        # Draw bottom plate well alignment circles
-        cv2.circle(cv2_main_image, (bottom_left_x, bottom_bottom_y), WELL_CIRCLE_RADIUS, BOTTOM_WELL_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
-        cv2.circle(cv2_main_image, (bottom_right_x, bottom_bottom_y), WELL_CIRCLE_RADIUS, BOTTOM_WELL_COLOR, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
-
+        # ##### Final touches to image, and show
         resized = cv2.resize(cv2_main_image, (UI_PREVIEW_MAIN_LB_WIDTH, UI_PREVIEW_MAIN_LB_HEIGHT))
         color_corrected = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
         self.detection_main_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected))
 
-        # ##### Barcode preview section
-
         self.preview_images_ready_signal.emit()
+
+    def __draw_plate_split_line(self, cv2_image):
+        _, width, _ = cv2_image.shape
+        plate_split = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", type=int)
+
+        cv2.line(cv2_image, (0, plate_split), (width, plate_split), PLATE_SPLIT_COLOR, PLATE_LINE_THICKNESS)
+
+    def __draw_plate_wells(self, cv2_image, is_top):
+        if is_top:
+            well_color = TOP_WELL_COLOR
+            grid_color = TOP_WELL_GRID_COLOR
+
+            y_offset = 0
+
+            top_y = self.settings.value("detection_settings/alignment_and_limits/top/top_y", type=int)
+            top_left_x = self.settings.value("detection_settings/alignment_and_limits/top/top_left_x", type=int)
+            top_right_x = self.settings.value("detection_settings/alignment_and_limits/top/top_right_x", type=int)
+            bottom_y = self.settings.value("detection_settings/alignment_and_limits/top/bottom_y", type=int)
+            bottom_left_x = self.settings.value("detection_settings/alignment_and_limits/top/bottom_left_x", type=int)
+            bottom_right_x = self.settings.value("detection_settings/alignment_and_limits/top/bottom_right_x", type=int)
+        else:
+            well_color = BOTTOM_WELL_COLOR
+            grid_color = BOTTOM_WELL_GRID_COLOR
+
+            y_offset = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", type=int)
+
+            top_y = self.settings.value("detection_settings/alignment_and_limits/bottom/top_y", type=int)
+            top_left_x = self.settings.value("detection_settings/alignment_and_limits/bottom/top_left_x", type=int)
+            top_right_x = self.settings.value("detection_settings/alignment_and_limits/bottom/top_right_x", type=int)
+            bottom_y = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_y", type=int)
+            bottom_left_x = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_left_x", type=int)
+            bottom_right_x = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_right_x", type=int)
+
+        # Draw bottom plate well alignment circles
+        offset_per_well_x = (bottom_right_x - top_left_x) // 7
+        offset_per_well_y = (bottom_y - top_y) // 11
+
+        for x in range(PLATE_COLS):
+            for y in range(PLATE_ROWS):
+                if (x == 0 and y == 0) or (x == 0 and y == PLATE_ROWS) or (x == PLATE_COLS and y == 0) or (x == PLATE_COLS and y == 0):
+                    continue
+                temp_y = (y_offset + bottom_y) - (y * offset_per_well_y)
+                temp_x = top_right_x - (x * offset_per_well_x)
+                cv2.circle(cv2_image, (temp_x, temp_y), WELL_CIRCLE_RADIUS, grid_color,
+                           WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+
+        cv2.circle(cv2_image, (top_left_x, top_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+        cv2.circle(cv2_image, (top_right_x, top_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+        cv2.circle(cv2_image, (bottom_left_x, bottom_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+        cv2.circle(cv2_image, (bottom_right_x, bottom_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+
+    def __draw_barcode_boxes(self, cv2_image, is_top):
+        if is_top:
+            y_offset = 0
+
+            bc_x_size = self.settings.value("detection_settings/barcode_detection/top/barcode_x_size", type=int)
+            bc_y_size = self.settings.value("detection_settings/barcode_detection/top/barcode_y_size", type=int)
+            scan_x_size = self.settings.value("detection_settings/barcode_detection/top/scan_x_size", type=int)
+            scan_y_size = self.settings.value("detection_settings/barcode_detection/top/scan_y_size", type=int)
+            scan_x_pos = self.settings.value("detection_settings/barcode_detection/top/scan_x_position", type=int)
+            scan_y_pos = self.settings.value("detection_settings/barcode_detection/top/scan_y_position", type=int)
+        else:
+            y_offset = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", type=int)
+
+            bc_x_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_x_size", type=int)
+            bc_y_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_y_size", type=int)
+            scan_x_size = self.settings.value("detection_settings/barcode_detection/bottom/scan_x_size", type=int)
+            scan_y_size = self.settings.value("detection_settings/barcode_detection/bottom/scan_y_size", type=int)
+            scan_x_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_x_position", type=int)
+            scan_y_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_y_position", type=int)
+
+        # ##### Scan Box
+        pt1_x = scan_x_pos - (scan_x_size // 2)
+        pt1_y = (scan_y_pos + y_offset) - (scan_y_size // 2)
+
+        pt2_x = scan_x_pos + (scan_x_size // 2)
+        pt2_y = (scan_y_pos + y_offset) + (scan_y_size // 2)
+
+        cv2.rectangle(cv2_image, (pt1_x, pt1_y), (pt2_x, pt2_y), SCAN_BOX_COLOR, SCAN_BOX_THICKNESS, cv2.LINE_AA)
+
+        # ##### Barcode Box
+        pt1_x = scan_x_pos - (bc_x_size // 2)
+        pt1_y = (scan_y_pos + y_offset) - (bc_y_size // 2)
+
+        pt2_x = scan_x_pos + (bc_x_size // 2)
+        pt2_y = (scan_y_pos + y_offset) + (bc_y_size // 2)
+
+        cv2.rectangle(cv2_image, (pt1_x, pt1_y), (pt2_x, pt2_y), BC_BOX_COLOR, BC_BOX_THICKNESS, cv2.LINE_AA)
+
+    def __detect_barcode_and_show_preview(self, cv2_image, is_top):
+        if is_top:
+            y_offset = 0
+
+            bc_x_size = self.settings.value("detection_settings/barcode_detection/top/barcode_x_size", type=int)
+            bc_y_size = self.settings.value("detection_settings/barcode_detection/top/barcode_y_size", type=int)
+            scan_x_pos = self.settings.value("detection_settings/barcode_detection/top/scan_x_position", type=int)
+            scan_y_pos = self.settings.value("detection_settings/barcode_detection/top/scan_y_position", type=int)
+
+            threshold = self.settings.value("detection_settings/barcode_detection/top/threshold_center", type=int)
+
+        else:
+            y_offset = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", type=int)
+
+            bc_x_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_x_size", type=int)
+            bc_y_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_y_size", type=int)
+            scan_x_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_x_position", type=int)
+            scan_y_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_y_position", type=int)
+
+            threshold = self.settings.value("detection_settings/barcode_detection/bottom/threshold_center", type=int)
+
+        y1 = (scan_y_pos - (bc_y_size // 2)) + y_offset
+        y2 = (scan_y_pos + (bc_y_size // 2)) + y_offset
+
+        x1 = (scan_x_pos - (bc_x_size // 2))
+        x2 = (scan_x_pos + (bc_x_size // 2))
+
+        cv2_barcode_raw = cv2_image[y1:y2, x1:x2]
+        cv2_barcode_gray = cv2.cvtColor(cv2_barcode_raw, cv2.COLOR_BGR2GRAY)
+        ret, cv2_barcode_threshold = cv2.threshold(cv2_barcode_gray, threshold, 255, cv2.THRESH_BINARY)
+
+        cv2.imwrite("temp.png", cv2_barcode_threshold)
+
+        resized_raw = cv2.resize(cv2_barcode_raw, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
+        color_corrected_raw = cv2.cvtColor(resized_raw, cv2.COLOR_BGR2RGB)
+
+        resized_threshold = cv2.resize(cv2_barcode_threshold, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
+        color_corrected_threshold = cv2.cvtColor(resized_threshold, cv2.COLOR_GRAY2RGB)
+
+        # Show the barcode
+        if is_top:
+            self.detection_top_bc_raw_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected_raw))
+            self.detection_top_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected_threshold))
+
+            # Barcode number detection
+            self.detection_top_bc_string = self.__bc_detect(cv2_barcode_raw)
+        else:
+            self.detection_bottom_bc_raw_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected_raw))
+            self.detection_bottom_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected_threshold))
+
+            # Barcode number detection
+            self.detection_bottom_bc_string = self.__bc_detect(cv2_barcode_raw)
+
+    def __bc_detect(self, threshold_image_path):
+        zbar_path = self.settings.value("file_and_transfer_settings/zbar_path", type=str)
+
+        if zbar_path:
+            process = subprocess.Popen([zbar_path, "--raw", "-q", "temp.png"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            out, err = process.communicate()
+            out = out.decode("utf-8").strip('\n')
+
+            if out != "":
+                return out
+
+        return "Not Found"
 
     # noinspection PyCallByClass,PyCallByClass,PyTypeChecker,PyArgumentList
     def __show_load_image_images(self):

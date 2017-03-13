@@ -30,7 +30,7 @@ import logging
 #####################################
 class LiveLogs(QtCore.QThread):
 
-    text_ready_signal = QtCore.pyqtSignal(str)
+    text_ready_signal = QtCore.pyqtSignal()
 
     def __init__(self, main_window):
         super(LiveLogs, self).__init__()
@@ -60,6 +60,7 @@ class LiveLogs(QtCore.QThread):
         self.log_file_path = None
         self.log_file_reader = None
         self.log_file_prev_mtime = 0
+        self.log_browser_string = ""
 
         # ########## Load class settings ##########
         self.__load_settings()
@@ -96,7 +97,7 @@ class LiveLogs(QtCore.QThread):
 
     # noinspection PyUnresolvedReferences
     def __connect_signals_to_slots(self):
-        self.text_ready_signal.connect(self.live_log_tb.setText)
+        self.text_ready_signal.connect(self.__on_text_should_update_signal__slot)
         self.live_log_tb.textChanged.connect(self.__on_move_cursor_needed__slot)
 
         self.live_log_info_cb.toggled.connect(self.__on_checkbox_changed__slot)
@@ -116,7 +117,7 @@ class LiveLogs(QtCore.QThread):
         self.log_file_reader = open(self.log_file_path, 'r')
 
     def __show_updated_log_file(self):
-        log_browser_string = ""
+        self.log_browser_string = ""
 
         # Seek back to the beginning of the file and read in the lines
         self.log_file_reader.seek(0)
@@ -128,21 +129,24 @@ class LiveLogs(QtCore.QThread):
 
             if log_line_type == "INFO":
                 if self.live_log_info_cb.isChecked():
-                    log_browser_string += line
+                    self.log_browser_string += line
             elif log_line_type == "WARNING":
                 if self.live_log_warning_cb.isChecked():
-                    log_browser_string += line
+                    self.log_browser_string += line
             elif log_line_type == "ERROR":
                 if self.live_log_error_cb.isChecked():
-                    log_browser_string += line
+                    self.log_browser_string += line
             elif log_line_type == "DEBUG":
                 if self.live_log_debug_cb.isChecked():
-                    log_browser_string += line
+                    self.log_browser_string += line
             else:
-                log_browser_string += line
+                self.log_browser_string += line
 
         # Display the text
-        self.text_ready_signal.emit(log_browser_string)
+        self.text_ready_signal.emit()
+
+    def __on_text_should_update_signal__slot(self):
+        self.live_log_tb.setText(self.log_browser_string)
 
     def __on_move_cursor_needed__slot(self):
         # Move the cursor to the end when the text browser text updates. This essentially scrolls constantly.
