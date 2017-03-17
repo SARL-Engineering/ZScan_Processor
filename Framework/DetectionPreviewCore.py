@@ -26,6 +26,8 @@ import logging
 import subprocess
 import cv2
 import qimage2ndarray
+from os.path import exists
+from os import makedirs
 
 # Settings for imports
 # Image.MAX_IMAGE_PIXELS = None  # This disables the decompression bomb warning
@@ -60,6 +62,65 @@ SCAN_BOX_COLOR = (72, 124, 247)
 
 BC_BOX_THICKNESS = 100
 BC_BOX_COLOR = (88, 83, 237)
+
+DETECT_ALL_Y_INCREMENT = 50
+DETECT_ALL_X_INCREMENT = 300
+
+
+#####################################
+# Detection Preview Class Definition
+#####################################
+class DetectionWorker(QtCore.QThread):
+
+    barcode_found_signal = QtCore.pyqtSignal()
+
+    def __init__(self, parent, y1, y2, x1, x2, threshold, cv2_image, image_base_path, zbar_path):
+        super(DetectionWorker, self).__init__()
+
+        self.detect_parent = parent
+
+        self.y1 = y1
+        self.y2 = y2
+        self.x1 = x1
+        self.x2 = x2
+
+        self.threshold = threshold
+        self.cv2_image = cv2_image
+
+        self.image_base_path = image_base_path
+        self.zbar_path = zbar_path
+
+        self.result = "Not Found"
+        self.cv2_raw = None
+        self.cv2_threshold = None
+
+        self.barcode_found_signal.connect(self.detect_parent.on_barcode_found__slot)
+
+        self.run()
+
+    def run(self):
+        self.cv2_raw = self.cv2_image[self.y1:self.y2, self.x1:self.x2]
+        cv2_barcode_gray = cv2.cvtColor(self.cv2_raw, cv2.COLOR_BGR2GRAY)
+        ret, self.cv2_threshold = cv2.threshold(cv2_barcode_gray, self.threshold, 255, cv2.THRESH_BINARY)
+
+        full_path = self.image_base_path + "\\" + str(self.threshold) + "__" +str(self.y1) + "_" + str(self.y2) + "_" + str(self.x1) + "_" + str(self.x2) + ".png"
+
+        cv2.imwrite(full_path, self.cv2_threshold)
+
+        process = subprocess.Popen([self.zbar_path, "--raw", "-q", full_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = process.communicate()
+        out = out.decode("utf-8").strip('\n')
+
+        if out != "":
+            self.result = out
+
+            resized_raw = cv2.resize(self.cv2_raw, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
+            self.cv2_raw = cv2.cvtColor(resized_raw, cv2.COLOR_BGR2RGB)
+
+            resized_threshold = cv2.resize(self.cv2_threshold, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
+            self.cv2_threshold = cv2.cvtColor(resized_threshold, cv2.COLOR_GRAY2RGB)
+
+            self.barcode_found_signal.emit()
 
 
 #####################################
@@ -97,7 +158,9 @@ class DetectionPreview(QtCore.QThread):
         self.detection_bottom_bc_threshold_preview_pixmap = None
         self.detection_bottom_bc_string = "Not Found"
 
-        self.detection_image_updates_needed = True
+        self.detection_image_updates_needed = False
+
+        self.barcode_found = False
 
         # ########## Load class settings ##########
         self.__load_settings()
@@ -259,6 +322,41 @@ class DetectionPreview(QtCore.QThread):
         cv2.rectangle(cv2_image, (pt1_x, pt1_y), (pt2_x, pt2_y), BC_BOX_COLOR, BC_BOX_THICKNESS, cv2.LINE_AA)
 
     def __detect_barcode_and_show_preview(self, cv2_image, is_top):
+        base_app_data_path = self.settings.value("file_transfer_and_settings/appdata_directory", type=str)
+        detection_preview_bc_image_folder = base_app_data_path + "\\detection_preview_temp"
+
+        if not exists(detection_preview_bc_image_folder):
+            makedirs(detection_preview_bc_image_folder)
+
+        code, raw, threshold = self.__try_detect_center_only(cv2_image, is_top)
+
+        code = "Not Found"
+        if code == "Not Found":
+            code_all, raw_all, threshold_all = self.__try_detect_all(cv2_image, is_top)
+
+            if code_all != "Not Found":
+                code = code_all
+                raw = raw_all
+                threshold = threshold_all
+
+        # Show the barcode
+        if is_top:
+            self.detection_top_bc_raw_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(raw))
+            self.detection_top_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(threshold))
+
+            # Barcode number detection
+            self.detection_top_bc_string = code
+        else:
+            self.detection_bottom_bc_raw_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(raw))
+            self.detection_bottom_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(threshold))
+
+            # Barcode number detection
+            self.detection_bottom_bc_string = code
+
+    def __try_detect_center_only(self, cv2_image, is_top):
+        base_app_data_path = self.settings.value("file_transfer_and_settings/appdata_directory", type=str)
+        detection_preview_bc_image_path = base_app_data_path + "\\detection_preview_temp\\temp.png"
+
         if is_top:
             y_offset = 0
 
@@ -289,7 +387,7 @@ class DetectionPreview(QtCore.QThread):
         cv2_barcode_gray = cv2.cvtColor(cv2_barcode_raw, cv2.COLOR_BGR2GRAY)
         ret, cv2_barcode_threshold = cv2.threshold(cv2_barcode_gray, threshold, 255, cv2.THRESH_BINARY)
 
-        cv2.imwrite("temp.png", cv2_barcode_threshold)
+        cv2.imwrite(detection_preview_bc_image_path, cv2_barcode_threshold)
 
         resized_raw = cv2.resize(cv2_barcode_raw, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
         color_corrected_raw = cv2.cvtColor(resized_raw, cv2.COLOR_BGR2RGB)
@@ -297,25 +395,82 @@ class DetectionPreview(QtCore.QThread):
         resized_threshold = cv2.resize(cv2_barcode_threshold, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
         color_corrected_threshold = cv2.cvtColor(resized_threshold, cv2.COLOR_GRAY2RGB)
 
-        # Show the barcode
+        code = self.__bc_detect(detection_preview_bc_image_path)
+
+        return code, color_corrected_raw, color_corrected_threshold
+
+    def __try_detect_all(self, cv2_image, is_top):
+        zbar_path = self.settings.value("file_and_transfer_settings/zbar_path", type=str)
+        base_app_data_path = self.settings.value("file_transfer_and_settings/appdata_directory", type=str)
+        detection_preview_bc_image_folder = base_app_data_path + "\\detection_preview_temp"
+
         if is_top:
-            self.detection_top_bc_raw_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected_raw))
-            self.detection_top_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected_threshold))
+            y_offset = 0
 
-            # Barcode number detection
-            self.detection_top_bc_string = self.__bc_detect(cv2_barcode_raw)
+            bc_x_size = self.settings.value("detection_settings/barcode_detection/top/barcode_x_size", type=int)
+            bc_y_size = self.settings.value("detection_settings/barcode_detection/top/barcode_y_size", type=int)
+            scan_x_size = self.settings.value("detection_settings/barcode_detection/top/scan_x_size", type=int)
+            scan_y_size = self.settings.value("detection_settings/barcode_detection/top/scan_y_size", type=int)
+            scan_x_pos = self.settings.value("detection_settings/barcode_detection/top/scan_x_position", type=int)
+            scan_y_pos = self.settings.value("detection_settings/barcode_detection/top/scan_y_position", type=int)
+
+            threshold_center = self.settings.value("detection_settings/barcode_detection/top/threshold_center",type=int)
+            threshold_range = self.settings.value("detection_settings/barcode_detection/top/threshold_range", type=int)
+
         else:
-            self.detection_bottom_bc_raw_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected_raw))
-            self.detection_bottom_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(color_corrected_threshold))
+            y_offset = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", type=int)
 
-            # Barcode number detection
-            self.detection_bottom_bc_string = self.__bc_detect(cv2_barcode_raw)
+            bc_x_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_x_size", type=int)
+            bc_y_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_y_size", type=int)
+            scan_x_size = self.settings.value("detection_settings/barcode_detection/bottom/scan_x_size", type=int)
+            scan_y_size = self.settings.value("detection_settings/barcode_detection/bottom/scan_y_size", type=int)
+            scan_x_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_x_position", type=int)
+            scan_y_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_y_position", type=int)
+
+            threshold_center = self.settings.value("detection_settings/barcode_detection/bottom/threshold_center", type=int)
+            threshold_range = self.settings.value("detection_settings/barcode_detection/bottom/threshold_range", type=int)
+
+        y_bound_upper = (scan_y_pos - (scan_y_size // 2)) + y_offset
+        x_bound_left = (scan_x_pos - (scan_x_size // 2))
+
+        num_x_increments = (scan_x_size - bc_x_size) // DETECT_ALL_X_INCREMENT
+        num_y_increments = (scan_y_size - bc_y_size) // DETECT_ALL_Y_INCREMENT
+        num_thresh_increments = (threshold_range * 2) + 1
+        threshold_min = threshold_center - threshold_range
+
+        workers = []
+
+        self.barcode_found = False
+
+        for y in range(num_y_increments):
+            for x in range(num_x_increments):
+                for thr in range(num_thresh_increments):
+                    if not self.barcode_found:
+                        y1 = y_bound_upper + (y * DETECT_ALL_Y_INCREMENT)
+                        y2 = y1 + bc_y_size
+                        x1 = x_bound_left + (x * DETECT_ALL_X_INCREMENT)
+                        x2 = x1 + bc_x_size
+
+                        current_threshold = threshold_min + thr
+
+                        worker = DetectionWorker(self, y1, y2, x1, x2, current_threshold, cv2_image, detection_preview_bc_image_folder, zbar_path)
+                        workers.append(worker)
+
+        for worker in workers:
+            result = worker.result
+            raw_cv2 = worker.cv2_raw
+            threshold_cv2 = worker.cv2_threshold
+
+            if result != "Not Found":
+                return result, raw_cv2, threshold_cv2
+
+        return "Not Found", 0, 0
 
     def __bc_detect(self, threshold_image_path):
         zbar_path = self.settings.value("file_and_transfer_settings/zbar_path", type=str)
 
         if zbar_path:
-            process = subprocess.Popen([zbar_path, "--raw", "-q", "temp.png"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process = subprocess.Popen([zbar_path, "--raw", "-q", threshold_image_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = process.communicate()
             out = out.decode("utf-8").strip('\n')
 
@@ -335,6 +490,9 @@ class DetectionPreview(QtCore.QThread):
         self.detection_bottom_bc_threshold_preview_pixmap = bc_pixmap_temp
 
         self.preview_images_ready_signal.emit()
+
+    def on_barcode_found__slot(self):
+        self.barcode_found = True
 
     def on_tab_index_changed__slot(self, index):
         if index == 1:

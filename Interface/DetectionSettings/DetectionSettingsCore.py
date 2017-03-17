@@ -46,7 +46,8 @@ class DetectionSettings(QtCore.QObject):
 
         # ########## References to GUI Elements ##########
         self.preview_image_lb = self.main_window.detection_main_preview_label  # type: QtWidgets.QLabel
-        self.preview_image_load_b = self.main_window.detection_load_image_button  # type: QtWidgets.QPushButton
+        self.preview_image_load_b = self.main_window.detection_load_new_image_button  # type: QtWidgets.QPushButton
+        self.preview_process_b = self.main_window.detection_process_button  # type: QtWidgets.QPushButton
 
         self.align_shared_split_sb = self.main_window.alignment_shared_split_line_spin_box  # type: QtWidgets.QSpinBox
 
@@ -206,6 +207,7 @@ class DetectionSettings(QtCore.QObject):
         self.detect_set_bottom_scan_thresh_range_sb.valueChanged.connect(self.__on_settings_changed__slot)
 
         self.preview_image_load_b.clicked.connect(self.__on_detection_load_preview_image_button_clicked__slot)
+        self.preview_process_b.clicked.connect(self.__on_process_button_clicked__slot)
 
     def __on_settings_changed__slot(self):
         self.settings.setValue("detection_settings/alignment_and_limits/shared/split_value", self.align_shared_split_sb.value())
@@ -244,8 +246,6 @@ class DetectionSettings(QtCore.QObject):
 
         self.logger.debug("Detection settings changes saved...")
 
-        self.image_update_needed_signal.emit()
-
     # noinspection PyArgumentList
     def __on_detection_load_preview_image_button_clicked__slot(self):
         file_dialog = QtWidgets.QFileDialog(self.main_window)
@@ -261,6 +261,9 @@ class DetectionSettings(QtCore.QObject):
             self.image_update_needed_signal.emit()
         else:
             self.logger.debug("Preview image path not changed. No file selected.")
+
+    def __on_process_button_clicked__slot(self):
+        self.image_update_needed_signal.emit()
 
     # noinspection PyCallByClass,PyArgumentList,PyTypeChecker
     def on_preview_images_ready__slot(self):
