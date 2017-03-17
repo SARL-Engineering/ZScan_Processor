@@ -330,7 +330,6 @@ class DetectionPreview(QtCore.QThread):
 
         code, raw, threshold = self.__try_detect_center_only(cv2_image, is_top)
 
-        code = "Not Found"
         if code == "Not Found":
             code_all, raw_all, threshold_all = self.__try_detect_all(cv2_image, is_top)
 
