@@ -24,11 +24,13 @@
 from PyQt5 import QtCore, QtWidgets
 import logging
 import datetime
+import glob
 
 #####################################
 # Global Variables
 #####################################
 NO_PATH_STRING = "*** No Path Set ***"
+IMAGE_EXTENSIONS = ["tif", ".png", ".jpg"]
 
 
 #####################################
@@ -72,11 +74,29 @@ class ProcessorCore(QtCore.QThread):
             self.__check_if_day_rollover_reset_needed()
 
             if self.__time_to_run_and_settings_valid():
-                self.logger.debug("Running once")
+                self.__process_images_queue()
 
-            self.msleep(100)
+            self.msleep(1000)
 
         self.logger.debug("Processor Core Thread Stopping...")
+
+    def __process_images_queue(self):
+        original_image_filenames = self.__get_list_of_original_images_in_path(self.input_images_path)
+
+        if not original_image_filenames:
+            self.logger.info("Attempted run, but no original images to process. Waiting for next run...")
+            return
+
+        self.logger.info("Found " + str(len(original_image_filenames)) + " original images to process.")
+
+    @staticmethod
+    def __get_list_of_original_images_in_path(path):
+        image_filenames = []
+
+        for extension in IMAGE_EXTENSIONS:
+            image_filenames += glob.glob(path + "\\*" + extension)
+
+        return image_filenames
 
     def __load_settings(self):
         self.settings_array = []
@@ -87,6 +107,11 @@ class ProcessorCore(QtCore.QThread):
         self.network_transfer_path = self.settings.value("file_and_transfer_settings/network_transfer_path", type=str)
         self.zbar_path = self.settings.value("file_and_transfer_settings/zbar_path", type=str)
         self.transfer_time_string = self.settings.value("file_and_transfer_settings/network_transfer_time", type=str)
+
+        self.input_images_path = self.input_images_path.replace("/", "\\")
+        self.failed_rename_path = self.failed_rename_path.replace("/", "\\")
+        self.local_output_path = self.local_output_path.replace("/", "\\")
+        self.network_transfer_path = self.network_transfer_path.replace("/", "\\")
 
         self.settings_array.append(self.input_images_path)
         self.settings_array.append(self.failed_rename_path)
@@ -106,28 +131,22 @@ class ProcessorCore(QtCore.QThread):
 
         now, run_time = self.__get_current_time_and_run_time()
 
-        if now > run_time and not self.already_ran_today:
+        if now.hour == run_time.hour and now.minute == run_time.minute and not self.already_ran_today:
             self.already_ran_today = True
 
             for setting in self.settings_array:
                 if setting == NO_PATH_STRING:
                     self.logger.error("Missing path in file and transfer settings. Please update and try again...")
                     return False
+
+            self.logger.info("Settings valid and start time passed. Attempting to process image queue.")
             return True
 
     def __get_current_time_and_run_time(self):
         # Checking if run time has passed
         now = datetime.datetime.now()
 
-        first_split = self.transfer_time_string.split(":")
-        second_split = first_split[1].split(" ")
-
-        minute = int(second_split[0])
-        am_pm = second_split[1]
-
-        hour = int(first_split[0]) + 12 if am_pm == "PM" else int(first_split[0])
-
-        run_time = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        run_time = datetime.datetime.strptime(self.transfer_time_string, "%I:%M %p")
 
         return now, run_time
 

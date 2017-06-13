@@ -121,7 +121,7 @@ QGroupBox::title{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -2218,7 +2218,10 @@ margin-top: 5px;</string>
                <item row="0" column="1">
                 <widget class="QTimeEdit" name="file_transfer_transfer_time_edit">
                  <property name="currentSection">
-                  <enum>QDateTimeEdit::MinuteSection</enum>
+                  <enum>QDateTimeEdit::HourSection</enum>
+                 </property>
+                 <property name="displayFormat">
+                  <string>hh:mm AP</string>
                  </property>
                 </widget>
                </item>
