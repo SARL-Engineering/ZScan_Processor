@@ -66,6 +66,8 @@ BC_BOX_COLOR = (88, 83, 237)
 DETECT_ALL_Y_INCREMENT = 50
 DETECT_ALL_X_INCREMENT = 300
 
+NO_PLATE_MEAN_THRESHOLD = 235
+
 
 #####################################
 # Detection Preview Class Definition
@@ -103,7 +105,7 @@ class DetectionWorker(QtCore.QThread):
         cv2_barcode_gray = cv2.cvtColor(self.cv2_raw, cv2.COLOR_BGR2GRAY)
         ret, self.cv2_threshold = cv2.threshold(cv2_barcode_gray, self.threshold, 255, cv2.THRESH_BINARY)
 
-        full_path = self.image_base_path + "\\" + str(self.threshold) + "__" +str(self.y1) + "_" + str(self.y2) + "_" + str(self.x1) + "_" + str(self.x2) + ".png"
+        full_path = self.image_base_path + "\\" + str(self.threshold) + "__" + str(self.y1) + "_" + str(self.y2) + "_" + str(self.x1) + "_" + str(self.x2) + ".png"
 
         cv2.imwrite(full_path, self.cv2_threshold)
 
@@ -111,8 +113,13 @@ class DetectionWorker(QtCore.QThread):
         out, err = process.communicate()
         out = out.decode("utf-8").strip('\n')
 
-        if out != "":
-            self.result = out
+        is_no_plate = cv2.mean(cv2_barcode_gray)[0] > NO_PLATE_MEAN_THRESHOLD
+
+        if out != "" or is_no_plate:
+            if is_no_plate:
+                self.result = "No Plate Present"
+            else:
+                self.result = out
 
             resized_raw = cv2.resize(self.cv2_raw, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
             self.cv2_raw = cv2.cvtColor(resized_raw, cv2.COLOR_BGR2RGB)
@@ -165,12 +172,6 @@ class DetectionPreview(QtCore.QThread):
         # ########## Load class settings ##########
         self.__load_settings()
 
-        # ########## Make signal/slot connections ##########
-        self.__connect_signals_to_slots()
-
-        # ########## Start Thread ##########
-        self.start()
-
     def run(self):
         self.logger.debug("Detection Preview Thread Starting...")
         while self.run_thread_flag:
@@ -184,7 +185,7 @@ class DetectionPreview(QtCore.QThread):
         pass
 
     # noinspection PyUnresolvedReferences
-    def __connect_signals_to_slots(self):
+    def connect_signals_to_slots__slot(self):
         self.main_window.tab_widget.currentChanged.connect(self.on_tab_index_changed__slot)
 
         self.preview_images_ready_signal.connect(self.main_window.interface_class.detection_class.on_preview_images_ready__slot)
@@ -354,9 +355,10 @@ class DetectionPreview(QtCore.QThread):
 
     def __try_detect_center_only(self, cv2_image, is_top):
         base_app_data_path = self.settings.value("file_transfer_and_settings/appdata_directory", type=str)
-        detection_preview_bc_image_path = base_app_data_path + "\\detection_preview_temp\\temp.png"
+        folder_path = base_app_data_path + "\\detection_preview_temp"
 
         if is_top:
+            detection_preview_bc_image_name = "\\top.png"
             y_offset = 0
 
             bc_x_size = self.settings.value("detection_settings/barcode_detection/top/barcode_x_size", type=int)
@@ -367,6 +369,7 @@ class DetectionPreview(QtCore.QThread):
             threshold = self.settings.value("detection_settings/barcode_detection/top/threshold_center", type=int)
 
         else:
+            detection_preview_bc_image_name = "\\bottom.png"
             y_offset = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", type=int)
 
             bc_x_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_x_size", type=int)
@@ -386,7 +389,11 @@ class DetectionPreview(QtCore.QThread):
         cv2_barcode_gray = cv2.cvtColor(cv2_barcode_raw, cv2.COLOR_BGR2GRAY)
         ret, cv2_barcode_threshold = cv2.threshold(cv2_barcode_gray, threshold, 255, cv2.THRESH_BINARY)
 
-        cv2.imwrite(detection_preview_bc_image_path, cv2_barcode_threshold)
+        split = (folder_path + detection_preview_bc_image_name).split("\\")
+        split[-1] = "original__" + split[-1]
+
+        cv2.imwrite("\\".join(split), cv2.cvtColor(cv2_barcode_raw, cv2.COLOR_BGR2RGB))
+        cv2.imwrite(folder_path + detection_preview_bc_image_name, cv2_barcode_threshold)
 
         resized_raw = cv2.resize(cv2_barcode_raw, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
         color_corrected_raw = cv2.cvtColor(resized_raw, cv2.COLOR_BGR2RGB)
@@ -394,7 +401,10 @@ class DetectionPreview(QtCore.QThread):
         resized_threshold = cv2.resize(cv2_barcode_threshold, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
         color_corrected_threshold = cv2.cvtColor(resized_threshold, cv2.COLOR_GRAY2RGB)
 
-        code = self.__bc_detect(detection_preview_bc_image_path)
+        code = self.__bc_detect(folder_path + detection_preview_bc_image_name)
+
+        if code != "Not Found":
+            self.logger.info("Detection preview found plate " + str(code) + " with threshold value " + str(threshold) + " on \"center\" detect.")
 
         return code, color_corrected_raw, color_corrected_threshold
 
@@ -456,12 +466,20 @@ class DetectionPreview(QtCore.QThread):
                         workers.append(worker)
 
         for worker in workers:
+            worker.wait()
             result = worker.result
+            threshold_value = str(worker.threshold)
             raw_cv2 = worker.cv2_raw
             threshold_cv2 = worker.cv2_threshold
 
             if result != "Not Found":
-                return result, raw_cv2, threshold_cv2
+                if result == "No Plate Present":
+                    self.logger.info("Detection preview found could not detect a plate.")
+                else:
+                    self.logger.info("Detection preview found plate " + result + " with threshold value " + threshold_value + " on \"full\" detect.")
+                    return result, raw_cv2, threshold_cv2
+
+                break
 
         return "Not Found", 0, 0
 

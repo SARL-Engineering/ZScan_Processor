@@ -29,6 +29,9 @@ import logging
 # File and Transfer Class Definition
 #####################################
 class FileAndTransferSettings(QtCore.QObject):
+
+    file_and_transfer_settings_changed_signal = QtCore.pyqtSignal()
+
     def __init__(self, main_window):
         super(FileAndTransferSettings, self).__init__()
 
@@ -182,3 +185,5 @@ class FileAndTransferSettings(QtCore.QObject):
                                self.transfer_time_te.time().toString('h:mm AP'))
 
         self.logger.debug("File and transfer settings changes saved...")
+        self.file_and_transfer_settings_changed_signal.emit()
+

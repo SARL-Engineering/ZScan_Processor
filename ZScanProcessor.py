@@ -57,6 +57,8 @@ UI_FILE_PATH = "Resources/UI/ZScanUI.ui"
 #####################################
 class ApplicationWindow(QtWidgets.QMainWindow):
 
+    connect_all_signals_to_slots_signal = QtCore.pyqtSignal()
+    start_all_threads_signal = QtCore.pyqtSignal()
     kill_threads_signal = QtCore.pyqtSignal()
 
     def __init__(self, parent=None):
@@ -95,6 +97,28 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.threads.append(self.interface_class.live_logs_class)
         self.threads.append(self.detection_preview_class)
         self.threads.append(self.processor_core_class)
+
+        # ########## Setup signal/slot connections ##########
+        for thread in self.threads:
+            self.connect_all_signals_to_slots_signal.connect(thread.connect_signals_to_slots__slot)
+
+        self.connect_all_signals_to_slots_signal.emit()
+
+        # ########## Start all child threads ##########
+        for thread in self.threads:
+            self.start_all_threads_signal.connect(thread.start)
+
+        self.start_all_threads_signal.emit()
+
+        time.sleep(1)
+
+        # ########## Ensure all threads started properly ##########
+        for thread in self.threads:
+            if not thread.isRunning():
+                self.logger.error("Thread" + thread.__class__.__name__ + " failed to start! Exiting...")
+                for thread_terminate in self.threads:
+                    thread_terminate.terminate()
+                self.close()
 
         # ########## Set up QT Application Window ##########
         self.show()

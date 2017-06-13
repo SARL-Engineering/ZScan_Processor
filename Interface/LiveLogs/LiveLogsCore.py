@@ -65,12 +65,6 @@ class LiveLogs(QtCore.QThread):
         # ########## Load class settings ##########
         self.__load_settings()
 
-        # ########## Make signal/slot connections ##########
-        self.__connect_signals_to_slots()
-
-        # ########## Start Thread ##########
-        self.start()
-
     def run(self):
         self.logger.debug("Live Logs Thread Starting...")
 
@@ -95,8 +89,11 @@ class LiveLogs(QtCore.QThread):
         self.live_log_error_cb.setChecked(live_log_error_cb_state)
         self.live_log_debug_cb.setChecked(live_log_debug_cb_state)
 
+        # This keeps the text box from being scrollable
+        self.live_log_tb.verticalScrollBar().blockSignals(True)
+
     # noinspection PyUnresolvedReferences
-    def __connect_signals_to_slots(self):
+    def connect_signals_to_slots__slot(self):
         self.text_ready_signal.connect(self.__on_text_should_update_signal__slot)
         self.live_log_tb.textChanged.connect(self.__on_move_cursor_needed__slot)
 
@@ -120,8 +117,9 @@ class LiveLogs(QtCore.QThread):
         self.log_browser_string = ""
 
         # Seek back to the beginning of the file and read in the lines
+        # Also strip it down to the most recent 100
         self.log_file_reader.seek(0)
-        log_lines = self.log_file_reader.readlines()
+        log_lines = self.log_file_reader.readlines()[-100:]
 
         # Go through line by line and only add lines that are selected to be shown via the checkboxes
         for line in log_lines:

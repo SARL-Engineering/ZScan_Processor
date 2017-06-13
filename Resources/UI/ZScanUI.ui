@@ -121,7 +121,7 @@ QGroupBox::title{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -257,7 +257,14 @@ background-color:rgb(202, 202, 202);
          </layout>
         </item>
         <item row="2" column="0">
-         <widget class="QTextBrowser" name="live_log_text_browser"/>
+         <widget class="QTextBrowser" name="live_log_text_browser">
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+         </widget>
         </item>
         <item row="0" column="0">
          <spacer name="verticalSpacer_7">
