@@ -29,20 +29,24 @@ import qimage2ndarray
 from os.path import exists
 from os import makedirs
 
-# Settings for imports
-# Image.MAX_IMAGE_PIXELS = None  # This disables the decompression bomb warning
+# Custom Import
+from Framework import WorkerCore
 
 #####################################
 # Global Variables
 #####################################
+# Settings for imports
+# Image.MAX_IMAGE_PIXELS = None  # This disables the decompression bomb warning
+
+
 UI_PREVIEW_LOAD_IMAGE_MAIN_PATH = "Resources/UI/preview_please_load_image_main.png"
 UI_PREVIEW_LOAD_IMAGE_BC_PATH = "Resources/UI/preview_please_load_image_barcode.png"
 
 UI_PREVIEW_MAIN_LB_WIDTH = 280
 UI_PREVIEW_MAIN_LB_HEIGHT = 830
 
-UI_PREVIEW_BC_WIDTH = 450
-UI_PREVIEW_BC_HEIGHT = 45
+UI_PREVIEW_BC_WIDTH = WorkerCore.UI_PREVIEW_BC_WIDTH
+UI_PREVIEW_BC_HEIGHT = WorkerCore.UI_PREVIEW_BC_HEIGHT
 
 PLATE_ROWS = 12
 PLATE_COLS = 8
@@ -66,75 +70,11 @@ BC_BOX_COLOR = (88, 83, 237)
 DETECT_ALL_Y_INCREMENT = 50
 DETECT_ALL_X_INCREMENT = 300
 
-NO_PLATE_MEAN_THRESHOLD = 235
-
-
-#####################################
-# Detection Preview Class Definition
-#####################################
-class DetectionWorker(QtCore.QThread):
-
-    barcode_found_signal = QtCore.pyqtSignal()
-
-    def __init__(self, parent, y1, y2, x1, x2, threshold, cv2_image, image_base_path, zbar_path):
-        super(DetectionWorker, self).__init__()
-
-        self.detect_parent = parent
-
-        self.y1 = y1
-        self.y2 = y2
-        self.x1 = x1
-        self.x2 = x2
-
-        self.threshold = threshold
-        self.cv2_image = cv2_image
-
-        self.image_base_path = image_base_path
-        self.zbar_path = zbar_path
-
-        self.result = "Not Found"
-        self.cv2_raw = None
-        self.cv2_threshold = None
-
-        self.barcode_found_signal.connect(self.detect_parent.on_barcode_found__slot)
-
-        self.run()
-
-    def run(self):
-        self.cv2_raw = self.cv2_image[self.y1:self.y2, self.x1:self.x2]
-        cv2_barcode_gray = cv2.cvtColor(self.cv2_raw, cv2.COLOR_BGR2GRAY)
-        ret, self.cv2_threshold = cv2.threshold(cv2_barcode_gray, self.threshold, 255, cv2.THRESH_BINARY)
-
-        full_path = self.image_base_path + "\\" + str(self.threshold) + "__" + str(self.y1) + "_" + str(self.y2) + "_" + str(self.x1) + "_" + str(self.x2) + ".png"
-
-        cv2.imwrite(full_path, self.cv2_threshold)
-
-        process = subprocess.Popen([self.zbar_path, "--raw", "-q", full_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = process.communicate()
-        out = out.decode("utf-8").strip('\n')
-
-        is_no_plate = cv2.mean(cv2_barcode_gray)[0] > NO_PLATE_MEAN_THRESHOLD
-
-        if out != "" or is_no_plate:
-            if is_no_plate:
-                self.result = "No Plate Present"
-            else:
-                self.result = out
-
-            resized_raw = cv2.resize(self.cv2_raw, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
-            self.cv2_raw = cv2.cvtColor(resized_raw, cv2.COLOR_BGR2RGB)
-
-            resized_threshold = cv2.resize(self.cv2_threshold, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
-            self.cv2_threshold = cv2.cvtColor(resized_threshold, cv2.COLOR_GRAY2RGB)
-
-            self.barcode_found_signal.emit()
-
 
 #####################################
 # Detection Preview Class Definition
 #####################################
 class DetectionPreview(QtCore.QThread):
-
     preview_images_ready_signal = QtCore.pyqtSignal()
 
     def __init__(self, main_window):
@@ -188,8 +128,10 @@ class DetectionPreview(QtCore.QThread):
     def connect_signals_to_slots__slot(self):
         self.main_window.tab_widget.currentChanged.connect(self.on_tab_index_changed__slot)
 
-        self.preview_images_ready_signal.connect(self.main_window.interface_class.detection_class.on_preview_images_ready__slot)
-        self.main_window.interface_class.detection_class.image_update_needed_signal.connect(self.on_image_update_needed__slot)
+        self.preview_images_ready_signal.connect(
+            self.main_window.interface_class.detection_class.on_preview_images_ready__slot)
+        self.main_window.interface_class.detection_class.image_update_needed_signal.connect(
+            self.on_image_update_needed__slot)
 
         self.main_window.kill_threads_signal.connect(self.on_kill_threads__slot)
 
@@ -263,8 +205,10 @@ class DetectionPreview(QtCore.QThread):
             top_left_x = self.settings.value("detection_settings/alignment_and_limits/bottom/top_left_x", type=int)
             top_right_x = self.settings.value("detection_settings/alignment_and_limits/bottom/top_right_x", type=int)
             bottom_y = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_y", type=int)
-            bottom_left_x = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_left_x", type=int)
-            bottom_right_x = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_right_x", type=int)
+            bottom_left_x = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_left_x",
+                                                type=int)
+            bottom_right_x = self.settings.value("detection_settings/alignment_and_limits/bottom/bottom_right_x",
+                                                 type=int)
 
         # Draw bottom plate well alignment circles
         offset_per_well_x = (bottom_right_x - top_left_x) // 7
@@ -272,17 +216,22 @@ class DetectionPreview(QtCore.QThread):
 
         for x in range(PLATE_COLS):
             for y in range(PLATE_ROWS):
-                if (x == 0 and y == 0) or (x == 0 and y == PLATE_ROWS) or (x == PLATE_COLS and y == 0) or (x == PLATE_COLS and y == 0):
+                if (x == 0 and y == 0) or (x == 0 and y == PLATE_ROWS) or (x == PLATE_COLS and y == 0) or (
+                        x == PLATE_COLS and y == 0):
                     continue
                 temp_y = (y_offset + bottom_y) - (y * offset_per_well_y)
                 temp_x = top_right_x - (x * offset_per_well_x)
                 cv2.circle(cv2_image, (temp_x, temp_y), WELL_CIRCLE_RADIUS, grid_color,
                            WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
 
-        cv2.circle(cv2_image, (top_left_x, top_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
-        cv2.circle(cv2_image, (top_right_x, top_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
-        cv2.circle(cv2_image, (bottom_left_x, bottom_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
-        cv2.circle(cv2_image, (bottom_right_x, bottom_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+        cv2.circle(cv2_image, (top_left_x, top_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS,
+                   cv2.LINE_AA)
+        cv2.circle(cv2_image, (top_right_x, top_y + y_offset), WELL_CIRCLE_RADIUS, well_color, WELL_CIRCLE_THICKNESS,
+                   cv2.LINE_AA)
+        cv2.circle(cv2_image, (bottom_left_x, bottom_y + y_offset), WELL_CIRCLE_RADIUS, well_color,
+                   WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
+        cv2.circle(cv2_image, (bottom_right_x, bottom_y + y_offset), WELL_CIRCLE_RADIUS, well_color,
+                   WELL_CIRCLE_THICKNESS, cv2.LINE_AA)
 
     def __draw_barcode_boxes(self, cv2_image, is_top):
         if is_top:
@@ -342,13 +291,15 @@ class DetectionPreview(QtCore.QThread):
         # Show the barcode
         if is_top:
             self.detection_top_bc_raw_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(raw))
-            self.detection_top_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(threshold))
+            self.detection_top_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(
+                qimage2ndarray.array2qimage(threshold))
 
             # Barcode number detection
             self.detection_top_bc_string = code
         else:
             self.detection_bottom_bc_raw_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(raw))
-            self.detection_bottom_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(qimage2ndarray.array2qimage(threshold))
+            self.detection_bottom_bc_threshold_preview_pixmap = QtGui.QPixmap.fromImage(
+                qimage2ndarray.array2qimage(threshold))
 
             # Barcode number detection
             self.detection_bottom_bc_string = code
@@ -404,7 +355,8 @@ class DetectionPreview(QtCore.QThread):
         code = self.__bc_detect(folder_path + detection_preview_bc_image_name)
 
         if code != "Not Found":
-            self.logger.info("Detection preview found plate " + str(code) + " with threshold value " + str(threshold) + " on \"center\" detect.")
+            self.logger.info("Detection preview found plate " + str(code) + " with threshold value " + str(
+                threshold) + " on \"center\" detect.")
 
         return code, color_corrected_raw, color_corrected_threshold
 
@@ -423,7 +375,8 @@ class DetectionPreview(QtCore.QThread):
             scan_x_pos = self.settings.value("detection_settings/barcode_detection/top/scan_x_position", type=int)
             scan_y_pos = self.settings.value("detection_settings/barcode_detection/top/scan_y_position", type=int)
 
-            threshold_center = self.settings.value("detection_settings/barcode_detection/top/threshold_center",type=int)
+            threshold_center = self.settings.value("detection_settings/barcode_detection/top/threshold_center",
+                                                   type=int)
             threshold_range = self.settings.value("detection_settings/barcode_detection/top/threshold_range", type=int)
 
         else:
@@ -436,8 +389,10 @@ class DetectionPreview(QtCore.QThread):
             scan_x_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_x_position", type=int)
             scan_y_pos = self.settings.value("detection_settings/barcode_detection/bottom/scan_y_position", type=int)
 
-            threshold_center = self.settings.value("detection_settings/barcode_detection/bottom/threshold_center", type=int)
-            threshold_range = self.settings.value("detection_settings/barcode_detection/bottom/threshold_range", type=int)
+            threshold_center = self.settings.value("detection_settings/barcode_detection/bottom/threshold_center",
+                                                   type=int)
+            threshold_range = self.settings.value("detection_settings/barcode_detection/bottom/threshold_range",
+                                                  type=int)
 
         y_bound_upper = (scan_y_pos - (scan_y_size // 2)) + y_offset
         x_bound_left = (scan_x_pos - (scan_x_size // 2))
@@ -462,7 +417,8 @@ class DetectionPreview(QtCore.QThread):
 
                         current_threshold = threshold_min + thr
 
-                        worker = DetectionWorker(self, y1, y2, x1, x2, current_threshold, cv2_image, detection_preview_bc_image_folder, zbar_path)
+                        worker = WorkerCore.DetectionWorker(self, y1, y2, x1, x2, current_threshold, cv2_image,
+                                                            detection_preview_bc_image_folder, zbar_path)
                         workers.append(worker)
 
         for worker in workers:
@@ -476,7 +432,8 @@ class DetectionPreview(QtCore.QThread):
                 if result == "No Plate Present":
                     self.logger.info("Detection preview found could not detect a plate.")
                 else:
-                    self.logger.info("Detection preview found plate " + result + " with threshold value " + threshold_value + " on \"full\" detect.")
+                    self.logger.info(
+                        "Detection preview found plate " + result + " with threshold value " + threshold_value + " on \"full\" detect.")
                     return result, raw_cv2, threshold_cv2
 
                 break
@@ -487,7 +444,8 @@ class DetectionPreview(QtCore.QThread):
         zbar_path = self.settings.value("file_and_transfer_settings/zbar_path", type=str)
 
         if zbar_path:
-            process = subprocess.Popen([zbar_path, "--raw", "-q", threshold_image_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process = subprocess.Popen([zbar_path, "--raw", "-q", threshold_image_path], stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE)
             out, err = process.communicate()
             out = out.decode("utf-8").strip('\n')
 
@@ -522,5 +480,3 @@ class DetectionPreview(QtCore.QThread):
 
     def on_kill_threads__slot(self):
         self.run_thread_flag = False
-
-

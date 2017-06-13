@@ -84,10 +84,11 @@ class ProcessorCore(QtCore.QThread):
         original_image_filenames = self.__get_list_of_original_images_in_path(self.input_images_path)
 
         if not original_image_filenames:
-            self.logger.info("Attempted run, but no original images to process. Waiting for next run...")
+            self.logger.info("Attempted run, but no raw images found. Waiting for next run...")
             return
 
-        self.logger.info("Found " + str(len(original_image_filenames)) + " original images to process.")
+        self.logger.info("Found " + str(len(original_image_filenames)) + " raw images to process.")
+
 
     @staticmethod
     def __get_list_of_original_images_in_path(path):
@@ -143,9 +144,7 @@ class ProcessorCore(QtCore.QThread):
             return True
 
     def __get_current_time_and_run_time(self):
-        # Checking if run time has passed
         now = datetime.datetime.now()
-
         run_time = datetime.datetime.strptime(self.transfer_time_string, "%I:%M %p")
 
         return now, run_time
