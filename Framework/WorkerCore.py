@@ -14,6 +14,8 @@ NO_PLATE_MEAN_THRESHOLD = 235
 UI_PREVIEW_BC_WIDTH = 450
 UI_PREVIEW_BC_HEIGHT = 45
 
+BARCODE_NUM_DIGITS = 9
+
 
 #####################################
 # Detection Worker Class Definition
@@ -63,18 +65,17 @@ class DetectionWorker(QtCore.QThread):
         is_no_plate = cv2.mean(cv2_barcode_gray)[0] > NO_PLATE_MEAN_THRESHOLD
 
         if out != "" or is_no_plate:
-            if is_no_plate:
-                self.result = "No Plate Present"
-            else:
+            if str.isnumeric(out) and len(out) == BARCODE_NUM_DIGITS:
                 self.result = out
+                self.barcode_found_signal.emit()
+            else:
+                self.result = "No Plate Present"
 
             resized_raw = cv2.resize(self.cv2_raw, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
             self.cv2_raw = cv2.cvtColor(resized_raw, cv2.COLOR_BGR2RGB)
 
             resized_threshold = cv2.resize(self.cv2_threshold, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
             self.cv2_threshold = cv2.cvtColor(resized_threshold, cv2.COLOR_GRAY2RGB)
-
-            self.barcode_found_signal.emit()
 
 
 #####################################

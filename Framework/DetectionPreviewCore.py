@@ -26,8 +26,9 @@ import logging
 import subprocess
 import cv2
 import qimage2ndarray
-from os.path import exists
-from os import makedirs
+from os.path import exists, isdir
+from os import mkdir, remove
+import glob
 
 # Custom Import
 from Framework import WorkerCore
@@ -366,6 +367,8 @@ class DetectionPreview(QtCore.QThread):
         detection_preview_bc_image_folder = base_app_data_path + "\\detection_preview_temp"
 
         if is_top:
+            detection_preview_bc_image_folder += "\\top_variants"
+
             y_offset = 0
 
             bc_x_size = self.settings.value("detection_settings/barcode_detection/top/barcode_x_size", type=int)
@@ -380,6 +383,8 @@ class DetectionPreview(QtCore.QThread):
             threshold_range = self.settings.value("detection_settings/barcode_detection/top/threshold_range", type=int)
 
         else:
+            detection_preview_bc_image_folder += "\\bottom_variants"
+
             y_offset = self.settings.value("detection_settings/alignment_and_limits/shared/split_value", type=int)
 
             bc_x_size = self.settings.value("detection_settings/barcode_detection/bottom/barcode_x_size", type=int)
@@ -393,6 +398,11 @@ class DetectionPreview(QtCore.QThread):
                                                    type=int)
             threshold_range = self.settings.value("detection_settings/barcode_detection/bottom/threshold_range",
                                                   type=int)
+
+        if not isdir(detection_preview_bc_image_folder):
+            mkdir(detection_preview_bc_image_folder)
+        else:
+            self.delete_all_files_in_folder(detection_preview_bc_image_folder)
 
         y_bound_upper = (scan_y_pos - (scan_y_size // 2)) + y_offset
         x_bound_left = (scan_x_pos - (scan_x_size // 2))
@@ -421,6 +431,8 @@ class DetectionPreview(QtCore.QThread):
                                                             detection_preview_bc_image_folder, zbar_path)
                         workers.append(worker)
 
+        barcode_present_but_unreadable = True
+
         for worker in workers:
             worker.wait()
             result = worker.result
@@ -429,6 +441,7 @@ class DetectionPreview(QtCore.QThread):
             threshold_cv2 = worker.cv2_threshold
 
             if result != "Not Found":
+                barcode_present_but_unreadable = False
                 if result == "No Plate Present":
                     self.logger.info("Detection preview found could not detect a plate.")
                 else:
@@ -436,7 +449,8 @@ class DetectionPreview(QtCore.QThread):
                         "Detection preview found plate " + result + " with threshold value " + threshold_value + " on \"full\" detect.")
                     return result, raw_cv2, threshold_cv2
 
-                break
+        if barcode_present_but_unreadable:
+            self.logger.info("Detection preview found a barcode, but could not read it.")
 
         return "Not Found", 0, 0
 
@@ -477,6 +491,12 @@ class DetectionPreview(QtCore.QThread):
 
     def on_image_update_needed__slot(self):
         self.detection_image_updates_needed = True
+
+    @staticmethod
+    def delete_all_files_in_folder(path):
+        files = glob.glob(path + "\\*")
+        for file in files:
+            remove(file)
 
     def on_kill_threads__slot(self):
         self.run_thread_flag = False
