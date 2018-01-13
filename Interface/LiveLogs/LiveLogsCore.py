@@ -144,7 +144,8 @@ class LiveLogs(QtCore.QThread):
         self.text_ready_signal.emit()
 
     def __on_text_should_update_signal__slot(self):
-        self.live_log_tb.setText(self.log_browser_string)
+        self.live_log_tb.clear()
+        self.live_log_tb.append(self.log_browser_string)
 
     def __on_move_cursor_needed__slot(self):
         # Move the cursor to the end when the text browser text updates. This essentially scrolls constantly.

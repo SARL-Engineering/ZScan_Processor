@@ -27,8 +27,10 @@ import subprocess
 import cv2
 import qimage2ndarray
 from os.path import exists, isdir
-from os import mkdir, remove
+from os import mkdir, remove, makedirs
 import glob
+from PIL import Image
+import zbar
 
 # Custom Import
 from Framework import WorkerCore
@@ -344,8 +346,8 @@ class DetectionPreview(QtCore.QThread):
         split = (folder_path + detection_preview_bc_image_name).split("\\")
         split[-1] = "original__" + split[-1]
 
-        cv2.imwrite("\\".join(split), cv2.cvtColor(cv2_barcode_raw, cv2.COLOR_BGR2RGB))
-        cv2.imwrite(folder_path + detection_preview_bc_image_name, cv2_barcode_threshold)
+        # cv2.imwrite("\\".join(split), cv2.cvtColor(cv2_barcode_raw, cv2.COLOR_BGR2RGB))
+        # cv2.imwrite(folder_path + detection_preview_bc_image_name, cv2_barcode_threshold)
 
         resized_raw = cv2.resize(cv2_barcode_raw, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
         color_corrected_raw = cv2.cvtColor(resized_raw, cv2.COLOR_BGR2RGB)
@@ -353,7 +355,7 @@ class DetectionPreview(QtCore.QThread):
         resized_threshold = cv2.resize(cv2_barcode_threshold, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
         color_corrected_threshold = cv2.cvtColor(resized_threshold, cv2.COLOR_GRAY2RGB)
 
-        code = self.__bc_detect(folder_path + detection_preview_bc_image_name)
+        code = self.__bc_detect(cv2_barcode_threshold)
 
         if code != "Not Found":
             self.logger.info("Detection preview found plate " + str(code) + " with threshold value " + str(
@@ -454,18 +456,26 @@ class DetectionPreview(QtCore.QThread):
 
         return "Not Found", 0, 0
 
-    def __bc_detect(self, threshold_image_path):
-        zbar_path = self.settings.value("file_and_transfer_settings/zbar_path", type=str)
+    def __bc_detect(self, cv2_barcode_threshold):
+        ################################################################################
+        scanner = zbar.ImageScanner()
 
-        if zbar_path:
-            process = subprocess.Popen([zbar_path, "--raw", "-q", threshold_image_path], stdout=subprocess.PIPE,
-                                       stderr=subprocess.PIPE)
-            out, err = process.communicate()
-            out = out.decode("utf-8").strip('\n')
+        # configure the reader
+        scanner.parse_config('enable')
 
-            if out != "":
-                return out
+        pil_im = Image.fromarray(cv2_barcode_threshold)
 
+        width, height = pil_im.size
+        raw = pil_im.tobytes()
+
+        # wrap image data
+        image = zbar.Image(width, height, 'Y800', raw)
+
+        # scan the image for barcodes
+        scanner.scan(image)
+
+        for symbol in image:
+            return symbol.data
         return "Not Found"
 
     # noinspection PyCallByClass,PyCallByClass,PyTypeChecker,PyArgumentList

@@ -6,6 +6,7 @@ from PyQt5 import QtCore
 import subprocess
 import logging
 import cv2
+from PIL import Image
 
 #####################################
 # Global Variables
@@ -64,8 +65,10 @@ class DetectionWorker(QtCore.QThread):
 
         is_no_plate = cv2.mean(cv2_barcode_gray)[0] > NO_PLATE_MEAN_THRESHOLD
 
+
+
         if out != "" or is_no_plate:
-            if str.isnumeric(out) and len(out) == BARCODE_NUM_DIGITS:
+            if self.is_number(out) and len(out) == BARCODE_NUM_DIGITS:
                 self.result = out
                 self.barcode_found_signal.emit()
             else:
@@ -77,6 +80,23 @@ class DetectionWorker(QtCore.QThread):
             resized_threshold = cv2.resize(self.cv2_threshold, (UI_PREVIEW_BC_WIDTH, UI_PREVIEW_BC_HEIGHT))
             self.cv2_threshold = cv2.cvtColor(resized_threshold, cv2.COLOR_GRAY2RGB)
 
+    @staticmethod
+    def is_number(input_string):
+        try:
+            float(input_string)
+            return True
+        except ValueError:
+            pass
+
+        try:
+            import unicodedata
+            unicodedata.numeric(input_string)
+            return True
+        except (TypeError, ValueError):
+            pass
+
+        return False
+
 
 #####################################
 # Detection Worker Class Definition
@@ -84,7 +104,7 @@ class DetectionWorker(QtCore.QThread):
 # This one is primarily used by DetectionPreview
 class CoreImageSplitWorker(QtCore.QThread):
     def __init__(self, parent, image_path, base_output_directory):
-        super().__init__(parent)
+        super(CoreImageSplitWorker, self).__init__(parent)
 
         self.image_path = image_path
         self.base_output_directory = base_output_directory
