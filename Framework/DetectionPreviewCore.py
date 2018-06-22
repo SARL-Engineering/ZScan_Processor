@@ -30,7 +30,7 @@ from os.path import exists, isdir
 from os import mkdir, remove, makedirs
 import glob
 from PIL import Image
-import zbar
+import pyzbar.pyzbar as pyzbar
 
 # Custom Import
 from Framework import WorkerCore
@@ -458,24 +458,24 @@ class DetectionPreview(QtCore.QThread):
 
     def __bc_detect(self, cv2_barcode_threshold):
         ################################################################################
-        scanner = zbar.ImageScanner()
-
-        # configure the reader
-        scanner.parse_config('enable')
-
-        pil_im = Image.fromarray(cv2_barcode_threshold)
-
-        width, height = pil_im.size
-        raw = pil_im.tobytes()
-
-        # wrap image data
-        image = zbar.Image(width, height, 'Y800', raw)
+        # scanner = zbar.ImageScanner()
+        # # configure the reader
+        # scanner.parse_config('enable')
+        #
+        # pil_im = Image.fromarray(cv2_barcode_threshold)
+        #
+        # width, height = pil_im.size
+        # raw = pil_im.tobytes()
+        #
+        # # wrap image data
+        # image = zbar.Image(width, height, 'Y800', raw)
 
         # scan the image for barcodes
-        scanner.scan(image)
+        scan_results = pyzbar.decode(cv2_barcode_threshold)
 
-        for symbol in image:
-            return symbol.data
+        if scan_results:
+            return scan_results[0].data.decode("utf-8")
+
         return "Not Found"
 
     # noinspection PyCallByClass,PyCallByClass,PyTypeChecker,PyArgumentList

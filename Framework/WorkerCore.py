@@ -7,6 +7,7 @@ import subprocess
 import logging
 import cv2
 from PIL import Image
+import pyzbar.pyzbar as pyzbar
 
 #####################################
 # Global Variables
@@ -58,14 +59,20 @@ class DetectionWorker(QtCore.QThread):
         full_path = self.image_base_path + "\\" + str(self.threshold) + "__" + str(self.y1) + "_" + str(self.y2) + "_" + str(self.x1) + "_" + str(self.x2) + ".png"
 
         cv2.imwrite(full_path, self.cv2_threshold)
-
-        process = subprocess.Popen([self.zbar_path, "--raw", "-q", full_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = process.communicate()
-        out = out.decode("utf-8").strip('\n')
+        #
+        # process = subprocess.Popen([self.zbar_path, "--raw", "-q", full_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # out, err = process.communicate()
+        # out = out.decode("utf-8").strip('\n')
+        # height, width = self.cv2_threshold.shape
+        #
+        scan_results = pyzbar.decode(self.cv2_threshold)
+        if scan_results:
+            scan_results = scan_results
+            out = scan_results[0].data.decode("utf-8")
+        else:
+            out = ""
 
         is_no_plate = cv2.mean(cv2_barcode_gray)[0] > NO_PLATE_MEAN_THRESHOLD
-
-
 
         if out != "" or is_no_plate:
             if self.is_number(out) and len(out) == BARCODE_NUM_DIGITS:
