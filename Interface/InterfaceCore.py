@@ -26,8 +26,8 @@ from PyQt5 import QtCore, QtWidgets
 
 # Custom imports
 from Interface.LiveLogs.LiveLogsCore import LiveLogs
-from Interface.DetectionSettings.DetectionSettingsCore import DetectionSettings
-from Interface.FileAndTransferSettings.FileAndTransferSettingsCore import FileAndTransferSettings
+from Interface.Settings.DetectionSettingsCore import DetectionSettings
+from Interface.Settings.FileAndTransferSettingsCore import FileAndTransferSettings
 from Interface.About.AboutCore import About
 
 

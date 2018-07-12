@@ -2,10 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d09cfe96-20bd-4090-a0f9-90ac5a91ee57" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ZScan_Processor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ZScan_Processor.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/BarcodeDetector/BarcodeDetectorWorkerCore.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/DetectionPreviewCore.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/LoggingCore.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/ProcessorCore.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/SettingsCore.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/WorkerCore.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/DetectionSettings/DetectionSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/DetectionSettings/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/FileAndTransferSettings/FileAndTransferSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/FileAndTransferSettingsCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/FileAndTransferSettings/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/InterfaceCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/InterfaceCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ZScanProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/ZScanProcessor.py" afterDir="false" />
     </list>
@@ -17,74 +26,23 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1531353737834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-  </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="ZScanProcessor.py" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/../ZScan_Processor - Original/ZScanProcessor.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="-658">
-                    <caret line="86" column="55" lean-forward="true" selection-start-line="86" selection-start-column="55" selection-end-line="86" selection-end-column="55" />
-                    <folding>
-                      <element signature="e#1169#1179#0" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
+    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1531431042909" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="ZScanProcessor.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
-                  <folding>
-                    <element signature="e#110#120#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DetectionPreviewCore.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2788">
-                  <caret line="176" column="53" selection-start-line="176" selection-start-column="53" selection-end-line="176" selection-end-column="53" />
-                  <folding>
-                    <element signature="e#868#910#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="ZScanUI.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Resources/UI/ZScanUI.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="51">
-                  <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="ZScanProcessor.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="97" column="41" lean-forward="true" selection-start-line="97" selection-start-column="41" selection-end-line="97" selection-end-column="41" />
+              <folding>
+                <element signature="e#110#120#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -165,6 +123,11 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\caperren\Github\ZScan_Processor\Interface\DetectionSettings" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -216,16 +179,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3279939" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3279939" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12617187" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12617187" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -253,6 +215,33 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1564">
+          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+          <folding>
+            <element signature="e#110#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2992">
+          <caret line="176" column="53" selection-start-line="176" selection-start-column="53" selection-end-line="176" selection-end-column="53" />
+          <folding>
+            <element signature="e#868#910#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/UI/ZScanUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1360">
@@ -468,37 +457,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/UI/ZScanUI.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ZScan_Processor - Original/ZScanProcessor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-607">
+          <caret line="86" column="55" lean-forward="true" selection-start-line="86" selection-start-column="55" selection-end-line="86" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2788">
-          <caret line="176" column="53" selection-start-line="176" selection-start-column="53" selection-end-line="176" selection-end-column="53" />
+        <state relative-caret-position="765">
+          <caret line="193" lean-forward="true" selection-start-line="193" selection-end-line="193" />
           <folding>
             <element signature="e#868#910#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/UI/ZScanUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ZScan_Processor - Original/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-658">
-          <caret line="86" column="55" lean-forward="true" selection-start-line="86" selection-start-column="55" selection-end-line="86" selection-end-column="55" />
-          <folding>
-            <element signature="e#1169#1179#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+        <state relative-caret-position="391">
+          <caret line="97" column="41" lean-forward="true" selection-start-line="97" selection-start-column="41" selection-end-line="97" selection-end-column="41" />
           <folding>
             <element signature="e#110#120#0" expanded="true" />
           </folding>

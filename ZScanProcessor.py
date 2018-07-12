@@ -87,7 +87,7 @@ class ZScanCore(QtCore.QObject):
 
         # ###### Instantiate Left And Right Screens ######
         self.shared_objects["screens"]["main_screen"] = \
-            self.create_application_window(ZScanWindow, "Zebrafish Scan Processor", (1536, 1024))  # type: ApplicationWindow
+            self.create_application_window(ZScanWindow, "Zebrafish Scan Processor", (1536, 1024))
 
         # ##### Instantiate Regular Classes ######
 
