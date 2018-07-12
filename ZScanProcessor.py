@@ -1,170 +1,145 @@
-#!/usr/bin/env python
-
-"""
-    Main file used to launch the ZScan Processor
-    No other files should be used for launching this application.
-"""
-
-__author__ = "Corwin Perren"
-__credits__ = [""]
-__license__ = "GPL (GNU General Public License) 3.0"
-__version__ = "0.1"
-__maintainer__ = "Corwin Perren"
-__email__ = "caperren@caperren.com"
-__status__ = "Development"
-
-# This file is part of "ZScan Processor".
-#
-# "ZScan Processor" is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# "ZScan Processor" is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with "ZScan Processor".  If not, see <http://www.gnu.org/licenses/>.
-
 #####################################
 # Imports
 #####################################
 # Python native imports
 import sys
-from PyQt5 import QtWidgets, QtCore, QtGui, uic
+from PyQt5 import QtWidgets, QtCore, QtGui
 import signal
-import ctypes
 import logging
-import time
+import qdarkstyle
+
+# Load UI
+from Resources.UI.ZScanUI import Ui_MainWindow as ZScanUI
 
 # Custom Imports
-from Framework.SettingsCore import Settings
-from Framework.LoggingCore import Logger
-from Interface.InterfaceCore import Interface
-from Framework.DetectionPreviewCore import DetectionPreview
-from Framework.ProcessorCore import ProcessorCore
+# import Framework.StartupSystems.ROSMasterChecker as ROSMasterChecker
+# import Framework.LoggingSystems.Logger as Logger
+# import Framework.VideoSystems.RoverVideoCoordinator as RoverVideoCoordinator
+# import Framework.MapSystems.RoverMapCoordinator as RoverMapCoordinator
+# import Framework.InputSystems.JoystickControlSender as JoystickControlSender
+# import Framework.NavigationSystems.SpeedAndHeadingIndication as SpeedAndHeading
+# import Framework.NavigationSystems.WaypointsCoordinator as WaypointsCoordinator
+# import Framework.ArmSystems.ArmIndication as ArmIndication
+# import Framework.StatusSystems.StatusCore as StatusCore
+# import Framework.StatusSystems.UbiquitiStatusCore as UbiquitiStatusCore
+# import Framework.SettingsSystems.UbiquitiRadioSettings as UbiquitiRadioSettings
+# import Framework.InputSystems.SpaceNavControlSender as SpaceNavControlSender
 
 #####################################
 # Global Variables
 #####################################
-UI_FILE_PATH = "Resources/UI/ZScanUI.ui"
+U = "Resources/Ui/left_screen.ui"
+
+#####################################
+# Class Organization
+#####################################
+# Class Name:
+#   "init"
+#   "run (if there)" - personal pref
+#   "private methods"
+#   "public methods, minus slots"
+#   "slot methods"
+#   "static methods"
+#   "run (if there)" - personal pref
 
 
 #####################################
-# Application Class Definition
+# ApplicationWindow Class Definition
 #####################################
-class ApplicationWindow(QtWidgets.QMainWindow):
+class ZScanWindow(QtWidgets.QMainWindow, ZScanUI):
+    exit_requested_signal = QtCore.pyqtSignal()
 
-    connect_all_signals_to_slots_signal = QtCore.pyqtSignal()
-    start_all_threads_signal = QtCore.pyqtSignal()
     kill_threads_signal = QtCore.pyqtSignal()
 
     def __init__(self, parent=None):
+        super(ZScanWindow, self).__init__(parent)
+
+        self.setupUi(self)
+
+        QtWidgets.QShortcut(QtGui.QKeySequence("Ctrl+Q"), self, self.exit_requested_signal.emit)
+
+
+#####################################
+# GroundStation Class Definition
+#####################################
+class ZScanCore(QtCore.QObject):
+    exit_requested_signal = QtCore.pyqtSignal()
+
+    start_threads_signal = QtCore.pyqtSignal()
+    connect_signals_and_slots_signal = QtCore.pyqtSignal()
+    kill_threads_signal = QtCore.pyqtSignal()
+
+    def __init__(self, parent=None,):
         # noinspection PyArgumentList
-        super(ApplicationWindow, self).__init__(parent)
-        uic.loadUi(UI_FILE_PATH, self)
+        super(ZScanCore, self).__init__(parent)
 
-        # ########## Class Variables ##########
-        self.num_threads_running = 0
-        self.threads = []
+        # ##### Setup the Logger Immediately #####
+        # self.logger_setup_class = Logger.Logger(console_output=True)  # Doesn't need to be shared
 
-        # ########## Instantiation of program classes ##########
-        # Settings class and version number set
-        self.settings_class = Settings(self)
-        self.settings = QtCore.QSettings()
-        self.settings.setValue("miscellaneous/version", __version__)
+        # ########## Get the Pick And Plate instance of the logger ##########
+        self.logger = logging.getLogger("zscanprocessor")
 
-        # Uncomment these lines to completely reset settings and quit, then re-comment and rerun program
-        # self.settings.clear()
-        # self.close()
+        self.shared_objects = {
+            "screens": {},
+            "regular_classes": {},
+            "threaded_classes": {}
+        }
 
-        # Set up the global logger instance
-        self.logger_class = Logger(console_output=True)
-        self.logger = logging.getLogger("ZScanProcessor")
+        # ###### Instantiate Left And Right Screens ######
+        self.shared_objects["screens"]["main_screen"] = \
+            self.create_application_window(ZScanWindow, "Zebrafish Scan Processor", (1536, 1024))  # type: ApplicationWindow
 
-        # All interface elements
-        self.interface_class = Interface(self)
+        # ##### Instantiate Regular Classes ######
 
-        # The detection preview class for handling calculations and updates to that tab
-        self.detection_preview_class = DetectionPreview(self)
+        # ##### Instantiate Threaded Classes ######
+        # self.__add_thread("Video Coordinator", RoverVideoCoordinator.RoverVideoCoordinator(self.shared_objects))
 
-        # The processor core class that handles schedules and actually running the program core features
-        self.processor_core_class = ProcessorCore(self)
+        self.connect_signals_and_slots_signal.emit()
+        self.__connect_signals_to_slots()
+        self.start_threads_signal.emit()
 
-        # ########## Add threads to list for easy access on program close ##########
-        self.threads.append(self.interface_class.live_logs_class)
-        self.threads.append(self.detection_preview_class)
-        self.threads.append(self.processor_core_class)
+    def __add_thread(self, thread_name, instance):
+        self.shared_objects["threaded_classes"][thread_name] = instance
+        instance.setup_signals(self.start_threads_signal, self.connect_signals_and_slots_signal,
+                               self.kill_threads_signal)
 
-        # ########## Setup signal/slot connections ##########
-        for thread in self.threads:
-            self.connect_all_signals_to_slots_signal.connect(thread.connect_signals_to_slots__slot)
+    def __connect_signals_to_slots(self):
+        self.shared_objects["screens"]["main_screen"].exit_requested_signal.connect(self.on_exit_requested__slot)
 
-        self.connect_all_signals_to_slots_signal.emit()
-
-        # ########## Start all child threads ##########
-        for thread in self.threads:
-            self.start_all_threads_signal.connect(thread.start)
-
-        self.start_all_threads_signal.emit()
-
-        time.sleep(1)
-
-        # ########## Ensure all threads started properly ##########
-        for thread in self.threads:
-            if not thread.isRunning():
-                self.logger.error("Thread" + thread.__class__.__name__ + " failed to start! Exiting...")
-                for thread_terminate in self.threads:
-                    thread_terminate.terminate()
-                self.close()
-
-        # ########## Set up QT Application Window ##########
-        self.show()
-
-    def closeEvent(self, event):
-        # Tell all threads to die
+    def on_exit_requested__slot(self):
         self.kill_threads_signal.emit()
 
-        # Wait for all the threads to end properly
-        for thread in self.threads:
-            thread.wait()
+        # Wait for Threads
+        for thread in self.shared_objects["threaded_classes"]:
+            self.shared_objects["threaded_classes"][thread].wait()
 
-        # Print final log noting shutdown and shutdown the logger to flush to disk
-        self.logger.info("########## Application Stopping ##########")
-        logging.shutdown()
+        QtGui.QGuiApplication.exit()
 
-        # Accept the close event to properly close the program
-        event.accept()
+    @staticmethod
+    def create_application_window(ui_class, title, size):
+        app_window = ui_class()  # Make a window in this application
+        app_window.setWindowTitle(title)  # Sets the window title
 
+        app_window.show()  # Shows the window in full screen mode
 
-#####################################
-# Function Definitions
-#####################################
-def set_application_icon(app_to_set):
-    # Make icon and set it on the passed in object
-    icon = QtGui.QIcon()
-    icon.addFile("Resources/UI/logo_small.jpg", QtCore.QSize(16, 16))
-    icon.addFile("Resources/UI/logo_small.jpg", QtCore.QSize(24, 24))
-    icon.addFile("Resources/UI/logo_small.jpg", QtCore.QSize(32, 32))
-    icon.addFile("Resources/UI/logo_small.jpg", QtCore.QSize(48, 48))
-    icon.addFile("Resources/UI/logo_small.jpg", QtCore.QSize(256, 256))
-    app_to_set.setWindowIcon(icon)
-
-    # This tells the OS that python is hosting another program. Doing this makes the icon show up on the task_bar
-    my_app_id = 'mycompany.myproduct.subproduct.version'
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(my_app_id)
+        return app_window
 
 
 #####################################
 # Main Definition
 #####################################
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, signal.SIG_DFL)  # This allows the keyboard interrupt kill to work  properly
-    application = QtWidgets.QApplication(sys.argv)  # Create the base qt gui application
-    set_application_icon(application)  # Sets the icon
-    app_window = ApplicationWindow()  # Make a window in this application
-    app_window.setWindowTitle("ZScan Processor")  # Sets the window title
-    app_window.show()  # Show the window in the application
+    signal.signal(signal.SIGINT, signal.SIG_DFL)  # This allows the keyboard interrupt kill to work properly
+
+    # ########## Start the QApplication Framework ##########
+    application = QtWidgets.QApplication(sys.argv)  # Create the ase qt gui application
+    application.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+
+    # ########## Set Organization Details for QSettings ##########
+    QtCore.QCoreApplication.setOrganizationName("SARL")
+    QtCore.QCoreApplication.setOrganizationDomain("http://tanguaylab.com")
+    QtCore.QCoreApplication.setApplicationName("ZScanProcessor")
+
+    # ########## Start Ground Station If Ready ##########
+    ground_station = ZScanCore()
     application.exec_()  # Execute launching of the application
