@@ -2,41 +2,111 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d09cfe96-20bd-4090-a0f9-90ac5a91ee57" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Framework/Logging/LiveLogs/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Framework/Logging/LoggingCore.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Framework/Logging/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Framework/Settings/SettingsCore.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Framework/TrayNotifier/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/Constants/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ZScan_Processor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ZScan_Processor.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/BarcodeDetector/BarcodeDetectorWorkerCore.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/DetectionPreviewCore.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/LoggingCore.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/ProcessorCore.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/SettingsCore.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/WorkerCore.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interface/DetectionSettings/DetectionSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interface/DetectionSettings/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interface/FileAndTransferSettings/FileAndTransferSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/FileAndTransferSettingsCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interface/FileAndTransferSettings/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/About/AboutCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/About/AboutCore.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interface/InterfaceCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/InterfaceCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/LiveLogs/LiveLogsCore.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/LiveLogs/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/Settings/FileAndTransferSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/FileAndTransferSettingsCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/TrayNotifier/TrayNotifierCore.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/UI/preview_please_load_image_main.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ZScanProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/ZScanProcessor.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1531431042909" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1536977056963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1897810701">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.7" value="2" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="19" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PLAIN_TEXT" value="19" />
+          <entry key="Python" value="4418" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="Python Console" value="73" />
+          <entry key="dummy" value="19" />
+          <entry key="py" value="4345" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="19" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts" />
+      <usages-collector id="statistics.vcs.git.usages" />
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ZScanProcessor.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="97" column="41" lean-forward="true" selection-start-line="97" selection-start-column="41" selection-end-line="97" selection-end-column="41" />
+            <state relative-caret-position="496">
+              <caret line="124" column="12" lean-forward="true" selection-start-line="124" selection-start-column="12" selection-end-line="124" selection-end-column="12" />
               <folding>
-                <element signature="e#110#120#0" expanded="true" />
+                <element signature="e#804#846#0" expanded="true" />
+                <element signature="e#4483#4487#0" />
+                <marker date="1536977096216" expanded="true" signature="5431:5450" ph="..." />
+                <marker date="1536977096216" expanded="true" signature="5528:5638" ph="..." />
+                <marker date="1536977096216" expanded="true" signature="5734:5787" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Resources/Constants/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="33" column="1" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Interface/InterfaceCore.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="479">
+              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+              <folding>
+                <element signature="e#936#971#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -44,10 +114,29 @@
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>zbar</find>
+      <find>U</find>
+      <find>connect_signals_to_slots__slot</find>
+      <find>log_file_prev_mtime</find>
+      <find>main_w</find>
+      <find>main_window</find>
+      <find>self.</find>
+      <find>top</find>
     </findStrings>
+    <replaceStrings>
+      <replace>main_screen</replace>
+      <replace>&quot;</replace>
+      <replace>bottom</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -58,7 +147,20 @@
         <option value="$PROJECT_DIR$/Framework/WorkerCore.py" />
         <option value="$PROJECT_DIR$/Framework/DetectionPreviewCore.py" />
         <option value="$PROJECT_DIR$/Resources/UI/ZScanUI.py" />
+        <option value="$PROJECT_DIR$/Interface/NotificationTray/TrayNotifierCore.py" />
+        <option value="$PROJECT_DIR$/Interface/TrayNotifier/TrayNotifierCore.py" />
+        <option value="$PROJECT_DIR$/Interface/LiveLogs/LiveLogsCore.py" />
+        <option value="$PROJECT_DIR$/Interface/About/AboutCore.py" />
+        <option value="$PROJECT_DIR$/Framework/LiveLogs/LiveLogsCore.py" />
+        <option value="$PROJECT_DIR$/Framework/Logging/LoggingCore.py" />
+        <option value="$PROJECT_DIR$/Framework/Settings/SettingsCore.py" />
+        <option value="$PROJECT_DIR$/Interface/Settings/FileAndTransferSettingsCore.py" />
+        <option value="$PROJECT_DIR$/Interface/InterfaceCore.py" />
+        <option value="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" />
+        <option value="$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py" />
         <option value="$PROJECT_DIR$/ZScanProcessor.py" />
+        <option value="$PROJECT_DIR$/Resources/Constants/__init__.py" />
+        <option value="$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py" />
       </list>
     </option>
   </component>
@@ -68,10 +170,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths />
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="-7" />
     <option name="width" value="1294" />
     <option name="height" value="1417" />
@@ -97,12 +196,49 @@
             <path>
               <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
               <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
+              <item name="Framework" type="462c0819:PsiDirectoryNode" />
+              <item name="Logging" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
+              <item name="Framework" type="462c0819:PsiDirectoryNode" />
+              <item name="Logging" type="462c0819:PsiDirectoryNode" />
+              <item name="LiveLogs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
+              <item name="Framework" type="462c0819:PsiDirectoryNode" />
+              <item name="PreviewProcessor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
+              <item name="Framework" type="462c0819:PsiDirectoryNode" />
+              <item name="TrayNotifier" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
               <item name="Interface" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
               <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
+              <item name="Interface" type="462c0819:PsiDirectoryNode" />
+              <item name="Settings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="Constants" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
@@ -121,10 +257,16 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Resources/UI" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\caperren\Github\ZScan_Processor\Framework\Settings" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\caperren\Github\ZScan_Processor\Framework\Settings" />
+      <recent name="C:\Users\caperren\Github\ZScan_Processor\Framework\Logging" />
+      <recent name="C:\Users\caperren\Github\ZScan_Processor\Framework" />
       <recent name="C:\Users\caperren\Github\ZScan_Processor\Interface\DetectionSettings" />
     </key>
   </component>
@@ -148,9 +290,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Program Files\Python37\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
@@ -159,7 +301,9 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
-      <method>
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2">
         <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_pyuic5" />
       </method>
     </configuration>
@@ -175,33 +319,65 @@
       <option name="presentableId" value="Default" />
       <updated>1529620008757</updated>
     </task>
+    <task id="LOCAL-00001" summary="Begun MAJOR refactor. New UI is laid out, needs element names. Going to get the tray notifier working first.">
+      <created>1531431963073</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1531431963073</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
+    <frame x="-7" y="0" width="1294" height="1417" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3279939" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12617187" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" id="SciView" order="3" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26904377" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3996949" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3272311" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32657832" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3993808" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.32972136" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18084261" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3272311" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32430342" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3993808" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Python Console" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -209,223 +385,11 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="2" />
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Begun MAJOR refactor. New UI is laid out, needs element names. Going to get the tray notifier working first." />
+    <option name="LAST_COMMIT_MESSAGE" value="Begun MAJOR refactor. New UI is laid out, needs element names. Going to get the tray notifier working first." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
-          <folding>
-            <element signature="e#110#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2992">
-          <caret line="176" column="53" selection-start-line="176" selection-start-column="53" selection-end-line="176" selection-end-column="53" />
-          <folding>
-            <element signature="e#868#910#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/UI/ZScanUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="80" selection-start-line="80" selection-end-line="80" />
-          <folding>
-            <element signature="e#110#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2992">
-          <caret line="176" column="53" selection-start-line="176" selection-start-column="53" selection-end-line="176" selection-end-column="53" />
-          <folding>
-            <element signature="e#868#910#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
-          <folding>
-            <element signature="e#110#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2992">
-          <caret line="176" column="53" selection-start-line="176" selection-start-column="53" selection-end-line="176" selection-end-column="53" />
-          <folding>
-            <element signature="e#868#910#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2363">
-          <caret line="151" column="27" selection-start-line="150" selection-start-column="28" selection-end-line="151" selection-end-column="27" />
-          <folding>
-            <element signature="e#110#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1462">
-          <caret line="98" column="48" selection-start-line="98" selection-start-column="48" selection-end-line="98" selection-end-column="48" />
-          <folding>
-            <element signature="e#868#910#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/WorkerCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1105">
-          <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/Python36/Lib/site-packages/pyzbar/zbar_library.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/Python36/Lib/ctypes/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5899">
-          <caret line="347" column="43" selection-start-line="347" selection-start-column="43" selection-end-line="347" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2567">
-          <caret line="151" column="27" selection-start-line="150" selection-start-column="28" selection-end-line="151" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="80" column="53" selection-start-line="80" selection-start-column="53" selection-end-line="80" selection-end-column="53" />
-          <folding>
-            <element signature="e#868#910#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/WorkerCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/Python36/Lib/site-packages/pyzbar/zbar_library.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2567">
-          <caret line="151" column="27" selection-start-line="150" selection-start-column="28" selection-end-line="151" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="80" column="53" selection-start-line="80" selection-start-column="53" selection-end-line="80" selection-end-column="53" />
-          <folding>
-            <element signature="e#868#910#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/WorkerCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2567">
-          <caret line="151" column="27" selection-start-line="150" selection-start-column="28" selection-end-line="151" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1258">
-          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
-          <folding>
-            <element signature="e#868#910#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/WorkerCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1105">
-          <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2567">
-          <caret line="151" column="27" selection-start-line="150" selection-start-column="28" selection-end-line="151" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8109">
-          <caret line="477" lean-forward="true" selection-start-line="477" selection-end-line="477" />
-          <folding>
-            <element signature="e#868#910#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/WorkerCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1105">
-          <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files/Python36/Lib/site-packages/numpy/testing/print_coercion_tables.py" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_bundle/pydev_monkey.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -435,54 +399,116 @@
       </provider>
     </entry>
     <entry file="file://C:/Program Files/Python36/Lib/site-packages/pyzbar/pyzbar.py" />
-    <entry file="file://C:/Program Files/Python36/Lib/site-packages/pyzbar/zbar_library.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Program Files/Python36/Lib/site-packages/pyzbar/zbar_library.py" />
     <entry file="file://$PROJECT_DIR$/Resources/UI/temp.py" />
-    <entry file="file://C:/Program Files/Python36/Lib/ctypes/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="983">
-          <caret line="347" selection-start-line="347" selection-end-line="347" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/WorkerCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Program Files/Python36/Lib/ctypes/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/Framework/WorkerCore.py" />
+    <entry file="file://$PROJECT_DIR$/../ZScan_Processor - Original/ZScanProcessor.py" />
+    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py" />
     <entry file="file://$PROJECT_DIR$/Resources/UI/ZScanUI.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../ZScan_Processor - Original/ZScanProcessor.py">
+    <entry file="file://$PROJECT_DIR$/Interface/About/AboutCore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-607">
-          <caret line="86" column="55" lean-forward="true" selection-start-line="86" selection-start-column="55" selection-end-line="86" selection-end-column="55" />
+        <state relative-caret-position="480">
+          <caret line="34" column="44" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/DetectionPreviewCore.py">
+    <entry file="file://$PROJECT_DIR$/../ZScan_Processor - Original/Framework/LoggingCore.py" />
+    <entry file="file://$PROJECT_DIR$/Framework/Logging/LoggingCore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="193" lean-forward="true" selection-start-line="193" selection-end-line="193" />
+        <state relative-caret-position="629">
+          <caret line="84" column="53" lean-forward="true" selection-start-line="84" selection-start-column="53" selection-end-line="84" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/Settings/SettingsCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="55" column="77" selection-start-line="55" selection-start-column="77" selection-end-line="55" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1598">
+          <caret line="94" column="30" lean-forward="true" selection-start-line="94" selection-start-column="30" selection-end-line="94" selection-end-column="30" />
           <folding>
-            <element signature="e#868#910#0" expanded="true" />
+            <element signature="e#882#924#0" expanded="true" />
+            <marker date="1536973218811" expanded="true" signature="5458:5740" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="97" column="41" lean-forward="true" selection-start-line="97" selection-start-column="41" selection-end-line="97" selection-end-column="41" />
+        <state relative-caret-position="374">
+          <caret line="91" column="84" selection-start-line="91" selection-start-column="84" selection-end-line="91" selection-end-column="84" />
           <folding>
             <element signature="e#110#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/PIL/Image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3463">
+          <caret line="2538" selection-start-line="2538" selection-end-line="2538" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="8" selection-start-line="8" selection-end-line="10" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="46" column="28" selection-start-line="46" selection-start-column="28" selection-end-line="46" selection-end-column="28" />
+          <folding>
+            <element signature="e#865#907#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interface/Settings/FileAndTransferSettingsCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" selection-start-line="26" selection-end-line="27" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/Constants/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="1" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interface/InterfaceCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+          <folding>
+            <element signature="e#936#971#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="124" column="12" lean-forward="true" selection-start-line="124" selection-start-column="12" selection-end-line="124" selection-end-column="12" />
+          <folding>
+            <element signature="e#804#846#0" expanded="true" />
+            <element signature="e#4483#4487#0" />
+            <marker date="1536977096216" expanded="true" signature="5431:5450" ph="..." />
+            <marker date="1536977096216" expanded="true" signature="5528:5638" ph="..." />
+            <marker date="1536977096216" expanded="true" signature="5734:5787" ph="..." />
           </folding>
         </state>
       </provider>

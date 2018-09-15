@@ -12,35 +12,19 @@ import qdarkstyle
 from Resources.UI.ZScanUI import Ui_MainWindow as ZScanUI
 
 # Custom Imports
-# import Framework.StartupSystems.ROSMasterChecker as ROSMasterChecker
-# import Framework.LoggingSystems.Logger as Logger
-# import Framework.VideoSystems.RoverVideoCoordinator as RoverVideoCoordinator
-# import Framework.MapSystems.RoverMapCoordinator as RoverMapCoordinator
-# import Framework.InputSystems.JoystickControlSender as JoystickControlSender
-# import Framework.NavigationSystems.SpeedAndHeadingIndication as SpeedAndHeading
-# import Framework.NavigationSystems.WaypointsCoordinator as WaypointsCoordinator
-# import Framework.ArmSystems.ArmIndication as ArmIndication
-# import Framework.StatusSystems.StatusCore as StatusCore
-# import Framework.StatusSystems.UbiquitiStatusCore as UbiquitiStatusCore
-# import Framework.SettingsSystems.UbiquitiRadioSettings as UbiquitiRadioSettings
-# import Framework.InputSystems.SpaceNavControlSender as SpaceNavControlSender
+from Interface.InterfaceCore import Interface
+
+from Framework.TrayNotifier import TrayNotifierCore
+from Framework.Settings import SettingsCore
+from Framework.Logging import LoggingCore
+from Framework.Logging.LiveLogs import LiveLogsCore
+
+from Framework.PreviewProcessor import PreviewProcessorCore
+
 
 #####################################
 # Global Variables
 #####################################
-U = "Resources/Ui/left_screen.ui"
-
-#####################################
-# Class Organization
-#####################################
-# Class Name:
-#   "init"
-#   "run (if there)" - personal pref
-#   "private methods"
-#   "public methods, minus slots"
-#   "slot methods"
-#   "static methods"
-#   "run (if there)" - personal pref
 
 
 #####################################
@@ -80,6 +64,12 @@ class ZScanCore(QtCore.QObject):
         self.logger = logging.getLogger("zscanprocessor")
 
         self.shared_objects = {
+            "core_signals": {
+                "start": self.start_threads_signal,
+                "kill": self.kill_threads_signal,
+                "connect_signals_and_slots": self.connect_signals_and_slots_signal
+            },
+
             "screens": {},
             "regular_classes": {},
             "threaded_classes": {}
@@ -90,18 +80,26 @@ class ZScanCore(QtCore.QObject):
             self.create_application_window(ZScanWindow, "Zebrafish Scan Processor", (1536, 1024))
 
         # ##### Instantiate Regular Classes ######
+        self.__add_non_thread("Settings", SettingsCore.Settings())
+        # QtCore.QSettings().clear()
+        # QtGui.QGuiApplication.exit()
+        self.__add_non_thread("Logger", LoggingCore.Logger())
+        self.__add_non_thread("Tray Notifier", TrayNotifierCore.TrayNotifier(self.shared_objects))
+        self.__add_non_thread("Interface", Interface(self.shared_objects))
 
         # ##### Instantiate Threaded Classes ######
-        # self.__add_thread("Video Coordinator", RoverVideoCoordinator.RoverVideoCoordinator(self.shared_objects))
+        self.__add_thread("Live Logs", LiveLogsCore.LiveLogs(self.shared_objects))
+        self.__add_thread("Preview Processor", PreviewProcessorCore.PreviewProcessor(self.shared_objects))
 
         self.connect_signals_and_slots_signal.emit()
         self.__connect_signals_to_slots()
         self.start_threads_signal.emit()
 
+    def __add_non_thread(self, name, instance):
+        self.shared_objects["regular_classes"][name] = instance
+
     def __add_thread(self, thread_name, instance):
         self.shared_objects["threaded_classes"][thread_name] = instance
-        instance.setup_signals(self.start_threads_signal, self.connect_signals_and_slots_signal,
-                               self.kill_threads_signal)
 
     def __connect_signals_to_slots(self):
         self.shared_objects["screens"]["main_screen"].exit_requested_signal.connect(self.on_exit_requested__slot)
