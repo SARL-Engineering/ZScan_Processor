@@ -341,23 +341,9 @@ background-color:rgb(202, 202, 202);
            </spacer>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox">
-            <property name="text">
-             <string>Continuous Preview</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="checkBox_2">
             <property name="text">
              <string>Continuous Detection</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton">
-            <property name="text">
-             <string>Single Preview</string>
             </property>
            </widget>
           </item>
@@ -436,6 +422,9 @@ background-color:rgb(202, 202, 202);
               </property>
               <property name="text">
                <string/>
+              </property>
+              <property name="scaledContents">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -652,6 +641,23 @@ background-color:rgb(202, 202, 202);
                   </item>
                   <item row="3" column="1">
                    <widget class="QSpinBox" name="top_h12_y_spinbox">
+                    <property name="suffix">
+                     <string> px</string>
+                    </property>
+                    <property name="maximum">
+                     <number>99999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_6">
+                    <property name="text">
+                     <string>Well Radius</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QSpinBox" name="top_well_radius_spinbox">
                     <property name="suffix">
                      <string> px</string>
                     </property>
@@ -1534,6 +1540,23 @@ background-color:rgb(202, 202, 202);
                   </item>
                   <item row="3" column="1">
                    <widget class="QSpinBox" name="bottom_h12_y_spinbox">
+                    <property name="suffix">
+                     <string> px</string>
+                    </property>
+                    <property name="maximum">
+                     <number>99999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_2">
+                    <property name="text">
+                     <string>Well Radius</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QSpinBox" name="bottom_well_radius_spinbox">
                     <property name="suffix">
                      <string> px</string>
                     </property>

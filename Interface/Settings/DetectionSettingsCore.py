@@ -59,6 +59,7 @@ class DetectionSettings(QtCore.QObject):
         self.top_a1_y_spinbox = self.main_screen.top_a1_y_spinbox  # type: QtWidgets.QSpinBox
         self.top_h12_x_spinbox = self.main_screen.top_h12_x_spinbox  # type: QtWidgets.QSpinBox
         self.top_h12_y_spinbox = self.main_screen.top_h12_y_spinbox  # type: QtWidgets.QSpinBox
+        self.top_well_radius_spinbox = self.main_screen.top_well_radius_spinbox  # type: QtWidgets.QSpinBox
 
         self.top_barcode_x_size_spinbox = self.main_screen.top_barcode_x_size_spinbox  # type: QtWidgets.QSpinBox
         self.top_barcode_y_size_spinbox = self.main_screen.top_barcode_y_size_spinbox  # type: QtWidgets.QSpinBox
@@ -75,6 +76,7 @@ class DetectionSettings(QtCore.QObject):
         self.bottom_a1_y_spinbox = self.main_screen.bottom_a1_y_spinbox  # type: QtWidgets.QSpinBox
         self.bottom_h12_x_spinbox = self.main_screen.bottom_h12_x_spinbox  # type: QtWidgets.QSpinBox
         self.bottom_h12_y_spinbox = self.main_screen.bottom_h12_y_spinbox  # type: QtWidgets.QSpinBox
+        self.bottom_well_radius_spinbox = self.main_screen.bottom_well_radius_spinbox  # type: QtWidgets.QSpinBox
 
         self.bottom_barcode_x_size_spinbox = self.main_screen.bottom_barcode_x_size_spinbox  # type: QtWidgets.QSpinBox
         self.bottom_barcode_y_size_spinbox = self.main_screen.bottom_barcode_y_size_spinbox  # type: QtWidgets.QSpinBox
