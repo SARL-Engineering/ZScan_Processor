@@ -22,6 +22,7 @@ import logging
 import cv2
 from datetime import datetime
 import os
+import time
 
 # Custom imports
 from Resources.UI.ZScanUI import Ui_MainWindow as ZScanUI
@@ -32,10 +33,16 @@ from Framework.DetectionProcessing import DetectionProcessorCore
 #####################################
 # Global Variables
 #####################################
+STARTUP_INITIAL_DELAY = 5000  # Milli-seconds
+
 CAP_A_OFFSET = 65
 WELL_COMPRESSION_LEVEL = 0
 PLATE_COMPRESSION_LEVEL = 6
 FAILED_COMPRESSION_LEVEL = 0
+
+NO_PLATE_MEAN_THRESHOLD = 235
+
+MODIFICATION_DELAY_TO_PROCESS = 10  # Seconds
 
 
 #####################################
@@ -63,16 +70,18 @@ class ScheduleProcessor(QtCore.QThread):
         self.run_thread_flag = True
 
         # ########## Class Variables ##########
+        self.watched_files = {}
 
         # ########## Setup program start signal connections ##########
         self.setup_signals()
 
     def run(self):
+        self.msleep(STARTUP_INITIAL_DELAY)  # Used so you can change settings after initial startup
         self.logger.debug("Schedule Processor Thread Starting...")
 
         while self.run_thread_flag:
             self.check_and_run_scheduled_processes()
-            self.msleep(10)
+            self.msleep(1000)
 
         self.logger.debug("Schedule Processor Thread Stopping...")
 
@@ -89,11 +98,10 @@ class ScheduleProcessor(QtCore.QThread):
         return False
 
     def check_for_new_files_and_process(self):
-        input_path = self.settings.value("file_and_transfer_settings/input_images_path", type=str)
+        valid_files = self.find_files_ready_to_process()
 
-        for root, directories, files in os.walk(input_path):
-            for filename in files:
-                self.process_full_scan_from_path(os.path.join(root, filename))
+        for file in valid_files:
+            self.process_full_scan_from_path(file)
 
     def process_full_scan_from_path(self, path):
         try:
@@ -130,7 +138,31 @@ class ScheduleProcessor(QtCore.QThread):
                 self.process_failed_plate(bottom_plate_image, "bottom", path)
 
             # ##### Remove original image if everything was successful #####
+            should_unlink = False
+
             if top_barcode and bottom_barcode:
+                should_unlink = True
+
+            elif not top_barcode and not bottom_barcode:
+                top_plate_mean = cv2.mean(top_plate_image)[0]
+                bottom_plate_mean = cv2.mean(bottom_plate_image)[0]
+
+                if top_plate_mean > NO_PLATE_MEAN_THRESHOLD and bottom_plate_mean > NO_PLATE_MEAN_THRESHOLD:
+                    should_unlink = True
+
+            elif not top_barcode:
+                top_plate_mean = cv2.mean(top_plate_image)[0]
+
+                if top_plate_mean > NO_PLATE_MEAN_THRESHOLD:
+                    should_unlink = True
+
+            elif not bottom_barcode:
+                bottom_plate_mean = cv2.mean(bottom_plate_image)[0]
+
+                if bottom_plate_mean > NO_PLATE_MEAN_THRESHOLD:
+                    should_unlink = True
+
+            if should_unlink:
                 os.unlink(path)
             else:
                 self.backup_original_on_failure(path)
@@ -214,6 +246,42 @@ class ScheduleProcessor(QtCore.QThread):
         failed_image_name = "%s/%s_original.tif" % (failed_path, iso_datetime_string)
 
         os.rename(path, failed_image_name)
+
+    def find_files_ready_to_process(self):
+        # Get pertinent settings
+        input_path = self.settings.value("file_and_transfer_settings/input_images_path", type=str)
+
+        all_files = []
+
+        # Get all new files
+        for root, directories, files in os.walk(input_path):
+            for filename in files:
+                file_path = os.path.join(root, filename)
+
+                all_files.append(file_path)
+
+                if file_path not in self.watched_files:
+                    self.watched_files[file_path] = time.time()
+
+        # Remove any files from watch that are no longer present
+        dead_files = [file for file in self.watched_files.keys() if file not in all_files]
+        for dead_file in dead_files:
+            del self.watched_files[dead_file]
+
+        # Go through files, build new list of all files that haven't had a file lock in a long time
+        files_valid_to_process = []
+
+        for file_path, last_write_attempt in self.watched_files.items():
+            try:
+                os.rename(file_path, file_path)
+            except OSError:
+                self.watched_files[file_path] = time.time()
+
+            if (time.time() - last_write_attempt) > MODIFICATION_DELAY_TO_PROCESS:
+                files_valid_to_process.append(file_path)
+
+        # Return the new list
+        return files_valid_to_process
 
     def detect_barcode(self, image, top_or_bottom):
         processing_dictionary = {

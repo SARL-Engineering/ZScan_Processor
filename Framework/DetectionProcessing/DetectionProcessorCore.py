@@ -26,8 +26,8 @@ from Framework.DetectionProcessing import DetectionWorkerCore
 #####################################
 # Global Variables
 #####################################
-SCAN_STEP_SIZE_X = 100
-SCAN_STEP_SIZE_Y = 250
+SCAN_STEP_SIZE_X = 200
+SCAN_STEP_SIZE_Y = 350
 
 
 #####################################
