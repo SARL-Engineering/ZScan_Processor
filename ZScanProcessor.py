@@ -20,6 +20,7 @@ from Framework.Logging import LoggingCore
 from Framework.Logging.LiveLogs import LiveLogsCore
 
 from Framework.PreviewProcessor import PreviewProcessorCore
+from Framework.ScheduledProcessing import ScheduledProcessingCore
 
 
 #####################################
@@ -90,6 +91,7 @@ class ZScanCore(QtCore.QObject):
         # ##### Instantiate Threaded Classes ######
         self.__add_thread("Live Logs", LiveLogsCore.LiveLogs(self.shared_objects))
         self.__add_thread("Preview Processor", PreviewProcessorCore.PreviewProcessor(self.shared_objects))
+        self.__add_thread("Schedule Processor", ScheduledProcessingCore.ScheduleProcessor(self.shared_objects))
 
         self.connect_signals_and_slots_signal.emit()
         self.__connect_signals_to_slots()

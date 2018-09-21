@@ -341,14 +341,14 @@ background-color:rgb(202, 202, 202);
            </spacer>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_2">
+           <widget class="QCheckBox" name="continuous_detection_checkbox">
             <property name="text">
              <string>Continuous Detection</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="single_detection_button">
             <property name="text">
              <string>Single Detection</string>
             </property>
@@ -854,7 +854,7 @@ background-color:rgb(202, 202, 202);
                   <item row="0" column="1">
                    <widget class="QSpinBox" name="top_threshold_center_spinbox">
                     <property name="suffix">
-                     <string> px</string>
+                     <string/>
                     </property>
                     <property name="maximum">
                      <number>255</number>
@@ -864,7 +864,7 @@ background-color:rgb(202, 202, 202);
                   <item row="1" column="1">
                    <widget class="QSpinBox" name="top_threshold_range_spinbox">
                     <property name="suffix">
-                     <string> px</string>
+                     <string/>
                     </property>
                     <property name="maximum">
                      <number>255</number>
@@ -1154,17 +1154,81 @@ background-color:rgb(202, 202, 202);
                  </layout>
                 </item>
                 <item>
-                 <spacer name="verticalSpacer_2">
+                 <widget class="Line" name="line_15">
                   <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                   <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_9">
+                  <item>
+                   <widget class="QLabel" name="label_20">
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Well Preview</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_25">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_17">
+                  <item>
+                   <widget class="QLabel" name="top_plate_well_preview_image_label">
+                    <property name="minimumSize">
+                     <size>
+                      <width>300</width>
+                      <height>300</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>300</width>
+                      <height>300</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color:black;</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </item>
@@ -1425,17 +1489,81 @@ background-color:rgb(202, 202, 202);
                  </layout>
                 </item>
                 <item>
-                 <spacer name="verticalSpacer_6">
+                 <widget class="Line" name="line_16">
                   <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                   <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_23">
+                  <item>
+                   <widget class="QLabel" name="label_22">
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Well Preview</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_27">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_22">
+                  <item>
+                   <widget class="QLabel" name="bottom_plate_well_preview_image_label">
+                    <property name="minimumSize">
+                     <size>
+                      <width>300</width>
+                      <height>300</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>300</width>
+                      <height>300</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color:black;</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_26">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </item>
@@ -1739,7 +1867,7 @@ background-color:rgb(202, 202, 202);
                   <item row="0" column="1">
                    <widget class="QSpinBox" name="bottom_threshold_center_spinbox">
                     <property name="suffix">
-                     <string> px</string>
+                     <string/>
                     </property>
                     <property name="maximum">
                      <number>255</number>
@@ -1763,7 +1891,7 @@ background-color:rgb(202, 202, 202);
                   <item row="1" column="1">
                    <widget class="QSpinBox" name="bottom_threshold_range_spinbox">
                     <property name="suffix">
-                     <string> px</string>
+                     <string/>
                     </property>
                     <property name="maximum">
                      <number>255</number>
