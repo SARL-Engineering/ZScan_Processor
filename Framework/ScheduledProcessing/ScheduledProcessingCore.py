@@ -1,18 +1,3 @@
-# This file is part of "ZScan Processor".
-#
-# "ZScan Processor" is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# "ZScan Processor" is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with "ZScan Processor".  If not, see <http://www.gnu.org/licenses/>.
-
 #####################################
 # Imports
 #####################################
@@ -27,6 +12,7 @@ import shutil
 
 # Custom imports
 from Resources.UI.ZScanUI import Ui_MainWindow as ZScanUI
+from Framework.TrayNotifier.TrayNotifierCore import TrayNotifier
 from Resources import Constants
 
 from Framework.DetectionProcessing import DetectionProcessorCore
@@ -60,12 +46,12 @@ class ScheduleProcessor(QtCore.QThread):
     def __init__(self, shared_objects):
         super(ScheduleProcessor, self).__init__()
 
-        # ########## Reference to top level window ##########
+        # ########## References to shared objects and gui elements ##########
         self.shared_objects = shared_objects
         self.core_signals = self.shared_objects["core_signals"]
         self.main_screen = self.shared_objects["screens"]["main_screen"]  # type: ZScanUI
+        self.tray_notifier = self.shared_objects["regular_classes"]["Tray Notifier"]  # type: TrayNotifier
 
-        # ########## References to GUI Elements ##########
         self.main_tab_widget = self.main_screen.main_tab_widget  # type: QtWidgets.QTabWidget
         self.input_images_line_edit = self.main_screen.file_transfer_input_images_line_edit  # type: QtWidgets.QLineEdit
         self.failed_rename_line_edit = self.main_screen.file_transfer_failed_rename_images_line_edit  # type: QtWidgets.QLineEdit
@@ -106,14 +92,15 @@ class ScheduleProcessor(QtCore.QThread):
 
     def check_and_run_scheduled_processes(self):
         main_tab_on_logs = self.main_tab_widget.currentWidget().objectName() == "logs_tab"
-        plate_locations_valid = True
+        app_hidden = self.main_screen.isHidden()
 
+        plate_locations_valid = True
         for line_edit in self.plate_line_edits:
             if line_edit.text() == NO_PATH_STRING:
                 plate_locations_valid = False
                 break
 
-        if main_tab_on_logs:
+        if main_tab_on_logs or app_hidden:
             if plate_locations_valid:
                 self.set_main_tab_widget_enabled__signal.emit(False)
 
@@ -153,17 +140,26 @@ class ScheduleProcessor(QtCore.QThread):
         return False
 
     def do_network_transfer(self):
-        local_output_path = self.settings.value("file_and_transfer_settings/local_output_path", type=str)
-        network_path = self.settings.value("file_and_transfer_settings/network_transfer_path", type=str)
+        try:
+            local_output_path = self.settings.value("file_and_transfer_settings/local_output_path", type=str)
+            network_path = self.settings.value("file_and_transfer_settings/network_transfer_path", type=str)
 
-        # Make destination files/folders overwriting if needed, unlink transferred files
-        self.copy_files(local_output_path, network_path)
+            # Make destination files/folders overwriting if needed, unlink transferred files
+            self.logger.info("Beginning network transfer.")
+            self.tray_notifier.show_informational_message("Network transfer started!")
 
-        # Clear empty local directories as needed
-        self.delete_empty_folders(local_output_path, delete_path_itself=False)
+            self.copy_files(local_output_path, network_path)
 
-    @staticmethod
-    def copy_files(source, destination):
+            self.logger.info("Network transfer finished.")
+            self.tray_notifier.show_informational_message("Network transfer complete!")
+
+            # Clear empty local directories as needed
+            self.delete_empty_folders(local_output_path, delete_path_itself=False)
+        except Exception as e:
+            self.logger.exception("Network transfer failed!")
+            self.tray_notifier.show_failure_message("Network transfer failed!")
+
+    def copy_files(self, source, destination):
         for root, directories, files in os.walk(source):
             destination_dir = root.replace(source, destination)
 
@@ -180,17 +176,16 @@ class ScheduleProcessor(QtCore.QThread):
                 shutil.copy2(source_path, destination_path)
 
                 if os.path.exists(destination_path):
+                    self.logger.info("Transferred %s to %s." % (file_to_transfer, destination_dir))
                     os.unlink(source_path)
 
     def delete_empty_folders(self, path, delete_path_itself=True):
         items_in_root = os.listdir(path)
+        for item_path in items_in_root:
+            full_path = os.path.join(path, item_path)
 
-        if items_in_root:
-            for item_path in items_in_root:
-                full_path = os.path.join(path, item_path)
-
-                if os.path.isdir(full_path):
-                    self.delete_empty_folders(full_path)
+            if os.path.isdir(full_path):
+                self.delete_empty_folders(full_path)
 
         items_in_root = os.listdir(path)
         if len(items_in_root) == 0 and delete_path_itself:
@@ -223,6 +218,7 @@ class ScheduleProcessor(QtCore.QThread):
             # ##### Handle successful and failed barcode reads #####
             if top_barcode:
                 self.logger.info("Found top barcode with value %s. Processing outputs." % top_barcode)
+                self.tray_notifier.show_informational_message("Processing %s." % top_barcode)
                 self.process_barcoded_plate_into_output_folder(top_plate_image, "top", top_barcode, path)
             else:
                 self.logger.warning("Failed to detect top barcode for image with path \"%s\". Moving to failed." % path)
@@ -230,6 +226,7 @@ class ScheduleProcessor(QtCore.QThread):
 
             if bottom_barcode:
                 self.logger.info("Found bottom barcode with value %s. Processing outputs." % bottom_barcode)
+                self.tray_notifier.show_informational_message("Processing %s." % bottom_barcode)
                 self.process_barcoded_plate_into_output_folder(bottom_plate_image, "bottom", bottom_barcode, path)
             else:
                 self.logger.warning(
@@ -267,7 +264,8 @@ class ScheduleProcessor(QtCore.QThread):
                 self.backup_original_on_failure(path)
 
         except Exception as e:
-            self.logger.exception("Detection process failed" % path)
+            self.logger.exception("Detection processing failed for path: " % path)
+            self.tray_notifier.show_failure_message("Detection processing failed!")
 
     def process_barcoded_plate_into_output_folder(self, image, top_or_bottom, barcode, combined_path):
         # Get pertinent settings

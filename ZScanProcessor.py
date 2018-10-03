@@ -26,6 +26,7 @@ from Framework.ScheduledProcessing import ScheduledProcessingCore
 #####################################
 # Global Variables
 #####################################
+UI_LOGO = "Resources/UI/logo_small.jpg"
 
 
 #####################################
@@ -43,6 +44,10 @@ class ZScanWindow(QtWidgets.QMainWindow, ZScanUI):
 
         QtWidgets.QShortcut(QtGui.QKeySequence("Ctrl+Q"), self, self.exit_requested_signal.emit)
 
+    def closeEvent(self, event):
+        self.hide()
+        event.ignore()
+
 
 #####################################
 # GroundStation Class Definition
@@ -57,9 +62,6 @@ class ZScanCore(QtCore.QObject):
     def __init__(self, parent=None,):
         # noinspection PyArgumentList
         super(ZScanCore, self).__init__(parent)
-
-        # ##### Setup the Logger Immediately #####
-        # self.logger_setup_class = Logger.Logger(console_output=True)  # Doesn't need to be shared
 
         # ########## Get the Pick And Plate instance of the logger ##########
         self.logger = logging.getLogger("zscanprocessor")
@@ -82,7 +84,7 @@ class ZScanCore(QtCore.QObject):
 
         # ##### Instantiate Regular Classes ######
         self.__add_non_thread("Settings", SettingsCore.Settings())
-        # QtCore.QSettings().clear()
+        # QtCore.QSettings().clear()  # Only used to reset when testing defaults on "fresh install"
         # QtGui.QGuiApplication.exit()
         self.__add_non_thread("Logger", LoggingCore.Logger())
         self.__add_non_thread("Tray Notifier", TrayNotifierCore.TrayNotifier(self.shared_objects))
@@ -134,6 +136,14 @@ if __name__ == "__main__":
     # ########## Start the QApplication Framework ##########
     application = QtWidgets.QApplication(sys.argv)  # Create the ase qt gui application
     application.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+
+    app_icon = QtGui.QIcon()
+    app_icon.addFile(UI_LOGO, QtCore.QSize(16, 16))
+    app_icon.addFile(UI_LOGO, QtCore.QSize(24, 24))
+    app_icon.addFile(UI_LOGO, QtCore.QSize(32, 32))
+    app_icon.addFile(UI_LOGO, QtCore.QSize(48, 48))
+    app_icon.addFile(UI_LOGO, QtCore.QSize(256, 256))
+    application.setWindowIcon(app_icon)
 
     # ########## Set Organization Details for QSettings ##########
     QtCore.QCoreApplication.setOrganizationName("SARL")

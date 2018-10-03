@@ -1,22 +1,3 @@
-"""
-    This file contains the logging core sub-class
-"""
-
-# This file is part of "ZScan Processor".
-#
-# "ZScan Processor" is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# "ZScan Processor" is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with "ZScan Processor".  If not, see <http://www.gnu.org/licenses/>.
-
 #####################################
 # Imports
 #####################################
@@ -50,7 +31,7 @@ class Logger(QtCore.QObject):
         self.logger = logging.getLogger("zscanprocessor")
 
         # ########## Set variables with useful paths ##########
-        self.appdata_base_directory = self.settings.value("file_transfer_and_settings/appdata_directory", type=str)
+        self.appdata_base_directory = self.settings.value("file_and_transfer_settings/appdata_directory", type=str)
         self.log_directory = self.appdata_base_directory + "\\logs"
         self.log_file_path = self.log_directory + "\\log.txt"
 
