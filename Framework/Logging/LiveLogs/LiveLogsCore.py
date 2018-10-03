@@ -114,7 +114,7 @@ class LiveLogs(QtCore.QThread):
 
     def __open_log_file(self):
         # Get the log file path
-        appdata_base_directory = self.settings.value("file_transfer_and_settings/appdata_directory", type=str)
+        appdata_base_directory = self.settings.value("file_and_transfer_settings/appdata_directory", type=str)
         log_directory = appdata_base_directory + "\\logs"
         self.log_file_path = log_directory + "\\log.txt"
 

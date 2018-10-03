@@ -62,4 +62,4 @@ class Settings(QtCore.QObject):
         app_data_dir = os.environ["APPDATA"]
         folder_name = "ZScanProcessor"
         full_path = app_data_dir + "\\" + folder_name
-        self.settings.setValue("file_transfer_and_settings/appdata_directory", full_path)
+        self.settings.setValue("file_and_transfer_settings/appdata_directory", full_path)

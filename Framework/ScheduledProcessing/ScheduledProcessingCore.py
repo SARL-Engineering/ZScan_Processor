@@ -20,9 +20,10 @@
 from PyQt5 import QtCore, QtWidgets, QtGui
 import logging
 import cv2
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import time
+import shutil
 
 # Custom imports
 from Resources.UI.ZScanUI import Ui_MainWindow as ZScanUI
@@ -35,6 +36,8 @@ from Framework.DetectionProcessing import DetectionProcessorCore
 #####################################
 STARTUP_INITIAL_DELAY = 5000  # Milli-seconds
 
+SETTINGS_WARNING_DELAY = 300  # Seconds
+
 CAP_A_OFFSET = 65
 WELL_COMPRESSION_LEVEL = 0
 PLATE_COMPRESSION_LEVEL = 6
@@ -43,12 +46,17 @@ FAILED_COMPRESSION_LEVEL = 0
 NO_PLATE_MEAN_THRESHOLD = 235
 
 MODIFICATION_DELAY_TO_PROCESS = 10  # Seconds
+TRANSFER_VALID_FUTURE_WINDOW = 10  # Seconds
+
+NO_PATH_STRING = "*** No Path Set ***"
 
 
 #####################################
 # PreviewProcessor Definition
 #####################################
 class ScheduleProcessor(QtCore.QThread):
+    set_main_tab_widget_enabled__signal = QtCore.pyqtSignal(bool)
+
     def __init__(self, shared_objects):
         super(ScheduleProcessor, self).__init__()
 
@@ -59,6 +67,14 @@ class ScheduleProcessor(QtCore.QThread):
 
         # ########## References to GUI Elements ##########
         self.main_tab_widget = self.main_screen.main_tab_widget  # type: QtWidgets.QTabWidget
+        self.input_images_line_edit = self.main_screen.file_transfer_input_images_line_edit  # type: QtWidgets.QLineEdit
+        self.failed_rename_line_edit = self.main_screen.file_transfer_failed_rename_images_line_edit  # type: QtWidgets.QLineEdit
+        self.local_output_line_edit = self.main_screen.file_transfer_local_output_line_edit  # type: QtWidgets.QLineEdit
+        self.network_transfer_line_edit = self.main_screen.file_transfer_network_transfer_line_edit  # type: QtWidgets.QLineEdit
+        self.transfer_time_time_edit = self.main_screen.file_transfer_transfer_time_edit  # type: QtWidgets.QTimeEdit
+
+        self.plate_line_edits = [self.input_images_line_edit, self.failed_rename_line_edit,
+                                 self.local_output_line_edit, self.network_transfer_line_edit]
 
         # ########## Get the settings instance ##########
         self.settings = QtCore.QSettings()
@@ -70,7 +86,10 @@ class ScheduleProcessor(QtCore.QThread):
         self.run_thread_flag = True
 
         # ########## Class Variables ##########
+        self.last_warning_shown_time = 0
         self.watched_files = {}
+        self.next_transfer_time = datetime.now() - timedelta(days=1)  # Set in the past to get startup logic to work
+        self.transfer_attempted = True
 
         # ########## Setup program start signal connections ##########
         self.setup_signals()
@@ -86,16 +105,96 @@ class ScheduleProcessor(QtCore.QThread):
         self.logger.debug("Schedule Processor Thread Stopping...")
 
     def check_and_run_scheduled_processes(self):
-        main_tab_not_on_settings = self.main_tab_widget.currentWidget().objectName() != "settings_tab"
+        main_tab_on_logs = self.main_tab_widget.currentWidget().objectName() == "logs_tab"
+        plate_locations_valid = True
 
-        if main_tab_not_on_settings:
-            if self.is_time_to_transfer():
-                pass  # Do transfer stuff here
+        for line_edit in self.plate_line_edits:
+            if line_edit.text() == NO_PATH_STRING:
+                plate_locations_valid = False
+                break
+
+        if main_tab_on_logs:
+            if plate_locations_valid:
+                self.set_main_tab_widget_enabled__signal.emit(False)
+
+                if self.is_time_to_transfer():
+                    self.do_network_transfer()
+                else:
+                    self.check_for_new_files_and_process()
+
+                self.set_main_tab_widget_enabled__signal.emit(True)
             else:
-                self.check_for_new_files_and_process()
+                if (time.time() - self.last_warning_shown_time) > SETTINGS_WARNING_DELAY:
+                    self.logger.warning("Cannot process as paths have not been set. Please enter valid paths.")
+                    self.last_warning_shown_time = time.time()
 
     def is_time_to_transfer(self):
+        # Get transfer time
+        network_transfer_time_string = self.settings.value("file_and_transfer_settings/network_transfer_time", type=str)
+        network_transfer_time = datetime.strptime(network_transfer_time_string, "%I:%M %p").time()
+
+        # Check if date is the same, if not, update next transfer time to one for the current day, reset flags
+        current_date = datetime.now().date()
+        if current_date != self.next_transfer_time.date():
+            self.next_transfer_time = datetime.combine(current_date, network_transfer_time)
+            self.transfer_attempted = False
+
+        # If next_transfer + offset > now > next transfer time AND not already_run, run transfer, set already_run
+        end_valid_window_datetime = self.next_transfer_time + timedelta(seconds=TRANSFER_VALID_FUTURE_WINDOW)
+        start_valid_window_datetime = self.next_transfer_time
+        current_datetime = datetime.now()
+
+        in_valid_transfer_window = start_valid_window_datetime <= current_datetime <= end_valid_window_datetime
+
+        if in_valid_transfer_window and not self.transfer_attempted:
+            self.transfer_attempted = True
+            return True
+
         return False
+
+    def do_network_transfer(self):
+        local_output_path = self.settings.value("file_and_transfer_settings/local_output_path", type=str)
+        network_path = self.settings.value("file_and_transfer_settings/network_transfer_path", type=str)
+
+        # Make destination files/folders overwriting if needed, unlink transferred files
+        self.copy_files(local_output_path, network_path)
+
+        # Clear empty local directories as needed
+        self.delete_empty_folders(local_output_path, delete_path_itself=False)
+
+    @staticmethod
+    def copy_files(source, destination):
+        for root, directories, files in os.walk(source):
+            destination_dir = root.replace(source, destination)
+
+            if not os.path.exists(destination_dir):
+                os.mkdir(destination_dir)
+
+            for file_to_transfer in files:
+                source_path = os.path.join(root, file_to_transfer)
+                destination_path = os.path.join(destination_dir, file_to_transfer)
+
+                if os.path.exists(destination_path):
+                    os.remove(destination_path)
+
+                shutil.copy2(source_path, destination_path)
+
+                if os.path.exists(destination_path):
+                    os.unlink(source_path)
+
+    def delete_empty_folders(self, path, delete_path_itself=True):
+        items_in_root = os.listdir(path)
+
+        if items_in_root:
+            for item_path in items_in_root:
+                full_path = os.path.join(path, item_path)
+
+                if os.path.isdir(full_path):
+                    self.delete_empty_folders(full_path)
+
+        items_in_root = os.listdir(path)
+        if len(items_in_root) == 0 and delete_path_itself:
+            os.rmdir(path)
 
     def check_for_new_files_and_process(self):
         valid_files = self.find_files_ready_to_process()
@@ -191,14 +290,9 @@ class ScheduleProcessor(QtCore.QThread):
         wells_folder_path = root_barcode_folder_path + "/wells"
         full_plate_folder_path = root_barcode_folder_path + "/full_plate"
 
-        if not os.path.exists(wells_folder_path):
-            os.mkdir(root_barcode_folder_path)
-
-        if not os.path.exists(wells_folder_path):
-            os.mkdir(wells_folder_path)
-
-        if not os.path.exists(full_plate_folder_path):
-            os.mkdir(full_plate_folder_path)
+        for path in [root_barcode_folder_path, wells_folder_path, full_plate_folder_path]:
+            if not os.path.exists(path):
+                os.mkdir(path)
 
         # Split plate into named wells and save
         offset_per_well_x = (h12_x_location - a1_x_location) / (num_columns - 1)
@@ -253,7 +347,7 @@ class ScheduleProcessor(QtCore.QThread):
 
         all_files = []
 
-        # Get all new files
+        # Get all files
         for root, directories, files in os.walk(input_path):
             for filename in files:
                 file_path = os.path.join(root, filename)
@@ -334,9 +428,13 @@ class ScheduleProcessor(QtCore.QThread):
 
         return image[pt1_y:pt2_y, pt1_x:pt2_x].copy()
 
+    def on_transfer_timeedit_changed__slot(self):
+        self.next_transfer_time = datetime.now() - timedelta(days=1)  # Set in the past to reset valid transfer
+
     # noinspection PyUnresolvedReferences
     def connect_signals_and_slots(self):
-        pass
+        self.set_main_tab_widget_enabled__signal.connect(self.main_tab_widget.setEnabled)
+        self.transfer_time_time_edit.timeChanged.connect(self.on_transfer_timeedit_changed__slot)
 
     def on_kill_threads__slot(self):
         self.run_thread_flag = False
