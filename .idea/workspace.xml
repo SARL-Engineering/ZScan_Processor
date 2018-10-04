@@ -2,18 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Zebrafish Scan Processor.spec" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build_exe.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logo_small.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ZScan_Processor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ZScan_Processor.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionWorkerCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionWorkerCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/Dependencies/zbar-0.10-setup.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/Dependencies/vcredist_x64.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/UI/logo_small.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/logo_small.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ZScanProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/ZScanProcessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Zebrafish Scan Processor.spec" beforeDir="false" afterPath="$PROJECT_DIR$/Zebrafish Scan Processor.spec" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,12 +39,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="LICENSE" value="1" />
+          <entry key="LICENSE" value="2" />
           <entry key="bat" value="1" />
-          <entry key="md" value="1" />
+          <entry key="md" value="2" />
           <entry key="png" value="3" />
           <entry key="pstat" value="1" />
-          <entry key="py" value="72" />
+          <entry key="py" value="74" />
           <entry key="spec" value="3" />
           <entry key="txt" value="1" />
         </counts>
@@ -57,10 +52,10 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="3" />
-          <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="6" />
+          <entry key="Markdown" value="2" />
+          <entry key="PLAIN_TEXT" value="7" />
           <entry key="Profiler Session" value="1" />
-          <entry key="Python" value="72" />
+          <entry key="Python" value="74" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -68,18 +63,18 @@
           <entry key="Python Console" value="1010" />
           <entry key="bat" value="473" />
           <entry key="dummy" value="67" />
-          <entry key="md" value="184" />
+          <entry key="md" value="291" />
           <entry key="py" value="22329" />
-          <entry key="spec" value="117" />
-          <entry key="txt" value="2276" />
+          <entry key="spec" value="132" />
+          <entry key="txt" value="2380" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bat" value="264" />
-          <entry key="Markdown" value="184" />
-          <entry key="PLAIN_TEXT" value="2669" />
+          <entry key="Markdown" value="291" />
+          <entry key="PLAIN_TEXT" value="2788" />
           <entry key="Python" value="23339" />
         </counts>
       </usages-collector>
@@ -97,11 +92,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Zebrafish Scan Processor.spec">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" column="22" lean-forward="true" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+            <state relative-caret-position="187">
+              <caret line="11" column="40" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -136,6 +149,7 @@
       <find>&quot;Resources/app_icon.png&quot;</find>
       <find>&quot;ZScan Processor&quot;</find>
       <find>--</find>
+      <find>logo_small</find>
     </findStrings>
     <replaceStrings>
       <replace>top</replace>
@@ -162,7 +176,6 @@
         <option value="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionProcessor.py" />
         <option value="$PROJECT_DIR$/Resources/Constants/__init__.py" />
         <option value="$PROJECT_DIR$/testing.py" />
-        <option value="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" />
         <option value="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" />
         <option value="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionProcessorCore.py" />
         <option value="$PROJECT_DIR$/Interface/InterfaceCore.py" />
@@ -177,9 +190,10 @@
         <option value="$USER_HOME$/Documents/temp/test.py" />
         <option value="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionWorkerCore.py" />
         <option value="$PROJECT_DIR$/build_exe.bat" />
-        <option value="$PROJECT_DIR$/ZScanProcessor.py" />
-        <option value="$PROJECT_DIR$/Zebrafish Scan Processor.spec" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Zebrafish Scan Processor.spec" />
+        <option value="$PROJECT_DIR$/ZScanProcessor.py" />
+        <option value="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" />
       </list>
     </option>
   </component>
@@ -222,12 +236,6 @@
               <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
               <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="Dependencies" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
@@ -367,11 +375,19 @@
       <option name="project" value="LOCAL" />
       <updated>1538593457657</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="This should be the proper setup needed to build release 1.0.0. Next to create the NSIS installer.">
+      <created>1538681123806</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1538681123806</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.09419714" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -410,7 +426,8 @@
     <MESSAGE value="It can now images with no plate on top/bottom or both. The &quot;failed&quot; image is moved to the failed directory as a worst case backup, but otherwise proceeds as though it was a successful barcode detection. The software now also only processes images that haven't had a file lock in a specified period of time. The trick for making this work only works on Windows, but that shouldn't be an issue for its intended use. Just need to handle some folder cleanup, network transfer, and hiding to the tray (plus showing errors/notifications) there and it'll be done!" />
     <MESSAGE value="Networks transfers now work. The only things missing (that I know of) are logs of the transfers, tray notifications for detection and transfers, and hiding the program to the taskbar itself. Pretty darn close to being done and ready for real testing!!!!" />
     <MESSAGE value="Logging and tray notifications now work for detections and transfers. Application hides to the tray now. Tray MUST be used to exit the program. Application icons have been set. Licenses have been updated to match Qt's open source licensing scheme. Ready to package for deployment. There's a chance I may need to mess with how the log file is being loaded if the program is running for a very long time. Might be issues with loading a very large text file for the live logs tab. Will re-visit after real world testing." />
-    <option name="LAST_COMMIT_MESSAGE" value="Logging and tray notifications now work for detections and transfers. Application hides to the tray now. Tray MUST be used to exit the program. Application icons have been set. Licenses have been updated to match Qt's open source licensing scheme. Ready to package for deployment. There's a chance I may need to mess with how the log file is being loaded if the program is running for a very long time. Might be issues with loading a very large text file for the live logs tab. Will re-visit after real world testing." />
+    <MESSAGE value="This should be the proper setup needed to build release 1.0.0. Next to create the NSIS installer." />
+    <option name="LAST_COMMIT_MESSAGE" value="This should be the proper setup needed to build release 1.0.0. Next to create the NSIS installer." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/temp.png" />
@@ -480,13 +497,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="77" selection-start-line="31" selection-start-column="77" selection-end-line="31" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -515,13 +525,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="524">
           <caret line="1889" column="55" selection-start-line="1889" selection-start-column="55" selection-end-line="1889" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/LICENSE">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2788">
-          <caret line="164" column="8" selection-start-line="164" selection-start-column="8" selection-end-line="164" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -562,10 +565,20 @@
     <entry file="file://$PROJECT_DIR$/Framework/Logging/LoggingCore.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
+    <entry file="file://$PROJECT_DIR$/LICENSE">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="88" column="74" selection-start-line="88" selection-start-column="74" selection-end-line="88" selection-end-column="74" />
+        <state relative-caret-position="456">
+          <caret line="138" selection-end-line="164" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="51">
+            <caret line="3" column="41" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
@@ -576,20 +589,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="17">
-            <caret line="1" column="274" selection-start-line="1" selection-start-column="274" selection-end-line="1" selection-end-column="274" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/Zebrafish Scan Processor.spec">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="40" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Zebrafish Scan Processor.spec">
+    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" column="22" lean-forward="true" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+        <state relative-caret-position="170">
+          <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
         </state>
       </provider>
     </entry>

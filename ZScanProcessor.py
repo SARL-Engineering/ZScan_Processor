@@ -26,7 +26,7 @@ from Framework.ScheduledProcessing import ScheduledProcessingCore
 #####################################
 # Global Variables
 #####################################
-UI_LOGO = "Resources/UI/logo_small.jpg"
+UI_LOGO = "logo_small.jpg"
 
 
 #####################################
