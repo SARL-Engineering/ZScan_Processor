@@ -6,7 +6,7 @@ from PyQt5 import QtCore
 import logging
 import cv2
 
-from pyzbar.pyzbar import decode
+from pyzbar import pyzbar
 
 #####################################
 # Global Variables
@@ -51,7 +51,7 @@ class DetectionWorker(QtCore.QThread):
             ret, threshold_barcode = cv2.threshold(cropped_gray, self.threshold, 255, cv2.THRESH_BINARY)
             self.threshold_image = cv2.cvtColor(threshold_barcode, cv2.COLOR_GRAY2RGB)
 
-            barcodes = decode(self.threshold_image)
+            barcodes = pyzbar.decode(self.threshold_image)
 
             if barcodes:
                 self.original_image = cv2.rotate(self.original_image, 0)
