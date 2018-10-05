@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Zebrafish Scan Processor"
-!define PRODUCT_VERSION "1.0.0"
+!define PRODUCT_VERSION "1.0.1"
 !define PRODUCT_PUBLISHER "Sinnhuber Aquatic Research Laboratory"
 !define PRODUCT_WEB_SITE "http://www.tanguaylab.com/SARL"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Zebrafish Scan Processor.exe"
@@ -45,10 +45,21 @@ SetCompressor zlib
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "ZScanProcessorSetup.exe"
-InstallDir "$PROGRAMFILES\Zebrafish Scan Processor"
+InstallDir "$PROGRAMFILES64\Zebrafish Scan Processor"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
+
+Function BitTypeTest
+  ${IfNot} ${RunningX64}
+    MessageBox MB_OK "This software can only be installed on 64-bit systems. Exiting installer."
+    abort
+  ${EndIf}
+FunctionEnd
+
+Function .onInit
+  call BitTypeTest
+FunctionEnd
 
 Section "Main Application" SEC01
   SetOutPath "$INSTDIR"

@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/Dependencies/vcredist_x64.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/UI/logo_small.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/logo_small.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZScanProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/ZScanProcessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Zebrafish Scan Processor.spec" beforeDir="false" afterPath="$PROJECT_DIR$/Zebrafish Scan Processor.spec" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,16 +19,16 @@
     <session id="-1897810701">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="11" />
+          <entry key="project.closed" value="13" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="2" />
-          <entry key="project.open.time.6" value="3" />
+          <entry key="project.open.time.6" value="4" />
           <entry key="project.open.time.7" value="5" />
           <entry key="project.open.time.8" value="3" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="17" />
+          <entry key="project.opened" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -66,7 +60,7 @@
           <entry key="md" value="291" />
           <entry key="py" value="22329" />
           <entry key="spec" value="132" />
-          <entry key="txt" value="2380" />
+          <entry key="txt" value="2482" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -74,7 +68,7 @@
         <counts>
           <entry key="Bat" value="264" />
           <entry key="Markdown" value="291" />
-          <entry key="PLAIN_TEXT" value="2788" />
+          <entry key="PLAIN_TEXT" value="2890" />
           <entry key="Python" value="23339" />
         </counts>
       </usages-collector>
@@ -214,6 +208,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -247,13 +242,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Program Files/Python37/Lib/shutil.py&#10;file_transfer_and_settings&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/testing.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../shuttle_gui" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -382,19 +376,25 @@
       <option name="project" value="LOCAL" />
       <updated>1538681123806</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Final 1.0.0 with minor changes for installation release. Includes installer generation scripts.">
+      <created>1538684811544</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1538684811544</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.09419714" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.09499205" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32972136" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25928792" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25928792" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3993808" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -427,7 +427,8 @@
     <MESSAGE value="Networks transfers now work. The only things missing (that I know of) are logs of the transfers, tray notifications for detection and transfers, and hiding the program to the taskbar itself. Pretty darn close to being done and ready for real testing!!!!" />
     <MESSAGE value="Logging and tray notifications now work for detections and transfers. Application hides to the tray now. Tray MUST be used to exit the program. Application icons have been set. Licenses have been updated to match Qt's open source licensing scheme. Ready to package for deployment. There's a chance I may need to mess with how the log file is being loaded if the program is running for a very long time. Might be issues with loading a very large text file for the live logs tab. Will re-visit after real world testing." />
     <MESSAGE value="This should be the proper setup needed to build release 1.0.0. Next to create the NSIS installer." />
-    <option name="LAST_COMMIT_MESSAGE" value="This should be the proper setup needed to build release 1.0.0. Next to create the NSIS installer." />
+    <MESSAGE value="Final 1.0.0 with minor changes for installation release. Includes installer generation scripts." />
+    <option name="LAST_COMMIT_MESSAGE" value="Final 1.0.0 with minor changes for installation release. Includes installer generation scripts." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/temp.png" />
@@ -556,9 +557,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="611">
           <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
-          <folding>
-            <element signature="e#110#134#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
