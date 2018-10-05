@@ -5,11 +5,11 @@ This application processes high-resolution scanned images of 96-well scientific 
 1. Monitors an input scans folder and automatically begins processing once the scan is complete.
 2. Splits the image into the two individual plates.
 3. Automatically detects the barcode on each plate to name the outputs automatically.
-4. Splits and names each wells based on the scan creation datetime, plate number, and well location.
+4. Splits and names each well based on the scan creation datetime, plate number, and well location.
 5. Saves a compressed version of the individual plate image.
 6. At a designated time, transfers all processed plates to a network share (or specified folder).
 
-###Other Features
+### Other Features
 * Minimizes to tray area for unobtrusive background processing.
 * Provides system notifications when plates are processed/fail.
 * Maintains logs of all detections, transfers, and failures.
