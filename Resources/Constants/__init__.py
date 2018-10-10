@@ -63,3 +63,11 @@ PREVIEW_IMAGE_DRAW_SETTINGS = {
         "thickness": 25
     }
 }
+
+DATABASE_SETTINGS_GUI_ELEMENTS = {
+    "database_host_line_edit": "",
+    "database_username_line_edit": "",
+    "database_password_line_edit": "",
+    "database_database_line_edit": "",
+    "database_insert_query_line_edit": ""
+}

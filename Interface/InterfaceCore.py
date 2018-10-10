@@ -10,6 +10,7 @@ from Resources.UI.ZScanUI import Ui_MainWindow as ZScanUI
 from Interface.About import AboutCore
 from Interface.Settings import FileAndTransferSettingsCore
 from Interface.Settings import DetectionSettingsCore
+from Interface.Settings import DatabaseSettingsCore
 
 
 #####################################
@@ -25,6 +26,7 @@ class Interface(QtCore.QObject):
         self.main_screen = self.shared_objects["screens"]["main_screen"]  # type: ZScanUI
 
         # ########## Instantiations of sub-classes ##########
+        self.database_settings = DatabaseSettingsCore.DatabaseSettings(self.shared_objects)
         self.detection_settings = DetectionSettingsCore.DetectionSettings(self.shared_objects)
         self.file_transfer_and_settings_class = FileAndTransferSettingsCore.FileAndTransferSettings(self.shared_objects)
         self.about_class = AboutCore.About(self.shared_objects)

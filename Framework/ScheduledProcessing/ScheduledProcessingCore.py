@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import os
 import time
 import shutil
+import mysql.connector
 
 # Custom imports
 from Resources.UI.ZScanUI import Ui_MainWindow as ZScanUI
@@ -35,6 +36,7 @@ MODIFICATION_DELAY_TO_PROCESS = 10  # Seconds
 TRANSFER_VALID_FUTURE_WINDOW = 10  # Seconds
 
 NO_PATH_STRING = "*** No Path Set ***"
+PLACEHOLDER_INSERT_VAR = "PLATEIDNUMBER"
 
 
 #####################################
@@ -76,6 +78,9 @@ class ScheduleProcessor(QtCore.QThread):
         self.watched_files = {}
         self.next_transfer_time = datetime.now() - timedelta(days=1)  # Set in the past to get startup logic to work
         self.transfer_attempted = True
+
+        self.output_database = None
+        self.database_cursor = None
 
         # ########## Setup program start signal connections ##########
         self.setup_signals()
@@ -220,6 +225,7 @@ class ScheduleProcessor(QtCore.QThread):
                 self.logger.info("Found top barcode with value %s. Processing outputs." % top_barcode)
                 self.tray_notifier.show_informational_message("Processing %s." % top_barcode)
                 self.process_barcoded_plate_into_output_folder(top_plate_image, "top", top_barcode, path)
+                self.write_plate_id_to_database(top_barcode)
             else:
                 self.logger.warning("Failed to detect top barcode for image with path \"%s\". Moving to failed." % path)
                 self.process_failed_plate(top_plate_image, "top", path)
@@ -228,6 +234,7 @@ class ScheduleProcessor(QtCore.QThread):
                 self.logger.info("Found bottom barcode with value %s. Processing outputs." % bottom_barcode)
                 self.tray_notifier.show_informational_message("Processing %s." % bottom_barcode)
                 self.process_barcoded_plate_into_output_folder(bottom_plate_image, "bottom", bottom_barcode, path)
+                self.write_plate_id_to_database(bottom_barcode)
             else:
                 self.logger.warning(
                     "Failed to detect bottom barcode for image with path \"%s\". Moving to failed." % path)
@@ -425,6 +432,36 @@ class ScheduleProcessor(QtCore.QThread):
         pt2_y = scanbox_y_position_spinbox + (scanbox_y_size_spinbox // 2)
 
         return image[pt1_y:pt2_y, pt1_x:pt2_x].copy()
+
+    def write_plate_id_to_database(self, plate_id):
+        host = self.settings.value("gui_elements/database_host_line_edit", type=str)
+        username = self.settings.value("gui_elements/database_username_line_edit", type=str)
+        password = self.settings.value("gui_elements/database_password_line_edit", type=str)
+        database = self.settings.value("gui_elements/database_database_line_edit", type=str)
+        insert_query = self.settings.value("gui_elements/database_insert_query_line_edit", type=str)
+
+        try:
+            if not self.output_database:
+                self.output_database = mysql.connector.connect(
+                    host=host,
+                    user=username,
+                    passwd=password,
+                    database=database
+                )
+
+                self.database_cursor = self.output_database.cursor()
+
+            final_insert_query = insert_query.replace(PLACEHOLDER_INSERT_VAR, plate_id)
+
+            self.database_cursor.execute(final_insert_query)
+            self.output_database.commit()
+            self.logger.info("Wrote plate \"%s\" to database \"%s\"." % (plate_id, database))
+
+        except mysql.connector.Error as e:
+            self.output_database = None
+            self.database_cursor = None
+
+            self.logger.warning("Could not write to database with error: %s." % e.msg)
 
     def on_transfer_timeedit_changed__slot(self):
         self.next_transfer_time = datetime.now() - timedelta(days=1)  # Set in the past to reset valid transfer
