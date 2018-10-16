@@ -60,10 +60,16 @@ class TrayNotifier(QtCore.QObject):
     def on_tray_menu_item_clicked(self, event):
         if event == QtWidgets.QSystemTrayIcon.Context:  # Happens on right-click, ignore for tray menu instead
             pass
-        elif event == QtWidgets.QSystemTrayIcon.Trigger:
+        elif event in [QtWidgets.QSystemTrayIcon.Trigger, QtWidgets.QSystemTrayIcon.DoubleClick]:
             self.main_screen.show()
+            self.main_screen.setWindowState(
+                self.main_screen.windowState() & ~QtCore.Qt.WindowMinimized | QtCore.Qt.WindowActive)
+            self.main_screen.activateWindow()
         elif event.text() == "Show":
             self.main_screen.show()
+            self.main_screen.setWindowState(
+                self.main_screen.windowState() & ~QtCore.Qt.WindowMinimized | QtCore.Qt.WindowActive)
+            self.main_screen.activateWindow()
         elif event.text() == "Exit":
             self.system_tray_icon.hide()
             self.main_screen.exit_requested_signal.emit()

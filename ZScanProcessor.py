@@ -48,6 +48,12 @@ class ZScanWindow(QtWidgets.QMainWindow, ZScanUI):
         self.hide()
         event.ignore()
 
+    def changeEvent(self, event):
+        if event.type() == QtCore.QEvent.WindowStateChange:
+            if self.windowState() & QtCore.Qt.WindowMinimized:
+                self.hide()
+                event.ignore()
+
 
 #####################################
 # GroundStation Class Definition
