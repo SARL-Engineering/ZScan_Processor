@@ -52,6 +52,9 @@ class DetectionSettings(QtCore.QObject):
         self.top_threshold_center_spinbox = self.main_screen.top_threshold_center_spinbox  # type: QtWidgets.QSpinBox
         self.top_threshold_range_spinbox = self.main_screen.top_threshold_range_spinbox  # type: QtWidgets.QSpinBox
 
+        self.top_overlay_plate_font_size_spinbox = self.main_screen.top_overlay_plate_font_size_spinbox  # type: QtWidgets.QSpinBox
+        self.top_overlay_well_font_size_spinbox = self.main_screen.top_overlay_well_font_size_spinbox  # type: QtWidgets.QSpinBox
+
         # Bottom Plate
         self.bottom_a1_x_spinbox = self.main_screen.bottom_a1_x_spinbox  # type: QtWidgets.QSpinBox
         self.bottom_a1_y_spinbox = self.main_screen.bottom_a1_y_spinbox  # type: QtWidgets.QSpinBox
@@ -68,6 +71,9 @@ class DetectionSettings(QtCore.QObject):
 
         self.bottom_threshold_center_spinbox = self.main_screen.bottom_threshold_center_spinbox  # type: QtWidgets.QSpinBox
         self.bottom_threshold_range_spinbox = self.main_screen.bottom_threshold_range_spinbox  # type: QtWidgets.QSpinBox
+
+        self.bottom_overlay_plate_font_size_spinbox = self.main_screen.bottom_overlay_plate_font_size_spinbox  # type: QtWidgets.QSpinBox
+        self.bottom_overlay_well_font_size_spinbox = self.main_screen.bottom_overlay_well_font_size_spinbox  # type: QtWidgets.QSpinBox
 
         # ########## Load Settings ##########
         self.__load_settings()

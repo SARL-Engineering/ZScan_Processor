@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/Constants/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/Constants/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ZScanProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/ZScanProcessor.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,7 +20,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/ZScan_Processor$Testing_Launch.coverage" NAME="Testing Launch Coverage Results" MODIFIED="1537228602068" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ZScan_Processor$Testing.coverage" NAME="Testing Coverage Results" MODIFIED="1537558157233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1539711938943" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1539720044171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1897810701">
@@ -42,7 +47,7 @@
           <entry key="md" value="3" />
           <entry key="png" value="3" />
           <entry key="pstat" value="1" />
-          <entry key="py" value="88" />
+          <entry key="py" value="98" />
           <entry key="spec" value="3" />
           <entry key="txt" value="1" />
         </counts>
@@ -53,7 +58,7 @@
           <entry key="Markdown" value="3" />
           <entry key="PLAIN_TEXT" value="7" />
           <entry key="Profiler Session" value="1" />
-          <entry key="Python" value="88" />
+          <entry key="Python" value="98" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -62,9 +67,9 @@
           <entry key="bat" value="473" />
           <entry key="dummy" value="67" />
           <entry key="md" value="2398" />
-          <entry key="py" value="23901" />
+          <entry key="py" value="25250" />
           <entry key="spec" value="132" />
-          <entry key="txt" value="2761" />
+          <entry key="txt" value="2837" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -72,8 +77,8 @@
         <counts>
           <entry key="Bat" value="264" />
           <entry key="Markdown" value="2398" />
-          <entry key="PLAIN_TEXT" value="3169" />
-          <entry key="Python" value="25208" />
+          <entry key="PLAIN_TEXT" value="3245" />
+          <entry key="Python" value="26557" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -82,43 +87,32 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py">
+        <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="412" column="101" selection-start-line="412" selection-start-column="101" selection-end-line="412" selection-end-column="101" />
+            <state relative-caret-position="534">
+              <caret line="325" column="74" lean-forward="true" selection-start-line="325" selection-start-column="74" selection-end-line="325" selection-end-column="74" />
               <folding>
                 <element signature="e#110#152#0" expanded="true" />
+                <marker date="1539719746436" expanded="true" signature="21429:22747" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" selection-start-line="11" selection-end-line="11" selection-end-column="57" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py">
+        <entry file="file://$PROJECT_DIR$/Resources/Constants/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="891">
-              <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
-              <folding>
-                <element signature="e#125#167#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="357">
+              <caret line="21" column="43" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharm2018.2/system/python_stubs/-991083293/PyQt5/QtWidgets/QSystemTrayIcon.py">
+        <entry file="file://$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="124" column="4" selection-start-line="124" selection-start-column="4" selection-end-line="124" selection-end-column="4" />
+            <state relative-caret-position="119">
+              <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -136,7 +130,6 @@
     <findStrings>
       <find>self.</find>
       <find>PLATE_SPLIT_PREVIEW_IMAGE_SIZE</find>
-      <find>bottom</find>
       <find>line</find>
       <find>top_</find>
       <find>plate_split_image_pixmap</find>
@@ -154,16 +147,18 @@
       <find>&quot;ZScan Processor&quot;</find>
       <find>--</find>
       <find>logo_small</find>
+      <find>bottom</find>
+      <find>top</find>
     </findStrings>
     <replaceStrings>
-      <replace>top</replace>
-      <replace>bottom</replace>
       <replace>self.black_image</replace>
       <replace>full_plate_image</replace>
       <replace>line_edit</replace>
       <replace>_line_edit</replace>
       <replace>file_and_transfer_settings</replace>
       <replace>UI_LOGO</replace>
+      <replace>top</replace>
+      <replace>bottom</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\caperren\Github\ZScan_Processor</dir>
@@ -182,23 +177,23 @@
         <option value="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionProcessorCore.py" />
         <option value="$PROJECT_DIR$/Interface/About/AboutCore.py" />
         <option value="$PROJECT_DIR$/Interface/Settings/FileAndTransferSettingsCore.py" />
-        <option value="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" />
         <option value="$PROJECT_DIR$/Framework/Logging/LoggingCore.py" />
         <option value="$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py" />
         <option value="$PROJECT_DIR$/Framework/Settings/SettingsCore.py" />
-        <option value="$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py" />
         <option value="$PROJECT_DIR$/LICENSE" />
         <option value="$USER_HOME$/Documents/temp/test.py" />
         <option value="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionWorkerCore.py" />
         <option value="$PROJECT_DIR$/build_exe.bat" />
         <option value="$PROJECT_DIR$/Zebrafish Scan Processor.spec" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/Resources/Constants/__init__.py" />
         <option value="$PROJECT_DIR$/Interface/InterfaceCore.py" />
         <option value="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" />
-        <option value="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" />
-        <option value="$PROJECT_DIR$/ZScanProcessor.py" />
         <option value="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" />
+        <option value="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" />
+        <option value="$PROJECT_DIR$/ZScanProcessor.py" />
+        <option value="$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py" />
+        <option value="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" />
+        <option value="$PROJECT_DIR$/Resources/Constants/__init__.py" />
       </list>
     </option>
   </component>
@@ -417,7 +412,14 @@
       <option name="project" value="LOCAL" />
       <updated>1539203162870</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Minimize now properly goes to the tray icon and restores correctly.">
+      <created>1539712072218</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1539712072218</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -465,7 +467,19 @@
     <MESSAGE value="Final 1.0.0 with minor changes for installation release. Includes installer generation scripts." />
     <MESSAGE value="Updated readme to reflect first program release." />
     <MESSAGE value="Added gui elements for writing to a database (new requested feature). Added database writing code to app. Minimal testing, but working so far. Also added gui elements for barcode overlay, not yet implemented in code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added gui elements for writing to a database (new requested feature). Added database writing code to app. Minimal testing, but working so far. Also added gui elements for barcode overlay, not yet implemented in code." />
+    <MESSAGE value="Minimize now properly goes to the tray icon and restores correctly." />
+    <option name="LAST_COMMIT_MESSAGE" value="Minimize now properly goes to the tray icon and restores correctly." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/temp.png" />
@@ -516,9 +530,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Interface/Settings/FileAndTransferSettingsCore.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Framework/Settings/SettingsCore.py">
@@ -603,13 +614,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/Constants/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="881">
-          <caret line="71" column="36" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="942">
@@ -621,27 +625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="942">
-          <caret line="454" selection-start-line="454" selection-end-line="454" />
-          <folding>
-            <element signature="e#110#152#0" expanded="true" />
-            <marker date="1539200373483" expanded="true" signature="20043:21361" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="412" column="101" selection-start-line="412" selection-start-column="101" selection-end-line="412" selection-end-column="101" />
-          <folding>
-            <element signature="e#110#152#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm2018.2/system/python_stubs/-991083293/PyQt5/QtWidgets/QSystemTrayIcon.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
@@ -649,20 +632,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="891">
-          <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
+        <state relative-caret-position="687">
+          <caret line="63" column="35" lean-forward="true" selection-start-line="63" selection-start-column="35" selection-end-line="63" selection-end-column="35" />
           <folding>
             <element signature="e#125#167#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/PIL/ImageFont.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4950">
+          <caret line="143" selection-start-line="143" selection-end-line="143" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/PIL/ImageDraw.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="253" column="8" selection-start-line="253" selection-start-column="8" selection-end-line="253" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1435">
+          <caret line="91" column="41" lean-forward="true" selection-start-line="91" selection-start-column="41" selection-end-line="91" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-197">
+          <caret line="94" column="78" selection-start-line="94" selection-start-column="78" selection-end-line="94" selection-end-column="78" />
+          <folding>
+            <element signature="e#110#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="325" column="74" lean-forward="true" selection-start-line="325" selection-start-column="74" selection-end-line="325" selection-end-column="74" />
+          <folding>
+            <element signature="e#110#152#0" expanded="true" />
+            <marker date="1539719746436" expanded="true" signature="21429:22747" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/Constants/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="43" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
         </state>
       </provider>
     </entry>

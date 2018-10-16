@@ -5,6 +5,7 @@
 from PyQt5 import QtCore, QtWidgets, QtGui
 import logging
 import cv2
+from PIL import ImageFont, ImageDraw, Image
 import qimage2ndarray
 import numpy as np
 from os.path import getsize
@@ -24,6 +25,8 @@ NO_PATH_NA_STRING = "N/A"
 NO_BARCODE_NA_STRING = "N/A"
 
 SIZE_DIVISOR = 1024000
+
+PREVIEW_EXAMPLE_TEXT = "000000000"
 
 
 #####################################
@@ -345,7 +348,10 @@ class PreviewProcessor(QtCore.QThread):
 
         # ##### Get well preview and draw plate markers #####
         well_preview = self.get_well_preview_image(top_plate_preview, "top")
+        self.draw_barcode_overlay(well_preview, PREVIEW_EXAMPLE_TEXT, "top", "well")
+
         self.draw_wells_and_boxes(top_plate_preview, "top")
+        self.draw_barcode_overlay(top_plate_preview, PREVIEW_EXAMPLE_TEXT, "top", "plate")
 
         output_image_group = [
             (top_plate_preview, self.image_mappings["settings_top_plate_tab"]["top_main_preview"]),
@@ -360,7 +366,10 @@ class PreviewProcessor(QtCore.QThread):
 
         # ##### Get well preview and draw plate markers #####
         well_preview = self.get_well_preview_image(bottom_plate_preview, "bottom")
+        self.draw_barcode_overlay(well_preview, PREVIEW_EXAMPLE_TEXT, "bottom", "well")
+
         self.draw_wells_and_boxes(bottom_plate_preview, "bottom")
+        self.draw_barcode_overlay(bottom_plate_preview, PREVIEW_EXAMPLE_TEXT, "bottom", "plate")
 
         # ##### Setup and show image group #####
         output_image_group = [
@@ -485,6 +494,28 @@ class PreviewProcessor(QtCore.QThread):
                    well_marker_thickness, cv2.LINE_AA)
         cv2.circle(image, (h12_x_location, h12_y_location), well_radius, well_marker_color,
                    well_marker_thickness, cv2.LINE_AA)
+
+    def draw_barcode_overlay(self, image, text, top_or_bottom, plate_or_well):
+        font_size = self.settings.value("gui_elements/%s_overlay_%s_font_size_spinbox" % (top_or_bottom, plate_or_well), type=int)
+        try:
+            font = ImageFont.truetype("Roboto-Regular.ttf", font_size)
+
+            barcode_image = Image.new('RGB', (1, 1), (0, 0, 0))
+            image_draw = ImageDraw.Draw(barcode_image)
+
+            width, height = image_draw.textsize(text, font)
+            width_offset, height_offset = font.getoffset(text)
+
+            barcode_image = Image.new('RGB', (width + width_offset, height + height_offset), (0, 0, 0))
+            image_draw = ImageDraw.Draw(barcode_image)
+            image_draw.text((0, 0), text, font=font)
+
+            width, height = barcode_image.size
+
+            overlay_image = np.array(barcode_image)
+            image[0:height, 0:width] = overlay_image
+        except Exception as e:
+            print(e)
 
     # noinspection PyArgumentList
     def set_pixmap_from_image_groups_and_show(self, output_image_group):

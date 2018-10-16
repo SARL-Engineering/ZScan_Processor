@@ -5,6 +5,8 @@
 from PyQt5 import QtCore, QtWidgets, QtGui
 import logging
 import cv2
+from PIL import ImageFont, ImageDraw, Image
+import numpy as np
 from datetime import datetime, timedelta
 import os
 import time
@@ -299,6 +301,9 @@ class ScheduleProcessor(QtCore.QThread):
             if not os.path.exists(path):
                 os.mkdir(path)
 
+        # Make backup copy of main input image so we can save a clean version
+        image_untouched = image.copy()
+
         # Split plate into named wells and save
         offset_per_well_x = (h12_x_location - a1_x_location) / (num_columns - 1)
         offset_per_well_y = (h12_y_location - a1_y_location) / (num_rows - 1)
@@ -312,13 +317,15 @@ class ScheduleProcessor(QtCore.QThread):
                 well_path = wells_folder_path + "/" + well_name
                 well_image = image[(y_location - well_radius):(y_location + well_radius),
                              (x_location - well_radius):(x_location + well_radius)]
+                self.draw_barcode_overlay(well_image, barcode, top_or_bottom, "well")
 
                 cv2.imwrite(well_path, cv2.cvtColor(well_image, cv2.COLOR_RGB2BGR),
                             [cv2.IMWRITE_PNG_COMPRESSION, WELL_COMPRESSION_LEVEL])
 
         # Save compressed version of plate image
         compressed_full_plate_path = "%s/%s_%s.png" % (full_plate_folder_path, iso_datetime_string, barcode)
-        cv2.imwrite(compressed_full_plate_path, cv2.cvtColor(image, cv2.COLOR_RGB2BGR),
+        self.draw_barcode_overlay(image_untouched, barcode, top_or_bottom, "plate")
+        cv2.imwrite(compressed_full_plate_path, cv2.cvtColor(image_untouched, cv2.COLOR_RGB2BGR),
                     [cv2.IMWRITE_PNG_COMPRESSION, PLATE_COMPRESSION_LEVEL])
 
     def process_failed_plate(self, image, top_or_bottom, combined_path):
@@ -432,6 +439,28 @@ class ScheduleProcessor(QtCore.QThread):
         pt2_y = scanbox_y_position_spinbox + (scanbox_y_size_spinbox // 2)
 
         return image[pt1_y:pt2_y, pt1_x:pt2_x].copy()
+
+    def draw_barcode_overlay(self, image, text, top_or_bottom, plate_or_well):
+        font_size = self.settings.value("gui_elements/%s_overlay_%s_font_size_spinbox" % (top_or_bottom, plate_or_well), type=int)
+        try:
+            font = ImageFont.truetype("Roboto-Regular.ttf", font_size)
+
+            barcode_image = Image.new('RGB', (1, 1), (0, 0, 0))
+            image_draw = ImageDraw.Draw(barcode_image)
+
+            width, height = image_draw.textsize(text, font)
+            width_offset, height_offset = font.getoffset(text)
+
+            barcode_image = Image.new('RGB', (width + width_offset, height + height_offset), (0, 0, 0))
+            image_draw = ImageDraw.Draw(barcode_image)
+            image_draw.text((0, 0), text, font=font)
+
+            width, height = barcode_image.size
+
+            overlay_image = np.array(barcode_image)
+            image[0:height, 0:width] = overlay_image
+        except Exception as e:
+            self.logger.exception("Barcode overlay failed... Please check settings...")
 
     def write_plate_id_to_database(self, plate_id):
         host = self.settings.value("gui_elements/database_host_line_edit", type=str)

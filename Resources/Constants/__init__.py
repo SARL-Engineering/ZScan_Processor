@@ -16,7 +16,10 @@ DETECTION_SETTINGS_GUI_ELEMENTS = {
     "top_scanbox_y_position_spinbox": 4060,
 
     "top_threshold_center_spinbox": 65,
-    "top_threshold_range_spinbox": 3,
+    "top_threshold_range_spinbox": 5,
+
+    "top_overlay_plate_font_size_spinbox": 275,
+    "top_overlay_well_font_size_spinbox": 40,
 
     "bottom_a1_x_spinbox": 1353,
     "bottom_a1_y_spinbox": 1005,
@@ -32,7 +35,11 @@ DETECTION_SETTINGS_GUI_ELEMENTS = {
     "bottom_scanbox_y_position_spinbox": 4070,
 
     "bottom_threshold_center_spinbox": 68,
-    "bottom_threshold_range_spinbox": 3
+    "bottom_threshold_range_spinbox": 5,
+
+    "bottom_overlay_plate_font_size_spinbox": 275,
+    "bottom_overlay_well_font_size_spinbox": 40,
+
 }
 
 PREVIEW_IMAGE_DRAW_SETTINGS = {
