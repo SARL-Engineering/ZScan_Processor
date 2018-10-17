@@ -356,6 +356,7 @@ Section Uninstall
   Delete "$INSTDIR\Include\pyconfig.h"
   Delete "$INSTDIR\cv2\cv2.cp37-win_amd64.pyd"
   Delete "$INSTDIR\base_library.zip"
+  Delete "$INSTDIR\vcredist_x64.exe"
 
   Delete "$SMPROGRAMS\Zebrafish Scan Processor\Uninstall.lnk"
   Delete "$SMPROGRAMS\Zebrafish Scan Processor\Website.lnk"
