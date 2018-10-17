@@ -84,7 +84,7 @@ class ZScanCore(QtCore.QObject):
             "threaded_classes": {}
         }
 
-        # ###### Instantiate Left And Right Screens ######
+        # ###### Instantiate Screens ######
         self.shared_objects["screens"]["main_screen"] = \
             self.create_application_window(ZScanWindow, "Zebrafish Scan Processor", (1536, 1024))
 
@@ -92,7 +92,7 @@ class ZScanCore(QtCore.QObject):
         self.__add_non_thread("Settings", SettingsCore.Settings())
         # QtCore.QSettings().clear()  # Only used to reset when testing defaults on "fresh install"
         # QtGui.QGuiApplication.exit()
-        self.__add_non_thread("Logger", LoggingCore.Logger(console_output=True))
+        self.__add_non_thread("Logger", LoggingCore.Logger(console_output=False))
         self.__add_non_thread("Tray Notifier", TrayNotifierCore.TrayNotifier(self.shared_objects))
         self.__add_non_thread("Interface", Interface(self.shared_objects))
 

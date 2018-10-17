@@ -6,13 +6,15 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 import logging
 import os
 
+END_OF_FILE_OFFSET = 200000  # Bytes
+
 
 #####################################
 # Live Logs Class Definition
 #####################################
 class LiveLogs(QtCore.QThread):
 
-    text_ready_signal = QtCore.pyqtSignal()
+    text_ready_signal = QtCore.pyqtSignal(str)
 
     def __init__(self, shared_objects):
         super(LiveLogs, self).__init__()
@@ -78,12 +80,9 @@ class LiveLogs(QtCore.QThread):
         self.live_log_error_cb.setChecked(live_log_error_cb_state)
         self.live_log_debug_cb.setChecked(live_log_debug_cb_state)
 
-        # This keeps the text box from being scrollable
-        self.live_log_tb.verticalScrollBar().blockSignals(True)
-
     # noinspection PyUnresolvedReferences
     def connect_signals_and_slots(self):
-        self.text_ready_signal.connect(self.__on_text_should_update_signal__slot)
+        self.text_ready_signal.connect(self.live_log_tb.setPlainText)
         self.live_log_tb.textChanged.connect(self.__on_move_cursor_needed__slot)
 
         self.live_log_info_cb.toggled.connect(self.__on_checkbox_changed__slot)
@@ -107,16 +106,16 @@ class LiveLogs(QtCore.QThread):
         self.log_file_reader.seek(0, os.SEEK_END)
         log_file_size = self.log_file_reader.tell()
 
-        if log_file_size != self.log_file_prev_size or self.checkboxes_changed:
+        if (log_file_size != self.log_file_prev_size) or self.checkboxes_changed:
             self.log_browser_string = ""
 
             # Seek back to the beginning of the file and read in the lines
-            # Also strip it down to the most recent 100
-            self.log_file_reader.seek(0)
-            log_lines = self.log_file_reader.readlines()[-300:]
+            # Also strip it down so we're not showing the whole thing
+            self.log_file_reader.seek(max(log_file_size - END_OF_FILE_OFFSET, 0))
+            log_lines = self.log_file_reader.readlines()
 
             # Go through line by line and only add lines that are selected to be shown via the checkboxes
-            for line in reversed(log_lines):
+            for line in log_lines:
                 log_line_type = line.split(" ")[0]
 
                 if log_line_type == "INFO":
@@ -131,21 +130,14 @@ class LiveLogs(QtCore.QThread):
                 elif log_line_type == "DEBUG":
                     if self.live_log_debug_cb.isChecked():
                         self.log_browser_string += line
-                else:
-                    self.log_browser_string += line
 
             # Display the text
-            self.text_ready_signal.emit()
+            self.text_ready_signal.emit(self.log_browser_string)
 
             self.log_file_prev_size = log_file_size
             self.checkboxes_changed = False
 
-    def __on_text_should_update_signal__slot(self):
-        self.live_log_tb.clear()
-        self.live_log_tb.append(self.log_browser_string)
-
     def __on_move_cursor_needed__slot(self):
-        # Move the cursor to the end when the text browser text updates. This essentially scrolls constantly.
         self.live_log_tb.moveCursor(QtGui.QTextCursor.End)
 
     def __on_checkbox_changed__slot(self):

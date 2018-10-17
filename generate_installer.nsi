@@ -2,14 +2,12 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Zebrafish Scan Processor"
-!define PRODUCT_VERSION "1.0.1"
+!define PRODUCT_VERSION "1.1.0"
 !define PRODUCT_PUBLISHER "Sinnhuber Aquatic Research Laboratory"
 !define PRODUCT_WEB_SITE "http://www.tanguaylab.com/SARL"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Zebrafish Scan Processor.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
-
-SetCompressor zlib
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -38,13 +36,10 @@ SetCompressor zlib
 ; Language files
 !insertmacro MUI_LANGUAGE "English"
 
-; Reserve files
-!insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
-
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "ZScanProcessorSetup.exe"
+OutFile "ZScanProcessorSetup_v1_1_0.exe"
 InstallDir "$PROGRAMFILES64\Zebrafish Scan Processor"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -97,6 +92,11 @@ Section "Main Application" SEC01
   File "Zebrafish Scan Processor\numpy\linalg\_umath_linalg.cp37-win_amd64.pyd"
   SetOutPath "$INSTDIR\numpy\random"
   File "Zebrafish Scan Processor\numpy\random\mtrand.cp37-win_amd64.pyd"
+  SetOutPath "$INSTDIR\PIL"
+  File "Zebrafish Scan Processor\PIL\_imaging.cp37-win_amd64.pyd"
+  File "Zebrafish Scan Processor\PIL\_imagingft.cp37-win_amd64.pyd"
+  File "Zebrafish Scan Processor\PIL\_imagingtk.cp37-win_amd64.pyd"
+  File "Zebrafish Scan Processor\PIL\_webp.cp37-win_amd64.pyd"
   SetOutPath "$INSTDIR"
   File "Zebrafish Scan Processor\pyexpat.pyd"
   SetOutPath "$INSTDIR\PyQt5\Qt\bin"
@@ -167,6 +167,7 @@ Section "Main Application" SEC01
   File "Zebrafish Scan Processor\Qt5Svg.dll"
   File "Zebrafish Scan Processor\Qt5WebSockets.dll"
   File "Zebrafish Scan Processor\Qt5Widgets.dll"
+  File "Zebrafish Scan Processor\Roboto-Regular.ttf"
   File "Zebrafish Scan Processor\select.pyd"
   File "Zebrafish Scan Processor\unicodedata.pyd"
   File "Zebrafish Scan Processor\VCRUNTIME140.dll"
@@ -202,17 +203,19 @@ Section "Microsoft Visual C++ Redistributable" SEC02
   SetOutPath "$INSTDIR"
   File "vcredist_x64.exe"
 
-  ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\10.0\VC\VCRedist\x64" "Installed"
+  ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\VCRedist\x64" "Installed"
   StrCmp $1 1 installed
 
   ;not installed, so run the installer
   ExecWait '"$INSTDIR\vcredist_x64.exe" /install /passive /norestart'
 
   installed:
-  
+
 SectionEnd
 
 Section -AdditionalIcons
+  WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
+  CreateShortCut "$SMPROGRAMS\Zebrafish Scan Processor\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
   CreateShortCut "$SMPROGRAMS\Zebrafish Scan Processor\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
@@ -239,8 +242,8 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
+  Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
-  Delete "$INSTDIR\vcredist_x64.exe"
   Delete "$INSTDIR\_win32sysloader.pyd"
   Delete "$INSTDIR\_ssl.pyd"
   Delete "$INSTDIR\_socket.pyd"
@@ -264,6 +267,7 @@ Section Uninstall
   Delete "$INSTDIR\VCRUNTIME140.dll"
   Delete "$INSTDIR\unicodedata.pyd"
   Delete "$INSTDIR\select.pyd"
+  Delete "$INSTDIR\Roboto-Regular.ttf"
   Delete "$INSTDIR\Qt5Widgets.dll"
   Delete "$INSTDIR\Qt5WebSockets.dll"
   Delete "$INSTDIR\Qt5Svg.dll"
@@ -324,6 +328,10 @@ Section Uninstall
   Delete "$INSTDIR\PyQt5\Qt\bin\libEGL.dll"
   Delete "$INSTDIR\PyQt5\Qt\bin\d3dcompiler_47.dll"
   Delete "$INSTDIR\pyexpat.pyd"
+  Delete "$INSTDIR\PIL\_webp.cp37-win_amd64.pyd"
+  Delete "$INSTDIR\PIL\_imagingtk.cp37-win_amd64.pyd"
+  Delete "$INSTDIR\PIL\_imagingft.cp37-win_amd64.pyd"
+  Delete "$INSTDIR\PIL\_imaging.cp37-win_amd64.pyd"
   Delete "$INSTDIR\numpy\random\mtrand.cp37-win_amd64.pyd"
   Delete "$INSTDIR\numpy\linalg\_umath_linalg.cp37-win_amd64.pyd"
   Delete "$INSTDIR\numpy\linalg\lapack_lite.cp37-win_amd64.pyd"
@@ -350,24 +358,31 @@ Section Uninstall
   Delete "$INSTDIR\base_library.zip"
 
   Delete "$SMPROGRAMS\Zebrafish Scan Processor\Uninstall.lnk"
+  Delete "$SMPROGRAMS\Zebrafish Scan Processor\Website.lnk"
   Delete "$DESKTOP\Zebrafish Scan Processor.lnk"
   Delete "$SMPROGRAMS\Zebrafish Scan Processor\Zebrafish Scan Processor.lnk"
 
   RMDir "$SMPROGRAMS\Zebrafish Scan Processor"
   RMDir "$INSTDIR\win32com\shell"
+  RMDir "$INSTDIR\win32com"
   RMDir "$INSTDIR\PyQt5\Qt\translations"
   RMDir "$INSTDIR\PyQt5\Qt\plugins\styles"
   RMDir "$INSTDIR\PyQt5\Qt\plugins\platformthemes"
   RMDir "$INSTDIR\PyQt5\Qt\plugins\platforms"
   RMDir "$INSTDIR\PyQt5\Qt\plugins\imageformats"
   RMDir "$INSTDIR\PyQt5\Qt\plugins\iconengines"
+  RMDir "$INSTDIR\PyQt5\Qt\plugins"
   RMDir "$INSTDIR\PyQt5\Qt\bin"
+  RMDir "$INSTDIR\PyQt5\Qt"
   RMDir "$INSTDIR\PyQt5"
+  RMDir "$INSTDIR\PIL"
   RMDir "$INSTDIR\numpy\random"
   RMDir "$INSTDIR\numpy\linalg"
   RMDir "$INSTDIR\numpy\fft"
   RMDir "$INSTDIR\numpy\core"
+  RMDir "$INSTDIR\numpy"
   RMDir "$INSTDIR\lib2to3\tests\data"
+  RMDir "$INSTDIR\lib2to3\tests"
   RMDir "$INSTDIR\lib2to3"
   RMDir "$INSTDIR\Include"
   RMDir "$INSTDIR\cv2"

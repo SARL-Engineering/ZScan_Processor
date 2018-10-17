@@ -95,7 +95,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11.addItem(spacerItem)
         self.gridLayout_5.addLayout(self.horizontalLayout_11, 0, 0, 1, 1)
         self.live_log_text_browser = QtWidgets.QTextBrowser(self.logs_tab)
-        self.live_log_text_browser.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.live_log_text_browser.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.live_log_text_browser.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.live_log_text_browser.setObjectName("live_log_text_browser")
         self.gridLayout_5.addWidget(self.live_log_text_browser, 1, 0, 1, 1)
@@ -1244,7 +1244,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.main_tab_widget.setCurrentIndex(1)
+        self.main_tab_widget.setCurrentIndex(0)
         self.settings_tab_widget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

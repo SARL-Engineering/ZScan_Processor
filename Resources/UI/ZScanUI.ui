@@ -45,7 +45,7 @@
     <item row="1" column="0">
      <widget class="QTabWidget" name="main_tab_widget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="logs_tab">
        <attribute name="title">
@@ -183,7 +183,7 @@ background-color:rgb(202, 202, 202);
         <item row="1" column="0">
          <widget class="QTextBrowser" name="live_log_text_browser">
           <property name="verticalScrollBarPolicy">
-           <enum>Qt::ScrollBarAlwaysOff</enum>
+           <enum>Qt::ScrollBarAlwaysOn</enum>
           </property>
           <property name="horizontalScrollBarPolicy">
            <enum>Qt::ScrollBarAlwaysOff</enum>
