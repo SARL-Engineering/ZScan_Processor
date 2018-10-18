@@ -26,57 +26,38 @@ Please keep this in mind when creating a MySQL user for this application.
 ## Screenshots
 ### Processed Outputs
 #### Full Plate & Well
-<img src="_screenshots_/plate_example.jpg" height="300" title="plate_example"><img src="_screenshots_/well_example.jpg" height="300" title="plate_example">
+<img src="_screenshots_/plate_example.jpg" height="300" title="plate_example"><img src="_screenshots_/well_example.jpg" height="300" title="well_example">
 
-#### Plate Well
-![well_example]
+#### Folder Structure & Explorer Preview
+<img src="_screenshots_/folder_structure.jpg" height="300" title="folder_structure"><img src="_screenshots_/output.jpg" height="300" title="explorer_example">
 
-#### Explorer Preview
-![explorer_preview]
-
-### Folder Structure
-![folder_structure]
-
+### Application
 ### Logs Screen
-![logs]
+<img src="_screenshots_/logs.jpg" title="logs_screen">
 
 ### Settings - Plate Splitting
-![settings_plate_split]
+<img src="_screenshots_/settings_plate_splitting.jpg" title="plate_splitting_screen">
 
 ### Settings - Plate Top
-![settings_top]
+<img src="_screenshots_/settings_plate_top.jpg" title="plate_top_screen">
 
 ### Settings - Plate Bottom
-![settings_bottom]
+<img src="_screenshots_/settings_plate_bottom.jpg" title="plate_bottom_screen">
 
 ### Settings - Files and Transfers
-![settings_files_transfers]
+<img src="_screenshots_/settings_files_and_transfers.jpg" title="files_and_transfers_screen">
 
 ### Settings - Database
-![settings_database]
+<img src="_screenshots_/settings_database.jpg" title="database_screen">
 
 ### System Notifications
-![system_notification]
+<img src="_screenshots_/system_notification.jpg" title="system_notifications_window">
 
 ### Tray Icon
-![tray_icon]
+<img src="_screenshots_/tray_icon.jpg" title="tray_icon_location">
 
 ### Example Database Output
-![database_output]
-
-[logs]:_screenshots_/logs.jpg
-[plate_example]_screenshots_/plate_example.jpg
-[well_example]:_screenshots_/well_example.jpg
-[explorer_preview]:_screenshots_/output.jpg
-[folder_structure]:_screenshots_/folder_structure.jpg
-[settings_bottom]:_screenshots_/settings_bottom_plate.jpg
-[settings_top]:_screenshots_/settings_top_plate.jpg
-[settings_plate_split]:_screenshots_/settings_plate_splitting.jpg
-[settings_files_transfers]:_screenshots_/settings_files_and_transfers.jpg
-[settings_database]:_screenshots_/settings_database.jpg
-[system_notification]:_screenshots_/system_notification.jpg
-[tray_icon]:_screenshots_/tray_icon.jpg
-[database_output]:_screenshots_/database_output.jpg
+<img src="_screenshots_/database_output.jpg" title="database_output_example">
 
 ## Build Information
 * Python 3.7 64-bit
