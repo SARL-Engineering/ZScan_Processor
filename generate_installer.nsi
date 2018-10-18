@@ -183,6 +183,7 @@ Section "Main Application" SEC01
   CreateDirectory "$SMPROGRAMS\Zebrafish Scan Processor"
   CreateShortCut "$SMPROGRAMS\Zebrafish Scan Processor\Zebrafish Scan Processor.lnk" "$INSTDIR\Zebrafish Scan Processor.exe"
   CreateShortCut "$DESKTOP\Zebrafish Scan Processor.lnk" "$INSTDIR\Zebrafish Scan Processor.exe"
+  CreateShortCut "$SMSTARTUP\Zebrafish Scan Processor.lnk" "$INSTDIR\Zebrafish Scan Processor.exe"
   File "Zebrafish Scan Processor\Zebrafish Scan Processor.exe.manifest"
   File "Zebrafish Scan Processor\_bz2.pyd"
   File "Zebrafish Scan Processor\_contextvars.pyd"
@@ -362,6 +363,7 @@ Section Uninstall
   Delete "$SMPROGRAMS\Zebrafish Scan Processor\Website.lnk"
   Delete "$DESKTOP\Zebrafish Scan Processor.lnk"
   Delete "$SMPROGRAMS\Zebrafish Scan Processor\Zebrafish Scan Processor.lnk"
+  Delete "$SMSTARTUP\Zebrafish Scan Processor.lnk"
 
   RMDir "$SMPROGRAMS\Zebrafish Scan Processor"
   RMDir "$INSTDIR\win32com\shell"

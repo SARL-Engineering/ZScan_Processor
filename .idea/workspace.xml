@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/Constants/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/Constants/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_database.png" beforeDir="false" afterPath="$PROJECT_DIR$/_screenshots_/settings_database.png" afterDir="false" />
-    </list>
+    <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +17,7 @@
     <session id="-1897810701">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="19" />
+          <entry key="project.closed" value="20" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
@@ -68,7 +60,7 @@
           <entry key="md" value="3380" />
           <entry key="py" value="26180" />
           <entry key="spec" value="171" />
-          <entry key="txt" value="3449" />
+          <entry key="txt" value="3706" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -76,7 +68,7 @@
         <counts>
           <entry key="Bat" value="264" />
           <entry key="Markdown" value="3380" />
-          <entry key="PLAIN_TEXT" value="3912" />
+          <entry key="PLAIN_TEXT" value="4169" />
           <entry key="Python" value="27585" />
         </counts>
       </usages-collector>
@@ -113,7 +105,7 @@
         <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-7749">
-              <caret line="30" column="27" lean-forward="true" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+              <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
               <folding>
                 <element signature="e#110#152#0" expanded="true" />
                 <marker date="1539893364410" expanded="true" signature="21678:24576" ph="..." />
@@ -459,7 +451,14 @@
       <option name="project" value="LOCAL" />
       <updated>1539738372240</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Changed database setup so it's a more generic query, tested with the UPDATE query we need to use here. Added a table of replacement tags for the query input field. Generated new installer for minor patch revision.">
+      <created>1539894386085</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1539894386085</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -536,7 +535,8 @@
     <MESSAGE value="Fixed minimize button not sending app to tray. Double-click of tray icon no longer crashes program. Fixed scrolling stuttering issue in log viewer. Also changed log viewer so it can't load more than 200kB of log lines in memory. Made new script for installer for this minor release. Will make changes to readme and screenshots, then release." />
     <MESSAGE value="Readme updates for v1.1.0. About to release." />
     <MESSAGE value="Updated installer script to properly delete all files on uninstall." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated installer script to properly delete all files on uninstall." />
+    <MESSAGE value="Changed database setup so it's a more generic query, tested with the UPDATE query we need to use here. Added a table of replacement tags for the query input field. Generated new installer for minor patch revision." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed database setup so it's a more generic query, tested with the UPDATE query we need to use here. Added a table of replacement tags for the query input field. Generated new installer for minor patch revision." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -757,7 +757,7 @@
     <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-7749">
-          <caret line="30" column="27" lean-forward="true" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+          <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
           <folding>
             <element signature="e#110#152#0" expanded="true" />
             <marker date="1539893364410" expanded="true" signature="21678:24576" ph="..." />
