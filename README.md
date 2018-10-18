@@ -26,10 +26,10 @@ Please keep this in mind when creating a MySQL user for this application.
 ## Screenshots
 ### Processed Outputs
 #### Full Plate & Well
-<img src="_screenshots_/plate_example.jpg" height="300" title="plate_example"><img src="_screenshots_/well_example.jpg" height="300" title="well_example">
+<img src="_screenshots_/plate_example.jpg" height="400" title="plate_example"><img src="_screenshots_/well_example.jpg" height="400" title="well_example">
 
 #### Folder Structure & Explorer Preview
-<img src="_screenshots_/folder_structure.jpg" height="300" title="folder_structure"><img src="_screenshots_/output.jpg" height="300" title="explorer_example">
+<img src="_screenshots_/folder_structure.jpg" height="400" title="folder_structure"><img src="_screenshots_/output.jpg" height="400" title="explorer_example">
 
 ### Application
 ### Logs Screen
@@ -39,10 +39,10 @@ Please keep this in mind when creating a MySQL user for this application.
 <img src="_screenshots_/settings_plate_splitting.jpg" title="plate_splitting_screen">
 
 ### Settings - Plate Top
-<img src="_screenshots_/settings_plate_top.jpg" title="plate_top_screen">
+<img src="_screenshots_/settings_top_plate.jpg" title="plate_top_screen">
 
 ### Settings - Plate Bottom
-<img src="_screenshots_/settings_plate_bottom.jpg" title="plate_bottom_screen">
+<img src="_screenshots_/settings_bottom_plate.jpg" title="plate_bottom_screen">
 
 ### Settings - Files and Transfers
 <img src="_screenshots_/settings_files_and_transfers.jpg" title="files_and_transfers_screen">
