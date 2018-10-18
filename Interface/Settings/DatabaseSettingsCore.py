@@ -37,7 +37,8 @@ class DatabaseSettings(QtCore.QObject):
         self.database_username_line_edit = self.main_screen.database_username_line_edit  # type: QtWidgets.QLineEdit
         self.database_password_line_edit = self.main_screen.database_password_line_edit  # type: QtWidgets.QLineEdit
         self.database_database_line_edit = self.main_screen.database_database_line_edit  # type: QtWidgets.QLineEdit
-        self.database_insert_query_line_edit = self.main_screen.database_insert_query_line_edit  # type: QtWidgets.QLineEdit
+        self.database_date_format_line_edit = self.main_screen.database_date_format_line_edit  # type: QtWidgets.QLineEdit
+        self.database_query_line_edit = self.main_screen.database_query_line_edit  # type: QtWidgets.QLineEdit
 
         self.database_test_connection_button = self.main_screen.database_test_connection_button  # type: QtWidgets.QPushButton
 

@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Zebrafish Scan Processor"
-!define PRODUCT_VERSION "1.1.0"
+!define PRODUCT_VERSION "1.1.1"
 !define PRODUCT_PUBLISHER "Sinnhuber Aquatic Research Laboratory"
 !define PRODUCT_WEB_SITE "http://www.tanguaylab.com/SARL"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Zebrafish Scan Processor.exe"
@@ -39,7 +39,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "ZScanProcessorSetup_v1_1_0.exe"
+OutFile "ZScanProcessorSetup_v1_1_1.exe"
 InstallDir "$PROGRAMFILES64\Zebrafish Scan Processor"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show

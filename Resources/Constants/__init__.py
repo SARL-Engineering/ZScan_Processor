@@ -76,5 +76,6 @@ DATABASE_SETTINGS_GUI_ELEMENTS = {
     "database_username_line_edit": "",
     "database_password_line_edit": "",
     "database_database_line_edit": "",
-    "database_insert_query_line_edit": ""
+    "database_date_format_line_edit": "",
+    "database_query_line_edit": ""
 }

@@ -14,7 +14,6 @@ import shutil
 import mysql.connector
 
 # Custom imports
-from Resources.UI.ZScanUI import Ui_MainWindow as ZScanUI
 from Framework.TrayNotifier.TrayNotifierCore import TrayNotifier
 from Resources import Constants
 
@@ -38,7 +37,11 @@ MODIFICATION_DELAY_TO_PROCESS = 10  # Seconds
 TRANSFER_VALID_FUTURE_WINDOW = 10  # Seconds
 
 NO_PATH_STRING = "*** No Path Set ***"
-PLACEHOLDER_INSERT_VAR = "PLATEIDNUMBER"
+
+REPLACEMENT_MAPPING = {
+    "plate_id": "%PID",
+    "creation_date": "%CD"
+}
 
 
 #####################################
@@ -53,7 +56,7 @@ class ScheduleProcessor(QtCore.QThread):
         # ########## References to shared objects and gui elements ##########
         self.shared_objects = shared_objects
         self.core_signals = self.shared_objects["core_signals"]
-        self.main_screen = self.shared_objects["screens"]["main_screen"]  # type: ZScanUI
+        self.main_screen = self.shared_objects["screens"]["main_screen"]
         self.tray_notifier = self.shared_objects["regular_classes"]["Tray Notifier"]  # type: TrayNotifier
 
         self.main_tab_widget = self.main_screen.main_tab_widget  # type: QtWidgets.QTabWidget
@@ -204,6 +207,15 @@ class ScheduleProcessor(QtCore.QThread):
         for file in valid_files:
             self.process_full_scan_from_path(file)
 
+        if self.database_cursor:
+            self.database_cursor.close()
+
+        if self.output_database:
+            self.output_database.close()
+
+        self.output_database = None
+        self.database_cursor = None
+
     def process_full_scan_from_path(self, path):
         try:
             self.logger.info("Attempting to process image with path \"%s\"" % path)
@@ -227,7 +239,7 @@ class ScheduleProcessor(QtCore.QThread):
                 self.logger.info("Found top barcode with value %s. Processing outputs." % top_barcode)
                 self.tray_notifier.show_informational_message("Processing %s." % top_barcode)
                 self.process_barcoded_plate_into_output_folder(top_plate_image, "top", top_barcode, path)
-                self.write_plate_id_to_database(top_barcode)
+                self.write_plate_id_to_database(top_barcode, path)
             else:
                 self.logger.warning("Failed to detect top barcode for image with path \"%s\". Moving to failed." % path)
                 self.process_failed_plate(top_plate_image, "top", path)
@@ -236,7 +248,7 @@ class ScheduleProcessor(QtCore.QThread):
                 self.logger.info("Found bottom barcode with value %s. Processing outputs." % bottom_barcode)
                 self.tray_notifier.show_informational_message("Processing %s." % bottom_barcode)
                 self.process_barcoded_plate_into_output_folder(bottom_plate_image, "bottom", bottom_barcode, path)
-                self.write_plate_id_to_database(bottom_barcode)
+                self.write_plate_id_to_database(bottom_barcode, path)
             else:
                 self.logger.warning(
                     "Failed to detect bottom barcode for image with path \"%s\". Moving to failed." % path)
@@ -441,7 +453,8 @@ class ScheduleProcessor(QtCore.QThread):
         return image[pt1_y:pt2_y, pt1_x:pt2_x].copy()
 
     def draw_barcode_overlay(self, image, text, top_or_bottom, plate_or_well):
-        font_size = self.settings.value("gui_elements/%s_overlay_%s_font_size_spinbox" % (top_or_bottom, plate_or_well), type=int)
+        font_size = self.settings.value("gui_elements/%s_overlay_%s_font_size_spinbox" % (top_or_bottom, plate_or_well),
+                                        type=int)
         try:
             font = ImageFont.truetype("Roboto-Regular.ttf", font_size)
 
@@ -462,12 +475,16 @@ class ScheduleProcessor(QtCore.QThread):
         except Exception as e:
             self.logger.exception("Barcode overlay failed... Please check settings...")
 
-    def write_plate_id_to_database(self, plate_id):
+    def write_plate_id_to_database(self, plate_id, plate_path):
         host = self.settings.value("gui_elements/database_host_line_edit", type=str)
         username = self.settings.value("gui_elements/database_username_line_edit", type=str)
         password = self.settings.value("gui_elements/database_password_line_edit", type=str)
         database = self.settings.value("gui_elements/database_database_line_edit", type=str)
-        insert_query = self.settings.value("gui_elements/database_insert_query_line_edit", type=str)
+        date_format = self.settings.value("gui_elements/database_date_format_line_edit", type=str)
+        query = self.settings.value("gui_elements/database_query_line_edit", type=str)
+
+        # Get creation date for table update
+        formatted_creation_date = datetime.fromtimestamp(os.path.getctime(plate_path)).strftime(date_format)
 
         try:
             if not self.output_database:
@@ -480,17 +497,44 @@ class ScheduleProcessor(QtCore.QThread):
 
                 self.database_cursor = self.output_database.cursor()
 
-            final_insert_query = insert_query.replace(PLACEHOLDER_INSERT_VAR, plate_id)
+            # Replace plate id
+            query = query.replace(REPLACEMENT_MAPPING["plate_id"], plate_id)
 
-            self.database_cursor.execute(final_insert_query)
+            # Fill in date
+            query = query.replace(REPLACEMENT_MAPPING["creation_date"], formatted_creation_date)
+
+            # Execute SQL command, commit DB
+            self.database_cursor.execute(query)
             self.output_database.commit()
-            self.logger.info("Wrote plate \"%s\" to database \"%s\"." % (plate_id, database))
+
+            # Notify and log based on success
+            if self.database_cursor.rowcount == 0:
+                self.tray_notifier.show_failure_message(
+                    "Write of plate \"%s\" to database \"%s\" did not affect any rows!" % (plate_id, database))
+                self.logger.warning(
+                    "Write of plate \"%s\" to database \"%s\" did not affect any rows!" % (plate_id, database))
+            else:
+                self.tray_notifier.show_informational_message(
+                    "Wrote plate \"%s\" to database \"%s\" affecting %d rows." % (
+                        plate_id, database, self.database_cursor.rowcount))
+                self.logger.info("Wrote plate \"%s\" to database \"%s\" affecting %d rows." % (
+                    plate_id, database, self.database_cursor.rowcount))
 
         except mysql.connector.Error as e:
+            if self.database_cursor:
+                self.database_cursor.close()
+
+            if self.output_database:
+                self.output_database.close()
+
             self.output_database = None
             self.database_cursor = None
 
-            self.logger.warning("Could not write to database with error: %s." % e.msg)
+            self.tray_notifier.show_failure_message(
+                "Write of plate \"%s\" to database \"%s\" failed! Please check DB settings!" % (plate_id, database))
+            self.logger.warning(
+                "Write of plate \"%s\" to database \"%s\" failed! Please check DB settings! Error: %s" % (
+                plate_id, database, e.msg))
 
     def on_transfer_timeedit_changed__slot(self):
         self.next_transfer_time = datetime.now() - timedelta(days=1)  # Set in the past to reset valid transfer

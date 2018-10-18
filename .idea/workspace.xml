@@ -2,18 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/_screenshots_/database_output.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_screenshots_/folder_structure.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_screenshots_/plate_example.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_screenshots_/settings_database.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_screenshots_/well_example.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_screenshots_/output.png" beforeDir="false" afterPath="$PROJECT_DIR$/_screenshots_/output.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_bottom_plate.png" beforeDir="false" afterPath="$PROJECT_DIR$/_screenshots_/settings_bottom_plate.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_files_and_transfers.png" beforeDir="false" afterPath="$PROJECT_DIR$/_screenshots_/settings_files_and_transfers.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_plate_splitting.png" beforeDir="false" afterPath="$PROJECT_DIR$/_screenshots_/settings_plate_splitting.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_top_plate.png" beforeDir="false" afterPath="$PROJECT_DIR$/_screenshots_/settings_top_plate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/Constants/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/Constants/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UI/ZScanUI.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_database.png" beforeDir="false" afterPath="$PROJECT_DIR$/_screenshots_/settings_database.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,13 +19,13 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/ZScan_Processor$Testing_Launch.coverage" NAME="Testing Launch Coverage Results" MODIFIED="1537228602068" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ZScan_Processor$Testing.coverage" NAME="Testing Coverage Results" MODIFIED="1537558157233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1539735457033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1539893757095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1897810701">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="18" />
+          <entry key="project.closed" value="19" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
@@ -38,10 +33,10 @@
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.6" value="7" />
-          <entry key="project.open.time.7" value="9" />
+          <entry key="project.open.time.7" value="10" />
           <entry key="project.open.time.8" value="4" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="29" />
+          <entry key="project.opened" value="30" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -51,7 +46,7 @@
           <entry key="md" value="5" />
           <entry key="png" value="3" />
           <entry key="pstat" value="1" />
-          <entry key="py" value="100" />
+          <entry key="py" value="103" />
           <entry key="spec" value="4" />
           <entry key="txt" value="1" />
         </counts>
@@ -62,18 +57,18 @@
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="8" />
           <entry key="Profiler Session" value="1" />
-          <entry key="Python" value="100" />
+          <entry key="Python" value="103" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="1307" />
+          <entry key="Python Console" value="1405" />
           <entry key="bat" value="473" />
-          <entry key="dummy" value="67" />
+          <entry key="dummy" value="83" />
           <entry key="md" value="3380" />
-          <entry key="py" value="25432" />
+          <entry key="py" value="26180" />
           <entry key="spec" value="171" />
-          <entry key="txt" value="3336" />
+          <entry key="txt" value="3449" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -81,8 +76,8 @@
         <counts>
           <entry key="Bat" value="264" />
           <entry key="Markdown" value="3380" />
-          <entry key="PLAIN_TEXT" value="3783" />
-          <entry key="Python" value="26739" />
+          <entry key="PLAIN_TEXT" value="3912" />
+          <entry key="Python" value="27585" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -93,7 +88,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1853">
+            <state relative-caret-position="1819">
               <caret line="109" column="40" selection-start-line="109" selection-start-column="40" selection-end-line="109" selection-end-column="40" />
               <folding>
                 <element signature="e#110#152#0" expanded="true" />
@@ -102,13 +97,26 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1921">
-              <caret line="113" column="41" selection-start-line="113" selection-start-column="41" selection-end-line="113" selection-end-column="41" />
+            <state relative-caret-position="1088">
+              <caret line="64" column="29" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
               <folding>
                 <element signature="e#110#120#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-7749">
+              <caret line="30" column="27" lean-forward="true" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+              <folding>
+                <element signature="e#110#152#0" expanded="true" />
+                <marker date="1539893364410" expanded="true" signature="21678:24576" ph="..." />
               </folding>
             </state>
           </provider>
@@ -147,6 +155,7 @@
       <find>bottom</find>
       <find>top</find>
       <find>checkboxes_changed</find>
+      <find>processing</find>
     </findStrings>
     <replaceStrings>
       <replace>self.black_image</replace>
@@ -182,16 +191,16 @@
         <option value="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionWorkerCore.py" />
         <option value="$PROJECT_DIR$/build_exe.bat" />
         <option value="$PROJECT_DIR$/Interface/InterfaceCore.py" />
-        <option value="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" />
         <option value="$PROJECT_DIR$/Framework/TrayNotifier/TrayNotifierCore.py" />
         <option value="$PROJECT_DIR$/Interface/Settings/DetectionSettingsCore.py" />
         <option value="$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py" />
-        <option value="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" />
-        <option value="$PROJECT_DIR$/Resources/Constants/__init__.py" />
         <option value="$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py" />
         <option value="$PROJECT_DIR$/ZScanProcessor.py" />
         <option value="$PROJECT_DIR$/Zebrafish Scan Processor.spec" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Resources/Constants/__init__.py" />
+        <option value="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" />
+        <option value="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" />
       </list>
     </option>
   </component>
@@ -212,7 +221,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -223,7 +231,24 @@
             <path>
               <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
               <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
-              <item name="_screenshots_" type="462c0819:PsiDirectoryNode" />
+              <item name="Framework" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
+              <item name="Framework" type="462c0819:PsiDirectoryNode" />
+              <item name="ScheduledProcessing" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
+              <item name="Interface" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
+              <item name="Interface" type="462c0819:PsiDirectoryNode" />
+              <item name="Settings" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
@@ -240,6 +265,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -419,13 +445,27 @@
       <option name="project" value="LOCAL" />
       <updated>1539735357319</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Readme updates for v1.1.0. About to release.">
+      <created>1539737755938</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1539737755938</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Updated installer script to properly delete all files on uninstall.">
+      <created>1539738372240</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1539738372240</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17488076" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17607313" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -439,8 +479,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.10294118" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.22136223" />
-      <window_info anchor="bottom" id="Python Console" order="12" weight="0.32507738" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.22136223" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.32430342" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32972136" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -494,7 +534,9 @@
     <MESSAGE value="Minimize now properly goes to the tray icon and restores correctly." />
     <MESSAGE value="Barcode overlays now on output images for both the full plates and well images." />
     <MESSAGE value="Fixed minimize button not sending app to tray. Double-click of tray icon no longer crashes program. Fixed scrolling stuttering issue in log viewer. Also changed log viewer so it can't load more than 200kB of log lines in memory. Made new script for installer for this minor release. Will make changes to readme and screenshots, then release." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed minimize button not sending app to tray. Double-click of tray icon no longer crashes program. Fixed scrolling stuttering issue in log viewer. Also changed log viewer so it can't load more than 200kB of log lines in memory. Made new script for installer for this minor release. Will make changes to readme and screenshots, then release." />
+    <MESSAGE value="Readme updates for v1.1.0. About to release." />
+    <MESSAGE value="Updated installer script to properly delete all files on uninstall." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated installer script to properly delete all files on uninstall." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -616,13 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="942">
-          <caret line="69" column="15" selection-start-line="69" selection-start-column="15" selection-end-line="69" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm2018.2/system/python_stubs/-991083293/PyQt5/QtWidgets/QSystemTrayIcon.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
@@ -661,38 +696,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5253">
-          <caret line="325" column="74" selection-start-line="325" selection-start-column="74" selection-end-line="325" selection-end-column="74" />
-          <folding>
-            <element signature="e#110#152#0" expanded="true" />
-            <marker date="1539719746436" expanded="true" signature="21429:22747" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Framework/PreviewProcessor/PreviewProcessorCore.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/Constants/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1853">
-          <caret line="109" column="40" selection-start-line="109" selection-start-column="40" selection-end-line="109" selection-end-column="40" />
-          <folding>
-            <element signature="e#110#152#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -713,12 +720,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1819">
+          <caret line="109" column="40" selection-start-line="109" selection-start-column="40" selection-end-line="109" selection-end-column="40" />
+          <folding>
+            <element signature="e#110#152#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1921">
-          <caret line="113" column="41" selection-start-line="113" selection-start-column="41" selection-end-line="113" selection-end-column="41" />
+        <state relative-caret-position="1088">
+          <caret line="64" column="29" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
           <folding>
             <element signature="e#110#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-197">
+          <caret line="40" column="65" selection-start-line="40" selection-start-column="65" selection-end-line="40" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/Constants/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="857">
+          <caret line="79" column="14" lean-forward="true" selection-start-line="79" selection-start-column="14" selection-end-line="79" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7749">
+          <caret line="30" column="27" lean-forward="true" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+          <folding>
+            <element signature="e#110#152#0" expanded="true" />
+            <marker date="1539893364410" expanded="true" signature="21678:24576" ph="..." />
           </folding>
         </state>
       </provider>
