@@ -83,8 +83,10 @@ Please keep this in mind when creating a MySQL user for this application.
     * PyQt5
     * pyzbar
     * opencv
+    * pillow
+    * mysql-connector
     * numpy
     * qdarkstyle
     * qimage2ndarray
-* Executable built with pyinstaller.
-* Installer built with NSIS.
+* Executable built with pyinstaller
+* Installer built with NSIS
