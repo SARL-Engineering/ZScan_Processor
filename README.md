@@ -25,8 +25,8 @@ Please keep this in mind when creating a MySQL user for this application.
 
 ## Screenshots
 ### Processed Outputs
-#### Full Plate
-<img src="_screenshots_/plate_example.jpg" height="300" title="plate_example">
+#### Full Plate & Well
+<img src="_screenshots_/plate_example.jpg" height="300" title="plate_example"><img src="_screenshots_/well_example.jpg" height="300" title="plate_example">
 
 #### Plate Well
 ![well_example]
