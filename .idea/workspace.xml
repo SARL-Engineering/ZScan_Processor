@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="" />
+    <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="Updated readme for new libraries.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/about.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/database_output.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/folder_structure.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/logs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/output.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/plate_example.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_bottom_plate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_database.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_files_and_transfers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_plate_splitting.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/settings_top_plate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/system_notification.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/tray_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_screenshots_/well_example.png" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +34,7 @@
     <session id="-1897810701">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="20" />
+          <entry key="project.closed" value="21" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
@@ -25,17 +42,17 @@
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.6" value="7" />
-          <entry key="project.open.time.7" value="10" />
+          <entry key="project.open.time.7" value="12" />
           <entry key="project.open.time.8" value="4" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="30" />
+          <entry key="project.opened" value="32" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="LICENSE" value="2" />
           <entry key="bat" value="1" />
-          <entry key="md" value="5" />
+          <entry key="md" value="8" />
           <entry key="png" value="3" />
           <entry key="pstat" value="1" />
           <entry key="py" value="103" />
@@ -46,7 +63,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="3" />
-          <entry key="Markdown" value="5" />
+          <entry key="Markdown" value="8" />
           <entry key="PLAIN_TEXT" value="8" />
           <entry key="Profiler Session" value="1" />
           <entry key="Python" value="103" />
@@ -54,22 +71,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="1405" />
+          <entry key="Python Console" value="1451" />
           <entry key="bat" value="473" />
           <entry key="dummy" value="83" />
-          <entry key="md" value="3380" />
+          <entry key="md" value="3688" />
           <entry key="py" value="26180" />
           <entry key="spec" value="171" />
-          <entry key="txt" value="3706" />
+          <entry key="txt" value="3890" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bat" value="264" />
-          <entry key="Markdown" value="3380" />
-          <entry key="PLAIN_TEXT" value="4169" />
-          <entry key="Python" value="27585" />
+          <entry key="Markdown" value="3688" />
+          <entry key="PLAIN_TEXT" value="4353" />
+          <entry key="Python" value="27631" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -77,39 +94,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1819">
-              <caret line="109" column="40" selection-start-line="109" selection-start-column="40" selection-end-line="109" selection-end-column="40" />
-              <folding>
-                <element signature="e#110#152#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1088">
-              <caret line="64" column="29" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
-              <folding>
-                <element signature="e#110#120#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7749">
-              <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
-              <folding>
-                <element signature="e#110#152#0" expanded="true" />
-                <marker date="1539893364410" expanded="true" signature="21678:24576" ph="..." />
-              </folding>
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="347">
+                <caret line="28" column="52" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -148,6 +140,7 @@
       <find>top</find>
       <find>checkboxes_changed</find>
       <find>processing</find>
+      <find>.png</find>
     </findStrings>
     <replaceStrings>
       <replace>self.black_image</replace>
@@ -158,6 +151,7 @@
       <replace>UI_LOGO</replace>
       <replace>top</replace>
       <replace>bottom</replace>
+      <replace>.jpg</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\caperren\Github\ZScan_Processor</dir>
@@ -189,10 +183,10 @@
         <option value="$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py" />
         <option value="$PROJECT_DIR$/ZScanProcessor.py" />
         <option value="$PROJECT_DIR$/Zebrafish Scan Processor.spec" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Resources/Constants/__init__.py" />
         <option value="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" />
         <option value="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -213,6 +207,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -257,7 +252,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -458,13 +452,28 @@
       <option name="project" value="LOCAL" />
       <updated>1539894386085</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Minor change to installer so that it adds the program to the current user's startup group, the default we'll want for this program.">
+      <created>1539896226604</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1539896226604</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Updated readme for new libraries.">
+      <created>1539899143834</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1539899143834</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17607313" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17845787" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -478,8 +487,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.10294118" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.22136223" />
-      <window_info anchor="bottom" id="Python Console" order="12" weight="0.32430342" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.22136223" />
+      <window_info anchor="bottom" id="Python Console" order="12" visible="true" weight="0.32430342" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32972136" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -536,7 +545,9 @@
     <MESSAGE value="Readme updates for v1.1.0. About to release." />
     <MESSAGE value="Updated installer script to properly delete all files on uninstall." />
     <MESSAGE value="Changed database setup so it's a more generic query, tested with the UPDATE query we need to use here. Added a table of replacement tags for the query input field. Generated new installer for minor patch revision." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed database setup so it's a more generic query, tested with the UPDATE query we need to use here. Added a table of replacement tags for the query input field. Generated new installer for minor patch revision." />
+    <MESSAGE value="Minor change to installer so that it adds the program to the current user's startup group, the default we'll want for this program." />
+    <MESSAGE value="Updated readme for new libraries." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated readme for new libraries." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -669,9 +680,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="687">
           <caret line="63" column="35" lean-forward="true" selection-start-line="63" selection-start-column="35" selection-end-line="63" selection-end-column="35" />
-          <folding>
-            <element signature="e#125#167#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -710,36 +718,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="426">
-            <caret line="31" column="20" lean-forward="true" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1819">
-          <caret line="109" column="40" selection-start-line="109" selection-start-column="40" selection-end-line="109" selection-end-column="40" />
-          <folding>
-            <element signature="e#110#152#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="64" column="29" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
-          <folding>
-            <element signature="e#110#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-197">
@@ -756,12 +734,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7749">
+        <state relative-caret-position="510">
           <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
-          <folding>
-            <element signature="e#110#152#0" expanded="true" />
-            <marker date="1539893364410" expanded="true" signature="21678:24576" ph="..." />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZScanProcessor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="74" column="13" selection-start-line="74" selection-start-column="13" selection-end-line="74" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/Logging/LiveLogs/LiveLogsCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="791">
+          <caret line="109" column="40" selection-start-line="109" selection-start-column="40" selection-end-line="109" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="347">
+            <caret line="28" column="52" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
