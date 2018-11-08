@@ -4,7 +4,7 @@
 # Python native imports
 from PyQt5 import QtCore, QtWidgets, QtGui
 import logging
-import mysql.connector
+import pymysql.cursors
 
 # Custom imports
 from Resources import Constants
@@ -59,19 +59,19 @@ class DatabaseSettings(QtCore.QObject):
         message_box.setStandardButtons(QtWidgets.QMessageBox.Ok)
 
         try:
-            mysql.connector.connect(
+            pymysql.connect(
                 host=host,
                 user=username,
-                passwd=password,
-                database=database
+                password=password,
+                db=database
             )
 
             message_box.setIcon(QtWidgets.QMessageBox.Information)
             message_box.setText("Test successful!")
-        except mysql.connector.Error as e:
+        except pymysql.Error as e:
             message_box.setIcon(QtWidgets.QMessageBox.Warning)
             message_box.setText("Test unsuccessful!")
-            message_box.setInformativeText("Error was: %s" % e.msg)
+            message_box.setInformativeText("Error was: %s" % e.args[1])
 
         message_box.exec()
 

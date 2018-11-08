@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import os
 import time
 import shutil
-import mysql.connector
+import pymysql.cursors
 
 # Custom imports
 from Framework.TrayNotifier.TrayNotifierCore import TrayNotifier
@@ -96,7 +96,7 @@ class ScheduleProcessor(QtCore.QThread):
 
         while self.run_thread_flag:
             self.check_and_run_scheduled_processes()
-            self.msleep(1000)
+            self.msleep(10000)
 
         self.logger.debug("Schedule Processor Thread Stopping...")
 
@@ -483,16 +483,15 @@ class ScheduleProcessor(QtCore.QThread):
         date_format = self.settings.value("gui_elements/database_date_format_line_edit", type=str)
         query = self.settings.value("gui_elements/database_query_line_edit", type=str)
 
-        # Get creation date for table update
         formatted_creation_date = datetime.fromtimestamp(os.path.getctime(plate_path)).strftime(date_format)
 
         try:
             if not self.output_database:
-                self.output_database = mysql.connector.connect(
+                self.output_database = pymysql.connect(
                     host=host,
                     user=username,
-                    passwd=password,
-                    database=database
+                    password=password,
+                    db=database
                 )
 
                 self.database_cursor = self.output_database.cursor()
@@ -520,7 +519,7 @@ class ScheduleProcessor(QtCore.QThread):
                 self.logger.info("Wrote plate \"%s\" to database \"%s\" affecting %d rows." % (
                     plate_id, database, self.database_cursor.rowcount))
 
-        except mysql.connector.Error as e:
+        except pymysql.Error as e:
             if self.database_cursor:
                 self.database_cursor.close()
 
@@ -534,7 +533,7 @@ class ScheduleProcessor(QtCore.QThread):
                 "Write of plate \"%s\" to database \"%s\" failed! Please check DB settings!" % (plate_id, database))
             self.logger.warning(
                 "Write of plate \"%s\" to database \"%s\" failed! Please check DB settings! Error: %s" % (
-                plate_id, database, e.msg))
+                    plate_id, database, e.args[1]))
 
     def on_transfer_timeedit_changed__slot(self):
         self.next_transfer_time = datetime.now() - timedelta(days=1)  # Set in the past to reset valid transfer

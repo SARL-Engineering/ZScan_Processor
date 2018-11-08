@@ -65,7 +65,7 @@ Please keep this in mind when creating a MySQL user for this application.
     * pyzbar
     * opencv
     * pillow
-    * mysql-connector
+    * PyMySQL
     * numpy
     * qdarkstyle
     * qimage2ndarray
