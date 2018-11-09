@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Zebrafish Scan Processor"
-!define PRODUCT_VERSION "1.1.1"
+!define PRODUCT_VERSION "1.1.2"
 !define PRODUCT_PUBLISHER "Sinnhuber Aquatic Research Laboratory"
 !define PRODUCT_WEB_SITE "http://www.tanguaylab.com/SARL"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Zebrafish Scan Processor.exe"
@@ -39,7 +39,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "ZScanProcessorSetup_v1_1_1.exe"
+OutFile "ZScanProcessorSetup_v1_1_2.exe"
 InstallDir "$PROGRAMFILES64\Zebrafish Scan Processor"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -60,6 +60,15 @@ Section "Main Application" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite try
   File "Zebrafish Scan Processor\base_library.zip"
+  SetOutPath "$INSTDIR\cryptography\hazmat\bindings"
+  File "Zebrafish Scan Processor\cryptography\hazmat\bindings\_constant_time.cp37-win_amd64.pyd"
+  File "Zebrafish Scan Processor\cryptography\hazmat\bindings\_openssl.cp37-win_amd64.pyd"
+  SetOutPath "$INSTDIR\cryptography-2.3.1-py3.7.egg-info"
+  File "Zebrafish Scan Processor\cryptography-2.3.1-py3.7.egg-info\INSTALLER"
+  File "Zebrafish Scan Processor\cryptography-2.3.1-py3.7.egg-info\METADATA"
+  File "Zebrafish Scan Processor\cryptography-2.3.1-py3.7.egg-info\RECORD"
+  File "Zebrafish Scan Processor\cryptography-2.3.1-py3.7.egg-info\top_level.txt"
+  File "Zebrafish Scan Processor\cryptography-2.3.1-py3.7.egg-info\WHEEL"
   SetOutPath "$INSTDIR\cv2"
   File "Zebrafish Scan Processor\cv2\cv2.cp37-win_amd64.pyd"
   SetOutPath "$INSTDIR\Include"
@@ -183,9 +192,9 @@ Section "Main Application" SEC01
   CreateDirectory "$SMPROGRAMS\Zebrafish Scan Processor"
   CreateShortCut "$SMPROGRAMS\Zebrafish Scan Processor\Zebrafish Scan Processor.lnk" "$INSTDIR\Zebrafish Scan Processor.exe"
   CreateShortCut "$DESKTOP\Zebrafish Scan Processor.lnk" "$INSTDIR\Zebrafish Scan Processor.exe"
-  CreateShortCut "$SMSTARTUP\Zebrafish Scan Processor.lnk" "$INSTDIR\Zebrafish Scan Processor.exe"
   File "Zebrafish Scan Processor\Zebrafish Scan Processor.exe.manifest"
   File "Zebrafish Scan Processor\_bz2.pyd"
+  File "Zebrafish Scan Processor\_cffi_backend.cp37-win_amd64.pyd"
   File "Zebrafish Scan Processor\_contextvars.pyd"
   File "Zebrafish Scan Processor\_ctypes.pyd"
   File "Zebrafish Scan Processor\_decimal.pyd"
@@ -204,13 +213,8 @@ Section "Microsoft Visual C++ Redistributable" SEC02
   SetOutPath "$INSTDIR"
   File "vcredist_x64.exe"
 
-  ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\VCRedist\x64" "Installed"
-  StrCmp $1 1 installed
-
   ;not installed, so run the installer
   ExecWait '"$INSTDIR\vcredist_x64.exe" /install /passive /norestart'
-
-  installed:
 
 SectionEnd
 
@@ -256,6 +260,7 @@ Section Uninstall
   Delete "$INSTDIR\_decimal.pyd"
   Delete "$INSTDIR\_ctypes.pyd"
   Delete "$INSTDIR\_contextvars.pyd"
+  Delete "$INSTDIR\_cffi_backend.cp37-win_amd64.pyd"
   Delete "$INSTDIR\_bz2.pyd"
   Delete "$INSTDIR\Zebrafish Scan Processor.exe.manifest"
   Delete "$INSTDIR\Zebrafish Scan Processor.exe"
@@ -356,6 +361,13 @@ Section Uninstall
   Delete "$INSTDIR\lib2to3\Grammar.txt"
   Delete "$INSTDIR\Include\pyconfig.h"
   Delete "$INSTDIR\cv2\cv2.cp37-win_amd64.pyd"
+  Delete "$INSTDIR\cryptography-2.3.1-py3.7.egg-info\WHEEL"
+  Delete "$INSTDIR\cryptography-2.3.1-py3.7.egg-info\top_level.txt"
+  Delete "$INSTDIR\cryptography-2.3.1-py3.7.egg-info\RECORD"
+  Delete "$INSTDIR\cryptography-2.3.1-py3.7.egg-info\METADATA"
+  Delete "$INSTDIR\cryptography-2.3.1-py3.7.egg-info\INSTALLER"
+  Delete "$INSTDIR\cryptography\hazmat\bindings\_openssl.cp37-win_amd64.pyd"
+  Delete "$INSTDIR\cryptography\hazmat\bindings\_constant_time.cp37-win_amd64.pyd"
   Delete "$INSTDIR\base_library.zip"
   Delete "$INSTDIR\vcredist_x64.exe"
 
@@ -363,7 +375,6 @@ Section Uninstall
   Delete "$SMPROGRAMS\Zebrafish Scan Processor\Website.lnk"
   Delete "$DESKTOP\Zebrafish Scan Processor.lnk"
   Delete "$SMPROGRAMS\Zebrafish Scan Processor\Zebrafish Scan Processor.lnk"
-  Delete "$SMSTARTUP\Zebrafish Scan Processor.lnk"
 
   RMDir "$SMPROGRAMS\Zebrafish Scan Processor"
   RMDir "$INSTDIR\win32com\shell"
@@ -389,6 +400,10 @@ Section Uninstall
   RMDir "$INSTDIR\lib2to3"
   RMDir "$INSTDIR\Include"
   RMDir "$INSTDIR\cv2"
+  RMDir "$INSTDIR\cryptography-2.3.1-py3.7.egg-info"
+  RMDir "$INSTDIR\cryptography\hazmat\bindings"
+  RMDir "$INSTDIR\cryptography\hazmat"
+  RMDir "$INSTDIR\cryptography"
   RMDir "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
