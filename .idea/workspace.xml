@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="Changed to pymysql over the official mysql connector">
+    <list default="true" id="2234506a-5b6f-40ee-8cd0-f706f3d3b7c2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/testing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +13,8 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/ZScan_Processor$Testing_Launch.coverage" NAME="Testing Launch Coverage Results" MODIFIED="1537228602068" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ZScan_Processor$Testing.coverage" NAME="Testing Coverage Results" MODIFIED="1537558157233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1541720895128" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ZScan_Processor$Testing.coverage" NAME="Testing Coverage Results" MODIFIED="1542073469397" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ZScan_Processor$Local_Launch.coverage" NAME="Local Launch Coverage Results" MODIFIED="1542066304748" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1897810701">
@@ -30,10 +28,10 @@
           <entry key="project.open.time.4" value="2" />
           <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.6" value="7" />
-          <entry key="project.open.time.7" value="13" />
+          <entry key="project.open.time.7" value="14" />
           <entry key="project.open.time.8" value="4" />
           <entry key="project.open.time.9" value="3" />
-          <entry key="project.opened" value="37" />
+          <entry key="project.opened" value="38" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -43,7 +41,7 @@
           <entry key="md" value="8" />
           <entry key="png" value="3" />
           <entry key="pstat" value="1" />
-          <entry key="py" value="114" />
+          <entry key="py" value="119" />
           <entry key="spec" value="4" />
           <entry key="txt" value="1" />
         </counts>
@@ -54,7 +52,7 @@
           <entry key="Markdown" value="8" />
           <entry key="PLAIN_TEXT" value="8" />
           <entry key="Profiler Session" value="1" />
-          <entry key="Python" value="114" />
+          <entry key="Python" value="119" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -63,9 +61,9 @@
           <entry key="bat" value="473" />
           <entry key="dummy" value="83" />
           <entry key="md" value="4195" />
-          <entry key="py" value="26654" />
+          <entry key="py" value="27914" />
           <entry key="spec" value="171" />
-          <entry key="txt" value="4171" />
+          <entry key="txt" value="4298" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -73,8 +71,8 @@
         <counts>
           <entry key="Bat" value="264" />
           <entry key="Markdown" value="4195" />
-          <entry key="PLAIN_TEXT" value="4634" />
-          <entry key="Python" value="28355" />
+          <entry key="PLAIN_TEXT" value="4761" />
+          <entry key="Python" value="29615" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -83,38 +81,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="430">
-                <caret line="47" column="62" selection-start-line="47" selection-start-column="62" selection-end-line="47" selection-end-column="62" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py">
+        <entry file="file://$PROJECT_DIR$/testing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="75" column="26" selection-start-line="75" selection-start-column="26" selection-end-line="75" selection-end-column="26" />
+            <state relative-caret-position="891">
+              <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
               <folding>
-                <element signature="e#110#152#0" expanded="true" />
-                <marker date="1541720414025" expanded="true" signature="2209:2210" ph="..." />
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
+        <entry file="file://C:/Program Files/Python37/Lib/site-packages/numpy/core/fromnumeric.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="521" column="34" lean-forward="true" selection-start-line="521" selection-start-column="34" selection-end-line="521" selection-end-column="34" />
-              <folding>
-                <element signature="e#110#152#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="325">
+              <caret line="2799" selection-start-line="2799" selection-end-line="2799" />
             </state>
           </provider>
         </entry>
@@ -154,6 +136,8 @@
       <find>checkboxes_changed</find>
       <find>processing</find>
       <find>.png</find>
+      <find>get_plate_image</find>
+      <find>\</find>
     </findStrings>
     <replaceStrings>
       <replace>self.black_image</replace>
@@ -165,6 +149,7 @@
       <replace>top</replace>
       <replace>bottom</replace>
       <replace>.jpg</replace>
+      <replace>/</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\caperren\Github\ZScan_Processor</dir>
@@ -179,7 +164,6 @@
         <option value="$PROJECT_DIR$/../ZScan_Processor - Original/Framework/DetectionPreviewCore.py" />
         <option value="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionWorker.py" />
         <option value="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionProcessor.py" />
-        <option value="$PROJECT_DIR$/testing.py" />
         <option value="$PROJECT_DIR$/Framework/DetectionProcessing/DetectionProcessorCore.py" />
         <option value="$PROJECT_DIR$/Interface/About/AboutCore.py" />
         <option value="$PROJECT_DIR$/Interface/Settings/FileAndTransferSettingsCore.py" />
@@ -201,6 +185,7 @@
         <option value="$PROJECT_DIR$/Interface/Settings/DatabaseSettingsCore.py" />
         <option value="$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/testing.py" />
       </list>
     </option>
   </component>
@@ -221,7 +206,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -229,43 +213,11 @@
               <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
               <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
-              <item name="Framework" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
-              <item name="Framework" type="462c0819:PsiDirectoryNode" />
-              <item name="ScheduledProcessing" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
-              <item name="Interface" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
-              <item name="Interface" type="462c0819:PsiDirectoryNode" />
-              <item name="Settings" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ZScan_Processor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ZScan_Processor" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="Constants" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -298,7 +250,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Local Launch">
+  <component name="RunManager" selected="Python.Testing">
     <configuration name="Local Launch" type="PythonConfigurationType" factoryName="Python" singleton="true">
       <module name="ZScan_Processor" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -515,19 +467,25 @@
       <option name="project" value="LOCAL" />
       <updated>1539902539255</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Changed to pymysql over the official mysql connector due to auth issues with the server used on campus as it's in an old auth mode that's no longer in the official connector.">
+      <created>1541721588982</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1541721588982</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18521462" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1200318" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32972136" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49960256" visible="true" weight="0.20743035" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49960256" visible="true" weight="0.20743035" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.37074304" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -601,7 +559,8 @@
     <MESSAGE value="Testing side by side images" />
     <MESSAGE value="New img include for readme" />
     <MESSAGE value="Hopefully last readme edit. Added up to date log screenshot." />
-    <option name="LAST_COMMIT_MESSAGE" value="Hopefully last readme edit. Added up to date log screenshot." />
+    <MESSAGE value="Changed to pymysql over the official mysql connector due to auth issues with the server used on campus as it's in an old auth mode that's no longer in the official connector." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed to pymysql over the official mysql connector due to auth issues with the server used on campus as it's in an old auth mode that's no longer in the official connector." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -656,7 +615,6 @@
     <entry file="file://$PROJECT_DIR$/top.png" />
     <entry file="file://$PROJECT_DIR$/../ZScan_Processor - Original/Framework/WorkerCore.py" />
     <entry file="file://$PROJECT_DIR$/../ZScan_Processor - Original/Framework/DetectionPreviewCore.py" />
-    <entry file="file://$PROJECT_DIR$/testing.py" />
     <entry file="file://C:/Program Files/Python37/Lib/shutil.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -815,13 +773,7 @@
     </entry>
     <entry file="file://C:/Program Files/Python37/Lib/site-packages/pymysql/__init__.py" />
     <entry file="file://C:/Program Files/Python37/Lib/site-packages/pymysql/connections.py" />
-    <entry file="file://C:/Program Files/Python37/Lib/site-packages/MySQLdb/connections.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/MySQLdb/connections.py" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21358">
@@ -829,20 +781,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Program Files/Python37/Lib/site-packages/MySQLdb/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="83" selection-start-line="83" selection-end-line="83" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/MySQLdb/__init__.py" />
     <entry file="file://C:/Program Files/Python37/Lib/site-packages/pymysql/_auth.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
           <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="e#32#67#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -850,20 +793,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="75" column="26" selection-start-line="75" selection-start-column="26" selection-end-line="75" selection-end-column="26" />
-          <folding>
-            <element signature="e#110#152#0" expanded="true" />
-            <marker date="1541720414025" expanded="true" signature="2209:2210" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="521" column="34" lean-forward="true" selection-start-line="521" selection-start-column="34" selection-end-line="521" selection-end-column="34" />
-          <folding>
-            <element signature="e#110#152#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -874,6 +803,40 @@
             <caret line="47" column="62" selection-start-line="47" selection-start-column="62" selection-end-line="47" selection-end-column="62" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework/ScheduledProcessing/ScheduledProcessingCore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3457">
+          <caret line="430" column="8" lean-forward="true" selection-start-line="430" selection-start-column="8" selection-end-line="431" selection-end-column="46" />
+          <folding>
+            <element signature="e#110#152#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="2799" selection-start-line="2799" selection-end-line="2799" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="891">
+          <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
