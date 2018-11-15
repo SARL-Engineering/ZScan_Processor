@@ -328,7 +328,7 @@ background-color:rgb(202, 202, 202);
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_24">
+           <spacer name="horizontalSpacer_28">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -339,6 +339,22 @@ background-color:rgb(202, 202, 202);
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QProgressBar" name="processing_progress_bar">
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>1</number>
+            </property>
+            <property name="value">
+             <number>-1</number>
+            </property>
+            <property name="textVisible">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="continuous_detection_checkbox">
@@ -359,7 +375,7 @@ background-color:rgb(202, 202, 202);
         <item row="0" column="0">
          <widget class="QTabWidget" name="settings_tab_widget">
           <property name="currentIndex">
-           <number>4</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="settings_plate_splitting_tab">
            <attribute name="title">
@@ -575,7 +591,7 @@ background-color:rgb(202, 202, 202);
                    </font>
                   </property>
                   <property name="text">
-                   <string>Well Locations</string>
+                   <string>Well Location Detection</string>
                   </property>
                  </widget>
                 </item>
@@ -584,12 +600,12 @@ background-color:rgb(202, 202, 202);
                   <item row="0" column="0">
                    <widget class="QLabel" name="label_26">
                     <property name="text">
-                     <string>A1 X Location</string>
+                     <string>Min Radius</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QSpinBox" name="top_a1_x_spinbox">
+                   <widget class="QSpinBox" name="top_well_min_radius_spinbox">
                     <property name="suffix">
                      <string> px</string>
                     </property>
@@ -601,12 +617,12 @@ background-color:rgb(202, 202, 202);
                   <item row="1" column="0">
                    <widget class="QLabel" name="label_27">
                     <property name="text">
-                     <string>A1 Y Location</string>
+                     <string>Max Radius</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QSpinBox" name="top_a1_y_spinbox">
+                   <widget class="QSpinBox" name="top_well_max_radius_spinbox">
                     <property name="suffix">
                      <string> px</string>
                     </property>
@@ -618,29 +634,12 @@ background-color:rgb(202, 202, 202);
                   <item row="2" column="0">
                    <widget class="QLabel" name="label_28">
                     <property name="text">
-                     <string>H12 X Location</string>
+                     <string>Min Distance Between</string>
                     </property>
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QSpinBox" name="top_h12_x_spinbox">
-                    <property name="suffix">
-                     <string> px</string>
-                    </property>
-                    <property name="maximum">
-                     <number>99999</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="0">
-                   <widget class="QLabel" name="label_29">
-                    <property name="text">
-                     <string>H12 Y Location</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="1">
-                   <widget class="QSpinBox" name="top_h12_y_spinbox">
+                   <widget class="QSpinBox" name="top_well_min_between_spinbox">
                     <property name="suffix">
                      <string> px</string>
                     </property>
@@ -650,21 +649,48 @@ background-color:rgb(202, 202, 202);
                    </widget>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="label_6">
+                   <widget class="QLabel" name="label_29">
                     <property name="text">
-                     <string>Well Radius</string>
+                     <string>Edge Detection Threshold 1</string>
                     </property>
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QSpinBox" name="top_well_radius_spinbox">
+                   <widget class="QSpinBox" name="top_well_detection_threshold_1_spinbox">
                     <property name="suffix">
-                     <string> px</string>
+                     <string/>
                     </property>
                     <property name="maximum">
                      <number>99999</number>
                     </property>
                    </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_6">
+                    <property name="text">
+                     <string>Edge Detection Threshold 2</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QSpinBox" name="top_well_detection_threshold_2_spinbox">
+                    <property name="suffix">
+                     <string/>
+                    </property>
+                    <property name="maximum">
+                     <number>99999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_44">
+                    <property name="text">
+                     <string>Edge Detection Blur Level</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QSpinBox" name="top_well_detection_blur_spinbox"/>
                   </item>
                  </layout>
                 </item>
@@ -1667,9 +1693,9 @@ background-color:rgb(202, 202, 202);
             <item row="3" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_12">
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout_7">
+               <layout class="QVBoxLayout" name="verticalLayout_16">
                 <item>
-                 <widget class="QLabel" name="label_40">
+                 <widget class="QLabel" name="label_64">
                   <property name="font">
                    <font>
                     <weight>75</weight>
@@ -1677,21 +1703,21 @@ background-color:rgb(202, 202, 202);
                    </font>
                   </property>
                   <property name="text">
-                   <string>Well Locations</string>
+                   <string>Well Location Detection</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <layout class="QFormLayout" name="formLayout_4">
+                 <layout class="QFormLayout" name="formLayout_9">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="label_41">
+                   <widget class="QLabel" name="label_70">
                     <property name="text">
-                     <string>A1 X Location</string>
+                     <string>Min Radius</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QSpinBox" name="bottom_a1_x_spinbox">
+                   <widget class="QSpinBox" name="bottom_well_min_radius_spinbox">
                     <property name="suffix">
                      <string> px</string>
                     </property>
@@ -1701,14 +1727,14 @@ background-color:rgb(202, 202, 202);
                    </widget>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="label_42">
+                   <widget class="QLabel" name="label_74">
                     <property name="text">
-                     <string>A1 Y Location</string>
+                     <string>Max Radius</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QSpinBox" name="bottom_a1_y_spinbox">
+                   <widget class="QSpinBox" name="bottom_well_max_radius_spinbox">
                     <property name="suffix">
                      <string> px</string>
                     </property>
@@ -1718,31 +1744,14 @@ background-color:rgb(202, 202, 202);
                    </widget>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="label_43">
+                   <widget class="QLabel" name="label_76">
                     <property name="text">
-                     <string>H12 X Location</string>
+                     <string>Min Distance Between</string>
                     </property>
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QSpinBox" name="bottom_h12_x_spinbox">
-                    <property name="suffix">
-                     <string> px</string>
-                    </property>
-                    <property name="maximum">
-                     <number>99999</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="0">
-                   <widget class="QLabel" name="label_45">
-                    <property name="text">
-                     <string>H12 Y Location</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="1">
-                   <widget class="QSpinBox" name="bottom_h12_y_spinbox">
+                   <widget class="QSpinBox" name="bottom_well_min_between_spinbox">
                     <property name="suffix">
                      <string> px</string>
                     </property>
@@ -1752,26 +1761,53 @@ background-color:rgb(202, 202, 202);
                    </widget>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="label_2">
+                   <widget class="QLabel" name="label_77">
                     <property name="text">
-                     <string>Well Radius</string>
+                     <string>Edge Detection Threshold 1</string>
                     </property>
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QSpinBox" name="bottom_well_radius_spinbox">
+                   <widget class="QSpinBox" name="bottom_well_detection_threshold_1_spinbox">
                     <property name="suffix">
-                     <string> px</string>
+                     <string/>
                     </property>
                     <property name="maximum">
                      <number>99999</number>
                     </property>
                    </widget>
                   </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_78">
+                    <property name="text">
+                     <string>Edge Detection Threshold 2</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QSpinBox" name="bottom_well_detection_threshold_2_spinbox">
+                    <property name="suffix">
+                     <string/>
+                    </property>
+                    <property name="maximum">
+                     <number>99999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_89">
+                    <property name="text">
+                     <string>Edge Detection Blur Level</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QSpinBox" name="bottom_well_detection_blur_spinbox"/>
+                  </item>
                  </layout>
                 </item>
                 <item>
-                 <spacer name="verticalSpacer_5">
+                 <spacer name="verticalSpacer_12">
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>

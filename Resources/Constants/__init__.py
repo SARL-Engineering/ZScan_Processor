@@ -2,11 +2,12 @@
 DETECTION_SETTINGS_GUI_ELEMENTS = {
     "alignment_shared_split_line_spinbox": 11750,
 
-    "top_a1_x_spinbox": 1010,
-    "top_a1_y_spinbox": 1014,
-    "top_h12_x_spinbox": 10349,
-    "top_h12_y_spinbox": 6795,
-    "top_well_radius_spinbox": 430,
+    "top_well_min_radius_spinbox": 365,
+    "top_well_max_radius_spinbox": 415,
+    "top_well_min_between_spinbox": 800,
+    "top_well_detection_blur_spinbox": 5,
+    "top_well_detection_threshold_1_spinbox": 12,
+    "top_well_detection_threshold_2_spinbox": 87,
 
     "top_barcode_x_size_spinbox": 600,
     "top_barcode_y_size_spinbox": 5000,
@@ -21,11 +22,12 @@ DETECTION_SETTINGS_GUI_ELEMENTS = {
     "top_overlay_plate_font_size_spinbox": 275,
     "top_overlay_well_font_size_spinbox": 40,
 
-    "bottom_a1_x_spinbox": 1353,
-    "bottom_a1_y_spinbox": 1005,
-    "bottom_h12_x_spinbox": 10684,
-    "bottom_h12_y_spinbox": 6791,
-    "bottom_well_radius_spinbox": 430,
+    "bottom_well_min_radius_spinbox": 365,
+    "bottom_well_max_radius_spinbox": 415,
+    "bottom_well_min_between_spinbox": 800,
+    "bottom_well_detection_blur_spinbox": 5,
+    "bottom_well_detection_threshold_1_spinbox": 12,
+    "bottom_well_detection_threshold_2_spinbox": 87,
 
     "bottom_barcode_x_size_spinbox": 600,
     "bottom_barcode_y_size_spinbox": 5000,

@@ -9,12 +9,14 @@ from PIL import ImageFont, ImageDraw, Image
 import qimage2ndarray
 import numpy as np
 from os.path import getsize
+from time import time
 
 # Custom imports
 from Resources.UI.ZScanUI import Ui_MainWindow as ZScanUI
 from Resources import Constants
 
 from Framework.DetectionProcessing import DetectionProcessorCore
+from Framework import ImageProcessing
 
 #####################################
 # Global Variables
@@ -28,6 +30,10 @@ SIZE_DIVISOR = 1024000
 
 PREVIEW_EXAMPLE_TEXT = "000000000"
 
+WELL_PREVIEW_BOX_SCALAR = 1.2
+
+WELLS_ADJUST_RESET_TIMEOUT = 5  # Seconds
+
 
 #####################################
 # PreviewProcessor Definition
@@ -36,6 +42,8 @@ class PreviewProcessor(QtCore.QThread):
     request_image_update__signal = QtCore.pyqtSignal()
     top_barcode_text_update_ready__signal = QtCore.pyqtSignal(str)
     bottom_barcode_text_update_ready__signal = QtCore.pyqtSignal(str)
+
+    progress_bar_status_update_requested__signal = QtCore.pyqtSignal(int)
 
     black_image = np.zeros((1000, 1000, 3), np.uint8)
 
@@ -76,6 +84,22 @@ class PreviewProcessor(QtCore.QThread):
         self.bottom_plate_well_preview_image_label = \
             self.main_screen.bottom_plate_well_preview_image_label  # type: QtWidgets.QLabel
 
+        self.top_well_min_radius_spinbox = self.main_screen.top_well_min_radius_spinbox  # type:QtWidgets.QSpinBox
+        self.top_well_max_radius_spinbox = self.main_screen.top_well_max_radius_spinbox  # type:QtWidgets.QSpinBox
+        self.top_well_min_between_spinbox = self.main_screen.top_well_min_between_spinbox  # type:QtWidgets.QSpinBox
+        self.top_well_detection_blur_spinbox = self.main_screen.top_well_detection_blur_spinbox  # type:QtWidgets.QSpinBox
+        self.top_well_detection_threshold_1_spinbox = self.main_screen.top_well_detection_threshold_1_spinbox  # type:QtWidgets.QSpinBox
+        self.top_well_detection_threshold_2_spinbox = self.main_screen.top_well_detection_threshold_2_spinbox  # type:QtWidgets.QSpinBox
+
+        self.bottom_well_min_radius_spinbox = self.main_screen.bottom_well_min_radius_spinbox  # type:QtWidgets.QSpinBox
+        self.bottom_well_max_radius_spinbox = self.main_screen.bottom_well_max_radius_spinbox  # type:QtWidgets.QSpinBox
+        self.bottom_well_min_between_spinbox = self.main_screen.bottom_well_min_between_spinbox  # type:QtWidgets.QSpinBox
+        self.bottom_well_detection_blur_spinbox = self.main_screen.bottom_well_detection_blur_spinbox  # type:QtWidgets.QSpinBox
+        self.bottom_well_detection_threshold_1_spinbox = self.main_screen.bottom_well_detection_threshold_1_spinbox  # type:QtWidgets.QSpinBox
+        self.bottom_well_detection_threshold_2_spinbox = self.main_screen.bottom_well_detection_threshold_2_spinbox  # type:QtWidgets.QSpinBox
+
+        self.processing_progress_bar = self.main_screen.processing_progress_bar  # type: QtWidgets.QProgressBar
+
         self.continuous_detection_checkbox = self.main_screen.continuous_detection_checkbox  # type: QtWidgets.QCheckBox
         self.single_detection_button = self.main_screen.single_detection_button  # type: QtWidgets.QPushButton
 
@@ -94,6 +118,12 @@ class PreviewProcessor(QtCore.QThread):
 
         self.detect_once = False
         self.detect_continuous = False
+
+        self.top_wells = None
+        self.bottom_wells = None
+
+        self.top_wells_reset_last_time = None
+        self.bottom_wells_reset_last_time = None
 
         self.preview_image = None
         self.output_pixmap_groups = None
@@ -183,6 +213,8 @@ class PreviewProcessor(QtCore.QThread):
         self.reset_barcode_detect_images_if_needed()
 
         if self.detect_once or self.detect_continuous:
+            self.progress_bar_status_update_requested__signal.emit(0)
+
             main_tab_on_settings = self.main_tab_widget.currentWidget().objectName() == "settings_tab"
 
             if self.preview_image is not None and main_tab_on_settings:
@@ -193,13 +225,17 @@ class PreviewProcessor(QtCore.QThread):
                 elif current_settings_tab == "settings_bottom_plate_tab":
                     self.detect_bottom()
 
+            self.progress_bar_status_update_requested__signal.emit(1)
             self.detect_once = False
 
     def check_if_preview_image_valid_and_load(self):
         self.reset_and_show_black_preview_images_if_needed()
         self.reset_file_information_if_needed()
+        self.reset_wells_detection_if_needed()
 
         if (self.preview_image is None or self.preview_image_path_changed) and not self.attempted_preview_image_load:
+            self.progress_bar_status_update_requested__signal.emit(0)
+
             preview_image_path = self.preview_image_path_line_edit.text()
             try:
                 if preview_image_path != NO_PATH_SET_STRING:
@@ -228,6 +264,7 @@ class PreviewProcessor(QtCore.QThread):
             except Exception as e:
                 self.logger.error(e)
 
+            self.progress_bar_status_update_requested__signal.emit(1)
             self.preview_image_path_changed = False
 
     def reset_barcode_detect_images_if_needed(self):
@@ -266,6 +303,37 @@ class PreviewProcessor(QtCore.QThread):
             self.preview_image_x_size_label.setText(NO_PATH_NA_STRING)
             self.preview_image_y_size_label.setText(NO_PATH_NA_STRING)
             self.preview_image_file_size_label.setText(NO_PATH_NA_STRING)
+
+            self.top_wells = None
+            self.bottom_wells = None
+
+    def reset_wells_detection_if_needed(self):
+        should_reset_top = False
+        should_reset_bottom = False
+
+        if self.preview_image_path_changed:
+            should_reset_top = True
+            should_reset_bottom = True
+
+        if self.top_wells_reset_last_time is not None:
+            time_diff = time() - self.top_wells_reset_last_time
+
+            if time_diff > WELLS_ADJUST_RESET_TIMEOUT:
+                should_reset_top = True
+
+        if self.bottom_wells_reset_last_time is not None:
+            time_diff = time() - self.bottom_wells_reset_last_time
+
+            if time_diff > WELLS_ADJUST_RESET_TIMEOUT:
+                should_reset_bottom = True
+
+        if should_reset_top:
+            self.top_wells = None
+            self.top_wells_reset_last_time = None
+
+        if should_reset_bottom:
+            self.bottom_wells = None
+            self.bottom_wells_reset_last_time = None
 
     def detect_top(self):
         processing_dictionary = {
@@ -343,14 +411,33 @@ class PreviewProcessor(QtCore.QThread):
         self.set_pixmap_from_image_groups_and_show(output_image_group)
 
     def show_top_plate_preview(self):
+        wells_config = {
+            "min_radius": self.settings.value("gui_elements/top_well_min_radius_spinbox", type=int),
+            "max_radius": self.settings.value("gui_elements/top_well_max_radius_spinbox", type=int),
+            "min_distance_between": self.settings.value("gui_elements/top_well_min_between_spinbox", type=int),
+            "blur": self.settings.value("gui_elements/top_well_detection_blur_spinbox", type=int),
+            "threshold_1": self.settings.value("gui_elements/top_well_detection_threshold_1_spinbox", type=int),
+            "threshold_2": self.settings.value("gui_elements/top_well_detection_threshold_2_spinbox", type=int)
+        }
+
         # ###### Get plate image from main preview
         top_plate_preview = self.get_plate_image("top")
 
         # ##### Get well preview and draw plate markers #####
-        well_preview = self.get_well_preview_image(top_plate_preview, "top")
+        # Find wells
+        if self.top_wells is None:
+            self.progress_bar_status_update_requested__signal.emit(0)
+            self.top_wells = ImageProcessing.find_wells_in_image(top_plate_preview, wells_config)
+            self.progress_bar_status_update_requested__signal.emit(1)
+
+        # Get well preview with barcode overlay, before we draw the wells overlay on main image
+        well_preview = self.get_well_preview_image(top_plate_preview, self.top_wells)
         self.draw_barcode_overlay(well_preview, PREVIEW_EXAMPLE_TEXT, "top", "well")
 
-        self.draw_wells_and_boxes(top_plate_preview, "top")
+        # Draw wells
+        ImageProcessing.draw_wells_on_image(top_plate_preview, self.top_wells)
+
+        # Draw barcode overlay
         self.draw_barcode_overlay(top_plate_preview, PREVIEW_EXAMPLE_TEXT, "top", "plate")
 
         output_image_group = [
@@ -361,14 +448,33 @@ class PreviewProcessor(QtCore.QThread):
         self.set_pixmap_from_image_groups_and_show(output_image_group)
 
     def show_bottom_plate_preview(self):
+        wells_config = {
+            "min_radius": self.settings.value("gui_elements/bottom_well_min_radius_spinbox", type=int),
+            "max_radius": self.settings.value("gui_elements/bottom_well_max_radius_spinbox", type=int),
+            "min_distance_between": self.settings.value("gui_elements/bottom_well_min_between_spinbox", type=int),
+            "blur": self.settings.value("gui_elements/bottom_well_detection_blur_spinbox", type=int),
+            "threshold_1": self.settings.value("gui_elements/bottom_well_detection_threshold_1_spinbox", type=int),
+            "threshold_2": self.settings.value("gui_elements/bottom_well_detection_threshold_2_spinbox", type=int)
+        }
+
         # ###### Get plate image from main preview
         bottom_plate_preview = self.get_plate_image("bottom")
 
         # ##### Get well preview and draw plate markers #####
-        well_preview = self.get_well_preview_image(bottom_plate_preview, "bottom")
+        # Find wells
+        if self.bottom_wells is None:
+            self.progress_bar_status_update_requested__signal.emit(0)
+            self.bottom_wells = ImageProcessing.find_wells_in_image(bottom_plate_preview, wells_config)
+            self.progress_bar_status_update_requested__signal.emit(1)
+
+        # Get well preview with barcode overlay, before we draw the wells overlay on main image
+        well_preview = self.get_well_preview_image(bottom_plate_preview, self.bottom_wells)
         self.draw_barcode_overlay(well_preview, PREVIEW_EXAMPLE_TEXT, "bottom", "well")
 
-        self.draw_wells_and_boxes(bottom_plate_preview, "bottom")
+        # Draw wells
+        ImageProcessing.draw_wells_on_image(bottom_plate_preview, self.bottom_wells)
+
+        # Draw barcode overlay
         self.draw_barcode_overlay(bottom_plate_preview, PREVIEW_EXAMPLE_TEXT, "bottom", "plate")
 
         # ##### Setup and show image group #####
@@ -390,17 +496,21 @@ class PreviewProcessor(QtCore.QThread):
         elif top_or_bottom == "bottom":
             return preview_image[0:height, plate_split_line_location:width]
 
-    def get_well_preview_image(self, image, top_or_bottom):
-        a1_x_location = self.settings.value("gui_elements/%s_a1_x_spinbox" % top_or_bottom, type=int)
-        a1_y_location = self.settings.value("gui_elements/%s_a1_y_spinbox" % top_or_bottom, type=int)
-        well_radius = self.settings.value("gui_elements/%s_well_radius_spinbox" % top_or_bottom, type=int)
+    def get_well_preview_image(self, image, wells):
+        if wells is not None:
+            a1_well = wells[0]
+            x, y, radius = a1_well
 
-        well_left = a1_x_location - well_radius
-        well_right = a1_x_location + well_radius
-        well_top = a1_y_location - well_radius
-        well_bottom = a1_y_location + well_radius
+            size_scaled = int(radius * WELL_PREVIEW_BOX_SCALAR)
 
-        return image[well_top:well_bottom, well_left:well_right].copy()
+            well_left = x - size_scaled
+            well_right = x + size_scaled
+            well_top = y - size_scaled
+            well_bottom = y + size_scaled
+
+            return image[well_top:well_bottom, well_left:well_right].copy()
+
+        return None
 
     def get_barcode_scanbox_image(self, top_or_bottom):
         scanbox_x_position_spinbox = self.settings.value("gui_elements/%s_scanbox_x_position_spinbox" % top_or_bottom,
@@ -528,6 +638,12 @@ class PreviewProcessor(QtCore.QThread):
 
         self.request_image_update__signal.emit()
 
+    def on_top_well_detection_adjusted__slot(self):
+        self.top_wells_reset_last_time = time()
+
+    def on_bottom_well_detection_adjusted__slot(self):
+        self.bottom_wells_reset_last_time = time()
+
     def on_continous_detect_checkbox_changed__slot(self, state):
         self.detect_continuous = state
 
@@ -555,6 +671,22 @@ class PreviewProcessor(QtCore.QThread):
 
         self.top_barcode_text_update_ready__signal.connect(self.top_plate_barcode_value_label.setText)
         self.bottom_barcode_text_update_ready__signal.connect(self.bottom_plate_barcode_value_label.setText)
+
+        self.top_well_min_radius_spinbox.valueChanged.connect(self.on_top_well_detection_adjusted__slot)
+        self.top_well_max_radius_spinbox.valueChanged.connect(self.on_top_well_detection_adjusted__slot)
+        self.top_well_min_between_spinbox.valueChanged.connect(self.on_top_well_detection_adjusted__slot)
+        self.top_well_detection_blur_spinbox.valueChanged.connect(self.on_top_well_detection_adjusted__slot)
+        self.top_well_detection_threshold_1_spinbox.valueChanged.connect(self.on_top_well_detection_adjusted__slot)
+        self.top_well_detection_threshold_2_spinbox.valueChanged.connect(self.on_top_well_detection_adjusted__slot)
+
+        self.bottom_well_min_radius_spinbox.valueChanged.connect(self.on_bottom_well_detection_adjusted__slot)
+        self.bottom_well_max_radius_spinbox.valueChanged.connect(self.on_bottom_well_detection_adjusted__slot)
+        self.bottom_well_min_between_spinbox.valueChanged.connect(self.on_bottom_well_detection_adjusted__slot)
+        self.bottom_well_detection_blur_spinbox.valueChanged.connect(self.on_bottom_well_detection_adjusted__slot)
+        self.bottom_well_detection_threshold_1_spinbox.valueChanged.connect(self.on_bottom_well_detection_adjusted__slot)
+        self.bottom_well_detection_threshold_2_spinbox.valueChanged.connect(self.on_bottom_well_detection_adjusted__slot)
+
+        self.progress_bar_status_update_requested__signal.connect(self.processing_progress_bar.setMaximum)
 
         self.request_image_update__signal.connect(self.on_image_update_requested__slot)
 

@@ -36,11 +36,12 @@ class DetectionSettings(QtCore.QObject):
         self.alignment_shared_split_line_spinbox = self.main_screen.alignment_shared_split_line_spinbox  # type: QtWidgets.QSpinBox
 
         # Top Plate
-        self.top_a1_x_spinbox = self.main_screen.top_a1_x_spinbox  # type: QtWidgets.QSpinBox
-        self.top_a1_y_spinbox = self.main_screen.top_a1_y_spinbox  # type: QtWidgets.QSpinBox
-        self.top_h12_x_spinbox = self.main_screen.top_h12_x_spinbox  # type: QtWidgets.QSpinBox
-        self.top_h12_y_spinbox = self.main_screen.top_h12_y_spinbox  # type: QtWidgets.QSpinBox
-        self.top_well_radius_spinbox = self.main_screen.top_well_radius_spinbox  # type: QtWidgets.QSpinBox
+        self.top_well_min_radius_spinbox = self.main_screen.top_well_min_radius_spinbox  # type: QtWidgets.QSpinBox
+        self.top_well_max_radius_spinbox = self.main_screen.top_well_max_radius_spinbox  # type: QtWidgets.QSpinBox
+        self.top_well_min_between_spinbox = self.main_screen.top_well_min_between_spinbox  # type: QtWidgets.QSpinBox
+        self.top_well_detection_blur_spinbox = self.main_screen.top_well_detection_blur_spinbox  # type: QtWidgets.QSpinBox
+        self.top_well_detection_threshold_1_spinbox = self.main_screen.top_well_detection_threshold_1_spinbox  # type: QtWidgets.QSpinBox
+        self.top_well_detection_threshold_2_spinbox = self.main_screen.top_well_detection_threshold_2_spinbox  # type: QtWidgets.QSpinBox
 
         self.top_barcode_x_size_spinbox = self.main_screen.top_barcode_x_size_spinbox  # type: QtWidgets.QSpinBox
         self.top_barcode_y_size_spinbox = self.main_screen.top_barcode_y_size_spinbox  # type: QtWidgets.QSpinBox
@@ -56,11 +57,12 @@ class DetectionSettings(QtCore.QObject):
         self.top_overlay_well_font_size_spinbox = self.main_screen.top_overlay_well_font_size_spinbox  # type: QtWidgets.QSpinBox
 
         # Bottom Plate
-        self.bottom_a1_x_spinbox = self.main_screen.bottom_a1_x_spinbox  # type: QtWidgets.QSpinBox
-        self.bottom_a1_y_spinbox = self.main_screen.bottom_a1_y_spinbox  # type: QtWidgets.QSpinBox
-        self.bottom_h12_x_spinbox = self.main_screen.bottom_h12_x_spinbox  # type: QtWidgets.QSpinBox
-        self.bottom_h12_y_spinbox = self.main_screen.bottom_h12_y_spinbox  # type: QtWidgets.QSpinBox
-        self.bottom_well_radius_spinbox = self.main_screen.bottom_well_radius_spinbox  # type: QtWidgets.QSpinBox
+        self.bottom_well_min_radius_spinbox = self.main_screen.bottom_well_min_radius_spinbox  # type: QtWidgets.QSpinBox
+        self.bottom_well_max_radius_spinbox = self.main_screen.bottom_well_max_radius_spinbox  # type: QtWidgets.QSpinBox
+        self.bottom_well_min_between_spinbox = self.main_screen.bottom_well_min_between_spinbox  # type: QtWidgets.QSpinBox
+        self.bottom_well_detection_blur_spinbox = self.main_screen.bottom_well_detection_blur_spinbox  # type: QtWidgets.QSpinBox
+        self.bottom_well_detection_threshold_1_spinbox = self.main_screen.bottom_well_detection_threshold_1_spinbox  # type: QtWidgets.QSpinBox
+        self.bottom_well_detection_threshold_2_spinbox = self.main_screen.bottom_well_detection_threshold_2_spinbox  # type: QtWidgets.QSpinBox
 
         self.bottom_barcode_x_size_spinbox = self.main_screen.bottom_barcode_x_size_spinbox  # type: QtWidgets.QSpinBox
         self.bottom_barcode_y_size_spinbox = self.main_screen.bottom_barcode_y_size_spinbox  # type: QtWidgets.QSpinBox

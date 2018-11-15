@@ -5,7 +5,7 @@ import os
 SPLIT_LOCATION = 11720
 RESIZE_SIZE = (1280, 720)
 
-CHOICE = 0
+CHOICE = 15
 PATH = "C:/Users/caperren/Pictures/FAILED IMAGES/scanner 1"
 PATHS = [os.path.join(PATH, item) for item in os.listdir(PATH)]
 
@@ -37,30 +37,33 @@ if __name__ == '__main__':
         bottom_image_gray = cv2.cvtColor(bottom_image, cv2.COLOR_BGR2GRAY)
 
         top_median = np.median(top_image_gray)
-        top_lower = int(max(1, (1.0 - SIGMA) * CENTER_VALUE))
-        top_upper = int(min(255, (1.0 + SIGMA) * CENTER_VALUE))
+        top_lower = int(max(1, int((1.0 - SIGMA) * CENTER_VALUE)))
+        top_upper = int(min(255, int((1.0 + SIGMA) * CENTER_VALUE)))
         print(top_median, top_lower, top_upper)
 
         circles_top = cv2.HoughCircles(top_image_gray, cv2.HOUGH_GRADIENT, 1, MIN_DIST_BETWEEN, param1=top_lower,
                                        param2=top_upper, minRadius=MIN_RADIUS, maxRadius=MAX_RADIUS)
-        circles_top = np.uint16(np.around(circles_top))
+        if circles_top is not None:
+            circles_top = np.uint16(np.around(circles_top))
+            print("top:", len(circles_top[0, :]))
+
+            for i in circles_top[0, :]:
+                # draw the outer circle
+                cv2.circle(top_image, (i[0], i[1]), i[2], (0, 255, 0), 20)
+                # draw the center of the circle
+                cv2.circle(top_image, (i[0], i[1]), 40, (0, 0, 255), -1)
 
         circles_bottom = cv2.HoughCircles(bottom_image_gray, cv2.HOUGH_GRADIENT, 1, MIN_DIST_BETWEEN, param1=top_lower,
                                           param2=top_upper, minRadius=MIN_RADIUS, maxRadius=MAX_RADIUS)
-        circles_bottom = np.uint16(np.around(circles_bottom))
-        print(len(circles_top[0, :]), len(circles_bottom[0, :]))
+        if circles_bottom is not None:
+            circles_bottom = np.uint16(np.around(circles_bottom))
+            print("bottom:", len(circles_bottom[0, :]))
 
-        for i in circles_top[0, :]:
-            # draw the outer circle
-            cv2.circle(top_image, (i[0], i[1]), i[2], (0, 255, 0), 20)
-            # draw the center of the circle
-            cv2.circle(top_image, (i[0], i[1]), 40, (0, 0, 255), -1)
-
-        for i in circles_bottom[0, :]:
-            # draw the outer circle
-            cv2.circle(bottom_image, (i[0], i[1]), i[2], (0, 255, 0), 20)
-            # draw the center of the circle
-            cv2.circle(bottom_image, (i[0], i[1]), 40, (0, 0, 255), -1)
+            for i in circles_bottom[0, :]:
+                # draw the outer circle
+                cv2.circle(bottom_image, (i[0], i[1]), i[2], (0, 255, 0), 20)
+                # draw the center of the circle
+                cv2.circle(bottom_image, (i[0], i[1]), 40, (0, 0, 255), -1)
 
         top_resized = cv2.resize(top_image, RESIZE_SIZE)
         bottom_resized = cv2.resize(bottom_image, RESIZE_SIZE)
